@@ -28,4 +28,5 @@
     pilkkujen korjaus CSV-yhteensopivaksi (olisi voinut aiemmin tajuta)
     poistettavien momenttien momenttinumeroiden korjaaminen
     &amp; --> & urlien korjaaminen
+    &nbsp; --> " " (binding space on erikoismerkki, korvaaminen normaalilla)
 4. Siirrä haluamaasi taulukkoohjelmaan
