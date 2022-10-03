@@ -23,4 +23,5 @@
     </tr> 
     --> rivinvaihto 
     0-tason otsikkorivien koostaminen
+    CSV otsikkorivi
 4. Siirrä haluamaasi taulukkoohjelmaan
