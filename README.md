@@ -14,4 +14,6 @@
         </a></td>
      <td class="tableContent" style="text-align: right"> --> ,
     url alku https://budjetti.vm.fi/
+    <tr> 
+     <td class="tableContent" style="text-align: left"> --> meno tai tulo alkuun
 4. Siirrä haluamaasi taulukkoohjelmaan
