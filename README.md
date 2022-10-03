@@ -11,4 +11,6 @@
     aria-level="1"> --> momenttitaso 1
     </a></span></td>
      <td class="tableContent" style="text-align: right"><span class="LihavaTeksti"> --> ,
+        </a></td>
+     <td class="tableContent" style="text-align: right"> --> ,
 4. Siirrä haluamaasi taulukkoohjelmaan
