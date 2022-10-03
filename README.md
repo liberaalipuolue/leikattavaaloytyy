@@ -22,4 +22,5 @@
     </td> 
     </tr> 
     --> rivinvaihto 
+    0-tason otsikkorivien koostaminen
 4. Siirrä haluamaasi taulukkoohjelmaan
