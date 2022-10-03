@@ -9,4 +9,6 @@
     style="margin-left: 10px" aria-level="3"> --> momenttitaso 3
     style="margin-left: 5px" aria-level="2"> --> momenttitaso 2
     aria-level="1"> --> momenttitaso 1
+    </a></span></td>
+     <td class="tableContent" style="text-align: right"><span class="LihavaTeksti"> --> ,
 4. Siirrä haluamaasi taulukkoohjelmaan
