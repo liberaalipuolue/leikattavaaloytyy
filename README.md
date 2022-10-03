@@ -27,4 +27,5 @@
     tallennus CSV-muotoon
     pilkkujen korjaus CSV-yhteensopivaksi (olisi voinut aiemmin tajuta)
     poistettavien momenttien momenttinumeroiden korjaaminen
+    &amp; --> & urlien korjaaminen
 4. Siirrä haluamaasi taulukkoohjelmaan
