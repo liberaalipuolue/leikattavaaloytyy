@@ -24,4 +24,6 @@
     --> rivinvaihto 
     0-tason otsikkorivien koostaminen
     CSV otsikkorivi
+    tallennus CSV-muotoon
+    pilkkujen korjaus CSV-yhteensopivaksi (olisi voinut aiemmin tajuta)
 4. Siirrä haluamaasi taulukkoohjelmaan
