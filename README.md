@@ -16,4 +16,5 @@
     url alku https://budjetti.vm.fi/
     <tr> 
      <td class="tableContent" style="text-align: left"> --> meno tai tulo alkuun
+    span-tagit pois
 4. Siirrä haluamaasi taulukkoohjelmaan
