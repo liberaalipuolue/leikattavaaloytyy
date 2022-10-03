@@ -18,4 +18,5 @@
      <td class="tableContent" style="text-align: left"> --> meno tai tulo alkuun
     span-tagit pois
     urlista momenttinumerot
+    " ,momenttitaso --> ,momenttitaso (eli hipsut ja väli pois)
 4. Siirrä haluamaasi taulukkoohjelmaan
