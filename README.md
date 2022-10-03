@@ -19,4 +19,7 @@
     span-tagit pois
     urlista momenttinumerot
     " ,momenttitaso --> ,momenttitaso (eli hipsut ja väli pois)
+    </td> 
+    </tr> 
+    --> rivinvaihto 
 4. Siirrä haluamaasi taulukkoohjelmaan
