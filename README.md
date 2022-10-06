@@ -30,3 +30,4 @@
     &amp; --> & urlien korjaaminen
     &nbsp; --> " " (binding space on erikoismerkki, korvaaminen normaalilla)
 4. Siirrä haluamaasi taulukkoohjelmaan
+   momenttipuuhun "." loppuun concat()-komennolla (koska unohtui), sarake tekstimuotoon
