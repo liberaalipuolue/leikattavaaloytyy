@@ -32,3 +32,8 @@
 4. Siirrä haluamaasi taulukkoohjelmaan
    momenttipuuhun "." loppuun concat()-komennolla (koska unohtui), sarake tekstimuotoon
    eurot momenttitasoittain eri sarakkeisiin. 4 uutta saraketta "eurot 0 momenttitaso".."eurot 3 momenttitaso"
+   momenttinimi 0-tasolta  momenttinimi-sarakkeeseen, momenttipuu arvoksi 0
+   ehdollinen muotoilu muotoiltu kaava (=D1=A1)
+   Mätsäilyä ja rivien liikuttelua.
+   RIKKI: Jotkut momenttipuun viimeinen numero on korvautunut väärällä numerolla (28 tai 29 tai 30 tai 32 tai 33 tai 35), tekstissä ne on oikein.
+   uusi sarake: sorttausapuri 2022+2023 yhdistelmä momenttipuista rivien sorttaukseen jälkikäteen EI TODELLINEN MOMENTTIPUU HUOM =CONCATENATE(C139;E139;)
