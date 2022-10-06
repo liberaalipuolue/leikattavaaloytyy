@@ -31,3 +31,4 @@
     &nbsp; --> " " (binding space on erikoismerkki, korvaaminen normaalilla)
 4. Siirrä haluamaasi taulukkoohjelmaan
    momenttipuuhun "." loppuun concat()-komennolla (koska unohtui), sarake tekstimuotoon
+   eurot momenttitasoittain eri sarakkeisiin. 4 uutta saraketta "eurot 0 momenttitaso".."eurot 3 momenttitaso"
