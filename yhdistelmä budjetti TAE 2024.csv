@@ -1,0 +1,564 @@
+Pääluokan numero;Pääluokan nimi;Menoluvun numero;Menoluvun nimi;Menomomentin numero;Menomomentin nimi;Menomomentin info-osa;Määräraha;Aiemmin budjetoitu IX lisätalousarvio 2023;Aiemmin budjetoitu VIII lisätalousarvio 2023;Aiemmin budjetoitu VII lisätalousarvio 2023;Aiemmin budjetoitu VI lisätalousarvio 2023;Aiemmin budjetoitu V lisätalousarvio 2023;Aiemmin budjetoitu IV lisätalousarvio 2023;Aiemmin budjetoitu III lisätalousarvio 2023;Aiemmin budjetoitu II lisätalousarvio 2023;Aiemmin budjetoitu I lisätalousarvio 2023;Aiemmin budjetoitu 2023;Toteutuma 2023;Toteutuma 2022
+21;"EDUSKUNTA";01;"Kansanedustajat";01;"Kansanedustajien toimintamenot";"";23865000;;;;;;;;;;22743000;;21659248
+21;"EDUSKUNTA";10;"Eduskunnan kanslia";01;"Eduskunnan kanslian toimintamenot";"";65140000;;;;;;;;;;61122000;;57111208
+21;"EDUSKUNTA";10;"Eduskunnan kanslia";29;"Arvonlisäveromenot";"";6200000;;;;;;;;;;6200000;;5112599
+21;"EDUSKUNTA";10;"Eduskunnan kanslia";51;"Avustajatuki eduskuntaryhmille";"";7220000;;;;;;;;;;6270000;;6214578
+21;"EDUSKUNTA";10;"Eduskunnan kanslia";70;"Tietohallinnon laitehankinnat ja kehittämishankkeet";"";5000000;;;;;;;;;;5000000;;5000000
+21;"EDUSKUNTA";20;"Eduskunnan oikeusasiamies";01;"Eduskunnan oikeusasiamiehen kanslian toimintamenot";"";9455000;;;;;;;;;;8531000;;7985240
+21;"EDUSKUNTA";30;"Ulkopoliittinen instituutti";01;"Ulkopoliittisen instituutin toimintamenot";"";4805000;;;;;;;;;;4309000;;4082000
+21;"EDUSKUNTA";30;"Ulkopoliittinen instituutti";29;"Arvonlisäveromenot";"";260000;;;;;;;;;;230000;;255280
+21;"EDUSKUNTA";40;"Valtiontalouden tarkastusvirasto";01;"Valtiontalouden tarkastusviraston toimintamenot";"";17585000;;;;;;;;;;17062000;;17051000
+21;"EDUSKUNTA";40;"Valtiontalouden tarkastusvirasto";29;"Arvonlisäveromenot";"";700000;;;;;;;;;;750000;;438339
+21;"EDUSKUNTA";90;"Eduskunnan muut menot";50;"Eduskuntaryhmien ryhmäkanslioiden tukeminen";"";5175000;;;;;;;;;;4880000;;4778530
+22;"TASAVALLAN PRESIDENTTI";01;"Tasavallan presidentti";01;"Tasavallan presidentin palkkio";"";126000;;;;;;;;;;126000;;126000
+22;"TASAVALLAN PRESIDENTTI";02;"Tasavallan presidentin kanslia";01;"Tasavallan presidentin kanslian toimintamenot";"";8977000;;;;;;;;;;8707000;;8669000
+22;"TASAVALLAN PRESIDENTTI";02;"Tasavallan presidentin kanslia";02;"Entisten tasavallan presidenttien menot";"";700000;;;;;;;;;;500000;;62995
+22;"TASAVALLAN PRESIDENTTI";02;"Tasavallan presidentin kanslia";20;"Vierailuista ja kokousmatkoista aiheutuvat menot";"";2550000;;;;;;;;;;2550000;;9488
+22;"TASAVALLAN PRESIDENTTI";02;"Tasavallan presidentin kanslia";29;"Arvonlisäveromenot";"";10000000;;;;;;;;;;8000000;;2654404
+22;"TASAVALLAN PRESIDENTTI";02;"Tasavallan presidentin kanslia";75;"Perusparannukset";"";25000000;;;;;;;;;;20000000;;12000000
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";01;"Valtioneuvoston kanslian toimintamenot";"";154198000;;;;;;;;;148000;153189000;;145188000
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";02;"Ministereiden, heidän valtiosihteeriensä ja erityisavustajiensa palkkaukset";"";15232000;;;;;;;;;;10366000;;11987688
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";03;"Euroopan unionin kansallisten asiantuntijoiden palkkamenot";"";2480000;;;;;;;;;;980000;;985000
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";22;"Valtioneuvoston selvitys- ja tutkimustoiminta";"";0;;;;;;;;;;7759000;;8788000
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";25;"Terveet tilat 2028";"";500000;;;;;;;;;;500000;;1500000
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";27;"Kuurojen totuus- ja sovintoprosessi";"";358000;;;;;;;;;;438000;;
+23;"VALTIONEUVOSTON KANSLIA";01;"Hallinto";29;"Arvonlisäveromenot";"";19000000;;;;;;;;;;19000000;;15595714
+23;"VALTIONEUVOSTON KANSLIA";10;"Omistajaohjaus";88;"Osakehankinnat";"";5700000;;;;;;;;;;5700000;;441113542
+23;"VALTIONEUVOSTON KANSLIA";20;"Poliittisen toiminnan avustaminen";50;"Puoluetoiminnan tukeminen";"";34566000;;;;;;;;;;35635000;;35635000
+23;"VALTIONEUVOSTON KANSLIA";30;"Oikeuskanslerinvirasto";01;"Oikeuskanslerinviraston toimintamenot";"";4564000;;;;;;;;;9000;4365000;;3852000
+23;"VALTIONEUVOSTON KANSLIA";90;"Muut menot";21;"Kunniamerkit";"";700000;;;;;;;;;;700000;;637288
+23;"VALTIONEUVOSTON KANSLIA";90;"Muut menot";66;"Osallistumismaksut ja maksuosuudet Euroopan hybridiuhkien torjunnan osaamiskeskukselle";"";2040000;;;;;;;;;;1860000;;1740000
+24;"ULKOMINISTERIÖN HALLINNONALA";01;"Ulkoasiainhallinto";01;"Ulkoasiainhallinnon toimintamenot";"";257647000;;;;;;;;;-270000;258506000;;267222000
+24;"ULKOMINISTERIÖN HALLINNONALA";01;"Ulkoasiainhallinto";20;"Tiede- ja kulttuuri-instituuttikiinteistöjen menot";"";1102000;;;;;;;;;;1005000;;3266000
+24;"ULKOMINISTERIÖN HALLINNONALA";01;"Ulkoasiainhallinto";29;"Ulkoministeriön hallinnonalan arvonlisäveromenot";"";14220000;;;;;;;;;;14220000;;13833491
+24;"ULKOMINISTERIÖN HALLINNONALA";01;"Ulkoasiainhallinto";74;"Talonrakennukset";"";12000000;;;;;;;;;;12500000;;11300000
+24;"ULKOMINISTERIÖN HALLINNONALA";10;"Kriisinhallinta";20;"Suomalaisten kriisinhallintajoukkojen ylläpitomenot";"";53080000;;;;;;;;;4420000;50680000;;39611503
+24;"ULKOMINISTERIÖN HALLINNONALA";10;"Kriisinhallinta";21;"Siviilihenkilöstön osallistuminen kriisinhallintaan";"";19248000;;;;;;;;;;19248000;;16594838
+24;"ULKOMINISTERIÖN HALLINNONALA";10;"Kriisinhallinta";66;"Rauhanvälitys";"";3900000;;;;;;;;;;2500000;;3396615
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";50;"Valtionapu Teollisen yhteistyön rahasto Oy:lle";"";0;;;;;;;;;;0;;0
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";66;"Varsinainen kehitysyhteistyö";"";628586000;;;;;;;;;;713012000;;774505000
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";67;"Demokratia- ja oikeusvaltiotuki";"";2904000;;;;;;;;;;3060000;;3000000
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";69;"Tuki Ukrainalle";"";57821000;;;;;;;;;;;;
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";88;"Finnfundin (Teollisen yhteistyön rahasto Oy) pääoman korottaminen";"";10000000;;;;;;;;;;10000000;;9999910
+24;"ULKOMINISTERIÖN HALLINNONALA";30;"Kansainvälinen kehitysyhteistyö";89;"Kehityspoliittiset lainat ja sijoitukset";"";69730000;;;;;;;;;;129730000;;129730000
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";20;"Itämeren, Barentsin ja arktisen alueen yhteistyö";"";1600000;;;;;;;;;;3000000;;4800000
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";23;"Etyj-puheenjohtajuus";"";2840000;;;;;;;;;;1569000;;
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";50;"Eräät valtionavut";"";1641000;;;;;;;;;;2241000;;2421373
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";51;"Hädänalaisten avustaminen";"";45000;;;;;;;;;;45000;;11917
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";66;"Eräät jäsenmaksut ja rahoitusosuudet";"";145000000;;;;;;;;;;110110000;;98463000
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";87;"Pääomasijoitus Instex S.A.S.:lle";"";0;;;;;;;;;;300000;;300000
+24;"ULKOMINISTERIÖN HALLINNONALA";90;"Ulkoministeriön hallinnonalan muut menot";95;"Kurssivaihtelut";"";500000;;;;;;;;;;500000;;-517166
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";01;"Oikeusministeriön toimintamenot";"";25441000;;;;;;;;;108000;23449000;;25647000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";03;"Oikeusministeriön yhteydessä toimivien viranomaisten toimintamenot";"";18069000;;;;;;;;;;13218000;;12246000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";05;"Oikeusrekisterikeskuksen toimintamenot";"";10110000;;;;;;;;;;10179000;;10193000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";20;"Erityismenot";"";13943000;;;;;;;;;;12013000;;12198300
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";21;"Oikeusministeriön hallinnonalan tuottavuusmääräraha";"";1735000;;;;;;;;;0;24951000;;9777000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";22;"Oikeusministeriön hallinnonalan ICT-kehittäminen";"";20120000;;;;;;;;;;;;
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";29;"Oikeusministeriön hallinnonalan arvonlisäveromenot";"";51510000;;;;;;;;;;50660000;;48618894
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";50;"Avustukset";"";14105000;;;;;;;;;1025000;13843000;;13795778
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";51;"Eräät valtion maksamat korvaukset";"";19000000;;;;;;;;;;19000000;;13910756
+25;"OIKEUSMINISTERIÖN HALLINNONALA";01;"Ministeriö ja hallinto";66;"Kansainväliset jäsenmaksut ja rahoitusosuudet";"";457000;;;;;;;;;7000;450000;;
+25;"OIKEUSMINISTERIÖN HALLINNONALA";10;"Tuomioistuimet";01;"Korkeimman oikeuden toimintamenot";"";9789000;;;;;;;;;;9178000;;9071000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";10;"Tuomioistuimet";02;"Korkeimman hallinto-oikeuden toimintamenot";"";15320000;;;;;;;;;;11828000;;14206000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";10;"Tuomioistuimet";03;"Muiden tuomioistuinten toimintamenot";"";328414000;;;;;;;;;625000;296612000;;290722000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";10;"Tuomioistuimet";04;"Oikeusapu- ja edunvalvontapiirien ja kuluttajariitalautakunnan toimintamenot";"";0;;;;;;;;;;;;
+25;"OIKEUSMINISTERIÖN HALLINNONALA";10;"Tuomioistuimet";50;"Yksityisille oikeusavustajille maksettavat korvaukset";"";0;;;;;;;;;;;;
+25;"OIKEUSMINISTERIÖN HALLINNONALA";15;"Oikeuspalvelut";01;"Oikeusapu- ja edunvalvontapiirien toimintamenot";"25.10.04";92964000;;;;;;;;;-540000;89322000;;84426000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";15;"Oikeuspalvelut";50;"Yksityisille oikeusavustajille maksettavat korvaukset";"25.10.50";80410000;;;;;;;;;725000;76770000;;82380286
+25;"OIKEUSMINISTERIÖN HALLINNONALA";20;"Maksuhäiriöt, ulosotto ja konkurssivalvonta";01;"Ulosottolaitoksen ja konkurssivalvonnan toimintamenot";"";110012000;;;;;;;;;;109193000;;108951000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";20;"Maksuhäiriöt, ulosotto ja konkurssivalvonta";95;"Ulosoton säilytettävänä olevien varojen korkomenot";"";0;;;;;;;;;;260000;;172345
+25;"OIKEUSMINISTERIÖN HALLINNONALA";30;"Syyttäjät";01;"Syyttäjälaitoksen toimintamenot";"";63201000;;;;;;;;;425000;57057000;;56577000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";40;"Rangaistusten täytäntöönpano";01;"Rikosseuraamuslaitoksen toimintamenot";"";279042000;;;;;;;;;300000;245400000;;240325000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";40;"Rangaistusten täytäntöönpano";74;"Avolaitostyöt";"";4700000;;;;;;;;;;4700000;;4700000
+25;"OIKEUSMINISTERIÖN HALLINNONALA";50;"Vaalimenot";20;"Vaalimenot";"";48336000;;;;;;;;;0;25336000;;14879520
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";01;"Sisäministeriön toimintamenot";"";19190000;;;;;;;;;55000;17518000;;18022000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";04;"Kriisinhallintakeskuksen toimintamenot";"";2434000;;;;;;;;;;2320000;;2322000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";21;"Sisäministeriön hallinnonalan kehittäminen";"";1432000;;;;;;;;;;1342000;;1562000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";25;"Öljy- ja kemikaalivahinkojen torjunta";"";5500000;;;;;;;;;;5500000;;5500000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";26;"EU:n osuus sisäisen turvallisuuden ja maahanmuuton hallintaan ohjelmakaudella 2021-2027";"";9713000;;;;;;;;;;42828000;;35150000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";27;"EU:n pelastuspalvelumekanismi CBRN-varastointi";"";114851000;;;;;;;;;;59845000;;
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";29;"Sisäministeriön hallinnonalan arvonlisäveromenot";"";191500000;;;;;;;;;;180200000;;137954371
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";50;"Eräät avustukset";"";280000;;;;;;;;;440000;480000;;580000
+26;"SISÄMINISTERIÖN HALLINNONALA";01;"Hallinto";66;"Kansainvälisten järjestöjen jäsenmaksut ja maksuosuudet ulkomaille";"";1000000;;;;;;;;;;960000;;753117
+26;"SISÄMINISTERIÖN HALLINNONALA";10;"Poliisitoimi";01;"Poliisitoimen toimintamenot";"";936764000;;;;;;;;;2477000;863666000;;828938000
+26;"SISÄMINISTERIÖN HALLINNONALA";10;"Poliisitoimi";02;"Suojelupoliisin toimintamenot";"";66752000;;;;;;;;;;45412000;;46819000
+26;"SISÄMINISTERIÖN HALLINNONALA";10;"Poliisitoimi";20;"Maasta poistamis- ja noutokuljetuksista aiheutuvat menot";"";7668000;;;;;;;;;;7668000;;2608000
+26;"SISÄMINISTERIÖN HALLINNONALA";10;"Poliisitoimi";21;"KEJO-hankkeen yhteiset menot";"";0;;;;;;;;;;6850000;;6850000
+26;"SISÄMINISTERIÖN HALLINNONALA";20;"Rajavartiolaitos";01;"Rajavartiolaitoksen toimintamenot";"";332149000;;;;;;;;;;305044000;;302516000
+26;"SISÄMINISTERIÖN HALLINNONALA";20;"Rajavartiolaitos";70;"Rajavartiolaitoksen investoinnit";"";179000000;;;;;;;;;0;325000000;;11000000
+26;"SISÄMINISTERIÖN HALLINNONALA";30;"Pelastustoimi ja hätäkeskustoiminta";01;"Pelastustoimen toimintamenot";"";4613000;;;;;;;;;500000;4507000;;24236000
+26;"SISÄMINISTERIÖN HALLINNONALA";30;"Pelastustoimi ja hätäkeskustoiminta";02;"Hätäkeskuslaitoksen toimintamenot";"";75557000;;;;;;;;;350000;70428000;;69367000
+26;"SISÄMINISTERIÖN HALLINNONALA";30;"Pelastustoimi ja hätäkeskustoiminta";03;"Pelastusopiston toimintamenot";"";17708000;;;;;;;;;;18026000;;
+26;"SISÄMINISTERIÖN HALLINNONALA";30;"Pelastustoimi ja hätäkeskustoiminta";20;"Erityismenot";"";3000000;;;;;;;;;3000000;8000000;;3875821
+26;"SISÄMINISTERIÖN HALLINNONALA";40;"Maahanmuutto";01;"Maahanmuuttoviraston ja valtion vastaanottokeskusten toimintamenot";"";101327000;;;;;;;;;;64865000;;75786000
+26;"SISÄMINISTERIÖN HALLINNONALA";40;"Maahanmuutto";21;"Pakolaisten ja turvapaikanhakijoiden vastaanotto";"";320570000;;;;;;;;;;371152000;;272307000
+26;"SISÄMINISTERIÖN HALLINNONALA";40;"Maahanmuutto";22;"Vapaaehtoinen paluu";"";2318000;;;;;;;;;;2318000;;2318000
+26;"SISÄMINISTERIÖN HALLINNONALA";40;"Maahanmuutto";63;"Vastaanottotoiminnan asiakkaille maksettavat tuet";"";87326000;;;;;;;;;;87158000;;66124963
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";01;"Puolustuspolitiikka ja hallinto";01;"Puolustusministeriön toimintamenot";"";18331000;;;;;;;;;;17461000;;16586000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";01;"Puolustuspolitiikka ja hallinto";21;"Puolustusministeriön hallinnonalan tuottavuusmääräraha";"";2875000;;;;;;;;;;2875000;;2875000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";01;"Puolustuspolitiikka ja hallinto";29;"Puolustusministeriön hallinnonalan arvonlisäveromenot";"";727285000;;;;;;;;;;923794000;;359156234
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";01;"Puolustuspolitiikka ja hallinto";66;"Jäsenmaksut ja rahoitusosuudet";"";22567000;;;;;;;;;;24445000;;30000000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";10;"Sotilaallinen maanpuolustus";01;"Puolustusvoimien toimintamenot";"";2355165000;;;;;;;;;1730000;2118298000;;2152420000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";10;"Sotilaallinen maanpuolustus";18;"Puolustusmateriaalihankinnat";"";1506506000;;;;;;;;;41564000;1580565000;;1289500000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";10;"Sotilaallinen maanpuolustus";19;"Monitoimihävittäjien hankinta";"";1486192000;;;;;;;;;;1405697000;;330028000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";10;"Sotilaallinen maanpuolustus";50;"Maanpuolustusjärjestöjen toiminnan tukeminen";"";8015000;;;;;;;;;;8215000;;7158734
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";30;"Sotilaallinen kriisinhallinta";20;"Sotilaallisen kriisinhallinnan kalusto- ja hallintomenot";"";66110000;;;;;;;;;0;63988000;;67178000
+27;"PUOLUSTUSMINISTERIÖN HALLINNONALA";30;"Sotilaallinen kriisinhallinta";95;"Kurssivaihtelut";"";10000;;;;;;;;;;10000;;-1578
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";01;"Valtiovarainministeriön toimintamenot";"";39030000;;;;;;;;;;35579000;;36400000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";20;"Valtion kiinteistöstrategian toteuttaminen ja hallinnonalan omistajaohjaus";"";345000;;;;;;;;;;345000;;3713805
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";21;"Valtiovarainministeriön hallinnonalan tuottavuusmääräraha";"";2306000;;;;;;;;;;3306000;;3261000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";25;"Metallirahamenot";"";210000;;;;;;;;;;5460000;;-2216999
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";29;"Valtiovarainministeriön hallinnonalan arvonlisäveromenot";"";162000000;;;;;;;;;;155000000;;150607538
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";50;"Elpymis- ja palautumissuunnitelman rahoitus työkykyhankkeeseen";"";1500000;;;;;;;;;;1500000;;1500000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";66;"Kansainvälisten järjestöjen jäsenmaksut ja rahoitusosuudet";"";1200000;;;;;;;;;;1200000;;1000000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";01;"Hallinto";69;"Suomen Pankin eräiden sijoitustuottojen siirto Kreikan valtiolle";"";1910000;;;;;;;;;;2320000;;2380000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";01;"Verohallinnon toimintamenot";"";423043000;;;;;;;;;960000;397079000;;410681000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";02;"Tullin toimintamenot";"";203399000;;;;;;;;;2316000;193593000;;193323000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";03;"Kansallisen tulorekisterin toimintamenot";"";43254000;;;;;;;;;;36808000;;32425000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";63;"Takaisin maksetut verot";"";2000000;;;;;;;;;1800000;2000000;;3663307
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";95;"Verotukseen liittyvät korkomenot";"";23200000;;;;;;;;;;18500000;;18812177
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";10;"Verotus ja tulli";97;"Autoveron vientipalautus";"";10000000;;;;;;;;;;10000000;;11314849
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";01;"Valtiokonttorin toimintamenot";"";36180000;;;;;;;;;9236000;36579000;;42426000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";02;"Keskitettyjen valuuttatilien kurssierot";"";600000;;;;;;;;;;600000;;917141
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";03;"Huoltovarmuuspankin palvelumaksu";"";1700000;;;;;;;;;;1700000;;1578250
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";07;"Valtion talous- ja henkilöstöhallinnon palvelukeskuksen toimintamenot";"";6447000;;;;;;;;;;2000000;;1663095
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";09;"Valtion tieto- ja viestintätekniikkakeskuksen toimintamenot ";"";5000000;;;;;;;;;;5000000;;4534543
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";10;"Valtion tieto- ja viestintätekniikkakeskuksen investointimenot ";"";15000000;;;;;;;;;;15000000;;15000000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";11;"Verkkomaksaminen";"";500000;;;;;;;;;;500000;;500000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";20;"Palvelut valtioyhteisölle";88;"Senaatti-konsernin liikelaitokset";"";0;;;;;;;;;;0;;0
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";30;"Tilastotoimi, taloudellinen tutkimus ja rekisterihallinto";01;"Tilastokeskuksen toimintamenot";"";54320000;;;;;;;;;;52607000;;54961000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";30;"Tilastotoimi, taloudellinen tutkimus ja rekisterihallinto";02;"Valtion taloudellisen tutkimuskeskuksen toimintamenot";"";4589000;;;;;;;;;;4403000;;4132000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";30;"Tilastotoimi, taloudellinen tutkimus ja rekisterihallinto";03;"Digi- ja väestötietoviraston toimintamenot";"";63464000;;;;;;;;;566000;62731000;;64468000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";30;"Tilastotoimi, taloudellinen tutkimus ja rekisterihallinto";04;"Sähköinen tunnistautuminen";"";8000000;;;;;;;;;;8000000;;5906913
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";40;"Valtion alue- ja paikallishallinto";01;"Aluehallintoviraston toimintamenot";"";70493000;;;;;;;;;;69511000;;70143000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";40;"Valtion alue- ja paikallishallinto";03;"Palvelurakenteiden ja valtion hallintorakenteiden kehittäminen ";"";1016000;;;;;;;;;;2018000;;2718000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";50;"Eläkkeet ja korvaukset";15;"Eläkkeet";"";5550399000;;;;;;;;;;5354542000;;4962121966
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";50;"Eläkkeet ja korvaukset";16;"Ylimääräiset eläkkeet ja muut eläkemenot";"";2849000;;;;;;;;;;3049000;;1449841
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";50;"Eläkkeet ja korvaukset";50;"Vahingonkorvaukset";"";39590000;;;;;;;;;;39440000;;36793749
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";50;"Eläkkeet ja korvaukset";63;"Muiden eläkelaitosten vastattavaksi kuuluvat eläkemenot";"";362857000;;;;;;;;;;317840000;;284576781
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";50;"Eläkkeet ja korvaukset";95;"Muiden eläkelaitosten valtion puolesta maksamien eläkemenojen ja valtiolle maksamien ennakoiden korkomenot";"";27213000;;;;;;;;;;19194000;;14423130
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";60;"Valtionhallinnon yhteiset henkilöstömenot";02;"Erikseen budjetoidut henkilöstömenot";"";2500000;;;;;;;;;;2500000;;0
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";60;"Valtionhallinnon yhteiset henkilöstömenot";10;"Työturvallisuuden edistäminen";"";1010000;;;;;;;;;;980000;;940000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";60;"Valtionhallinnon yhteiset henkilöstömenot";12;"Osaamisen kehittäminen";"";12000000;;;;;;;;;;15000000;;8765249
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";01;"Julkisen hallinnon ICT:n ohjaus ja kehittäminen";"";10800000;;;;;;;;;0;13933000;;42345000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";02;"Valtion talous-, henkilöstö- ja toimitilahallinnon tietojärjestelmät";"";4350000;;;;;;;;;;8600000;;15600000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";05;"Sosiaali- ja terveydenhuollon  sekä pelastustoimen uudistuksen valmistelun ja toimeenpanon tuki ja ohjaus";"";105100000;;;;;;;;;;5100000;;225300000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";06;"Eräät Pohjois-Atlantin puolustusliitto NATO:n  jäsenyydestä aiheutuvat menot";"";0;;;;;;;;;700000;15000000;;
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";20;"Tuottavuuden edistäminen";"";8762000;;;;;;;;;-1200000;1231000;;58003000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";23;"Valtionavustustoiminnan kehittämis- ja digitalisointihanke";"";0;;;;;;;;;;1091000;;692000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";70;"Valtionhallinnon kehittäminen";40;"Turvallisuusviranomaisten viestintäverkot";"";27800000;;;;;;;;;;21200000;;12500000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";80;"Siirrot Ahvenanmaan maakunnalle";30;"Ahvenanmaan tasoitusmaksu";"";206588000;;;;;;;;;-3257000;202494000;;202195000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";80;"Siirrot Ahvenanmaan maakunnalle";34;"Ahvenanmaan verotasoitus";"";109300000;;;;;;;;;18451000;96000000;;84800000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";89;"Hyvinvointialueiden ja HUS-yhtymän rahoitus";31;"Hyvinvointialueiden ja HUS-yhtymän sosiaali- ja terveydenhuollon sekä pelastustoimen rahoitus";"";24648062000;;;;;;;;;155600000;20634122000;;1860440000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";89;"Hyvinvointialueiden ja HUS-yhtymän rahoitus";32;"Hyvinvointialueiden lisärahoitus";"";1000000;;;;;;;;;;1000000;;
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";90;"Kuntien tukeminen";30;"Valtionosuus kunnille peruspalvelujen järjestämiseen";"";2576100000;;;;;;;;;;2751900000;;7986435458
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";90;"Kuntien tukeminen";31;"Kuntien yhdistymisen taloudellinen tuki";"";11400000;;;;;;;;;;11400000;;1050000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";90;"Kuntien tukeminen";35;"Valtion korvaus kunnille veroperustemuutoksista aiheutuvista verotulojen menetyksistä";"";863000000;;;;;;;;;;851000000;;2749400018
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";91;"Työllisyyden ja elinkeinoelämän tukeminen";41;"Energiaverotuki";"";70000000;;;;;;;;;;82000000;;144341487
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";91;"Työllisyyden ja elinkeinoelämän tukeminen";80;"Lainat ja takaukset sähkön johdannaismarkkinoilla toimiville yhteisöille";"";0;;;;;;;;;;0;;10000000000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";03;"Rahoitusvakausviraston toimintamenot";"";8080000;;;;;;;;;38000;6135000;;10259000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";20;"Euroopan unionin osallistuminen matkamenojen korvauksiin";"";1400000;;;;;;;;;;1000000;;1800000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";40;"Isäntämaakorvaus Pohjoismaiden Investointipankille";"";13800000;;;;;;;;;;13256000;;13236152
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";67;"Kansainvälisille rahoituslaitoksille annettujen sitoumusten lunastaminen";"";10000;;;;;;;;;;170000;;0
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";68;"Suomen osuus Kansainvälisen jälleenrakennus- ja kehityspankin sekä Kansainvälisen rahoitusyhtiön peruspääoman korottamisesta";"";6200000;;;;;;;;;;14600000;;14809421
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";69;"Maksut Euroopan unionille";"";2286000000;;;;;;;;;-110000000;2498000000;;2605000000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";92;"EU ja kansainväliset järjestöt";95;"Valtion takaus- ja takuusuoritukset";"";12080000;;;;;;;;;;28630000;;96390
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";99;"Erikseen budjetoidut valtionhallinnon menot";95;"Satunnaiset säädösperusteiset menot";"";300000;;;;;;;;;;300000;;0
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";99;"Erikseen budjetoidut valtionhallinnon menot";96;"Ennakoimattomat menot";"";2000000;;;;;;;;;;2000000;;2000000
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";99;"Erikseen budjetoidut valtionhallinnon menot";97;"Valtion saatavien turvaaminen";"";250000;;;;;;;;;;250000;;87674
+28;"VALTIOVARAINMINISTERIÖN HALLINNONALA";99;"Erikseen budjetoidut valtionhallinnon menot";98;"Kassasijoitusten riskienhallinta";"";1000;;;;;;;;;;8300000;;18535541
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";01;"Opetus- ja kulttuuriministeriön toimintamenot";"";14849000;;;;;;;;;;22077000;;20330000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";02;"Opetushallituksen toimintamenot";"";64034000;;;;;;;;;;67576000;;64351000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";03;"Opetushallituksen yhteydessä toimivien viranomaisten toimintamenot";"";12675000;;;;;;;;;;9598000;;5058000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";04;"Jatkuvan oppimisen ja työllisyyden palvelukeskuksen toimintamenot ";"";15840000;;;;;;;;;;39820000;;33608487
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";05;"Suomen Akatemian toimintamenot";"29.40.01";13539000;;;;;;;;;;11988000;;12086000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";06;"Kansallisarkiston toimintamenot ";"29.40.02";21320000;;;;;;;;;;23055000;;20168000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";07;"Kotimaisten kielten keskuksen toimintamenot";"29.40.03";5069000;;;;;;;;;;4488000;;4589000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";08;"Varastokirjaston toimintamenot";"29.40.04";1767000;;;;;;;;;;2219000;;1688000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";09;"Opintotuen muutoksenhakulautakunnan toimintamenot";"29.70.01";681000;;;;;;;;;;651000;;652000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";10;"Taiteen edistämiskeskuksen toimintamenot";"29.80.01";6966000;;;;;;;;;;4450000;;38610000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";11;"Suomenlinnan hoitokunnan toimintamenot";"29.80.03";2723000;;;;;;;;;;2255000;;2816000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";12;"Museoviraston toimintamenot";"29.80.04";26132000;;;;;;;;;;24548000;;24181000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";13;"Saavutettavuuskirjasto Celian toimintamenot";"29.80.05";5750000;;;;;;;;;;5590000;;5669000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";14;"Kansallisen audiovisuaalisen instituutin toimintamenot";"29.80.06";7407000;;;;;;;;;;7460000;;7239000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";21;"Kansainvälinen yhteistyö";"";2516000;;;;;;;;;;2337000;;1807000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";29;"Opetus- ja kulttuuriministeriön hallinnonalan arvonlisäveromenot";"";36282000;;;;;;;;;;34000000;;33845321
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";30;"Lasten ja nuorten harrastustoiminta";"";14500000;;;;;;;;;;14500000;;19500000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";50;"Eräät avustukset";"";1547000;;;;;;;;;;1597000;;1597000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";51;"Avustukset kirkolliseen ja uskonnolliseen toimintaan";"";3549000;;;;;;;;;;3807000;;3782000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";52;"Valtion rahoitus evankelis-luterilaisen kirkon yhteiskunnallisiin tehtäviin";"";124501000;;;;;;;;;;122661000;;118856000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";53;"Jatkuvan oppimisen ja osaamisen kehittäminen";"";6348000;;;;;;;;;;13348000;;17614000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";01;"Hallinto, kirkollisasiat ja toimialan yhteiset menot";66;"Rahoitusosuudet kansainvälisille järjestöille";"";2246000;;;;;;;;;;2246000;;2117385
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";10;"Varhaiskasvatus, esi- ja perusopetus ja vapaa sivistystyö";01;"Valtion yleissivistävän koulutuksen toimintamenot";"";42099000;;;;;;;;;;40066000;;41828000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";10;"Varhaiskasvatus, esi- ja perusopetus ja vapaa sivistystyö";20;"Perusopetuksen, varhaiskasvatuksen ja vapaan sivistystyön yhteiset menot";"";74750000;;;;;;;;;23500000;25230000;;172439000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";10;"Varhaiskasvatus, esi- ja perusopetus ja vapaa sivistystyö";30;"Valtionosuus ja -avustus esi- ja perusopetuksen ja varhaiskasvatuksen käyttökustannuksiin";"";534419000;;;;;;;;;;666777000;;537422346
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";10;"Varhaiskasvatus, esi- ja perusopetus ja vapaa sivistystyö";31;" Valtionosuus ja -avustus vapaan sivistystyön oppilaitosten käyttökustannuksiin";"";164053000;;;;;;;;;;182081000;;175898716
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";10;"Varhaiskasvatus, esi- ja perusopetus ja vapaa sivistystyö";51;"Valtionavustus järjestöille";"";7723000;;;;;;;;;;9603000;;8910800
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";20;"Ammatillinen koulutus ja lukiokoulutus";01;"Valtion ammatillisen koulutuksen toimintamenot";"";8950000;;;;;;;;;;8617000;;8503000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";20;"Ammatillinen koulutus ja lukiokoulutus";21;"Ammatillisen koulutuksen ja lukiokoulutuksen yhteiset menot";"";23137000;;;;;;;;;4600000;13296000;;23410000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";20;"Ammatillinen koulutus ja lukiokoulutus";30;"Valtionosuus ja -avustus ammatilliseen koulutukseen";"";1097081000;;;;;;;;;;1043403000;;1046762940
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";20;"Ammatillinen koulutus ja lukiokoulutus";35;"Valtionosuus ja -avustus lukiokoulutuksen käyttökustannuksiin";"";307710000;;;;;;;;;;278406000;;257161918
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";01;"Suomen Akatemian toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";02;"Kansallisarkiston toimintamenot ";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";03;"Kotimaisten kielten keskuksen toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";04;"Varastokirjaston toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";20;"Korkeakoululaitoksen ja tieteen yhteiset menot";"";38245000;;;;;;;;;270000;40346000;;35394000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";50;"Valtionrahoitus yliopistojen toimintaan";"";2145663000;;;;;;;;;;1999188000;;1876415000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";51;"Suomen Akatemian tutkimusmäärärahat";"";402637000;;;;;;;;;;345575000;;331877592
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";53;"Rahapelitoiminnan tuotot tieteen edistämiseen";"";0;;;;;;;;;;74715000;;71405424
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";54;"Strateginen tutkimusrahoitus";"";55631000;;;;;;;;;;55631000;;49480717
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";55;"Valtionrahoitus ammattikorkeakoulujen toimintaan";"";1000634000;;;;;;;;;;954190000;;921196000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";56;"Tiedepoliittisten tavoitteiden edistäminen";"";30409000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";40;"Korkeakouluopetus ja tutkimus";66;"Rahoitusosuudet kansainvälisille järjestöille";"";23349000;;;;;;;;;;21453000;;21043848
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";70;"Opintotuki";01;"Opintotuen muutoksenhakulautakunnan toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";70;"Opintotuki";52;"Opintolainojen valtiontakaus";"";158200000;;;;;;;;;;132600000;;135917542
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";70;"Opintotuki";55;"Opintoraha ja asumislisä";"";526600000;;;;;;;;;;515200000;;467864817
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";70;"Opintotuki";57;"Korkeakouluopiskelijoiden ateriatuki";"";39500000;;;;;;;;;-5000000;35564000;;25169333
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";70;"Opintotuki";59;"Koulumatkatuki";"";104200000;;;;;;;;;-10000000;67100000;;56799327
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";01;"Taiteen edistämiskeskuksen toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";03;"Suomenlinnan hoitokunnan toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";04;"Museoviraston toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";05;"Saavutettavuuskirjasto Celian toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";06;"Kansallisen audiovisuaalisen instituutin toimintamenot";"";0;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";16;"Ylimääräiset taiteilija- ja sanomalehtimieseläkkeet";"";22417000;;;;;;;;;;21307000;;18771069
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";20;"Museoviraston kulttuuri- ja nähtävyyskohteiden tilakustannukset";"";18502000;;;;;;;;;;18502000;;17264000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";21;"Taiteen ja kulttuurin yhteiset menot";"";609000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";30;"Valtionavustukset yleisten kirjastojen toimintaan";"";10013000;;;;;;;;;200000;4000000;;4894000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";31;"Valtionosuus ja -avustus esittävän taiteen ja museoiden käyttökustannuksiin";"";158993000;;;;;;;;;;141111000;;139932232
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";34;"Valtionosuus ja -avustus taiteen perusopetuksen käyttökustannuksiin";"";97406000;;;;;;;;;;94387000;;90441863
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";40;"Korvaus Suomenlinnan huoltoliikenteen käyttötappioon";"";252000;;;;;;;;;;252000;;85815
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";41;"Eräät käyttöoikeuskorvaukset";"";27648000;;;;;;;;;;27648000;;26648000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";50;"Avustukset taiteen ja kulttuurin edistämiseen";"";99114000;;;;;;;;;3800000;24764000;;90141000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";51;"Apurahat taiteilijoille, kirjailijoille ja kääntäjille";"";18955000;;;;;;;;;;17256000;;16678428
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";52;"Rahapelitoiminnan tuotot taiteen edistämiseen";"";0;;;;;;;;;;180053000;;159466640
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";53;"Valtionavustus tilakustannuksiin";"";28909000;;;;;;;;;;26749000;;24532869
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";55;"Digitaalisen kulttuuriperinnön saatavuus ja säilyttäminen";"";2300000;;;;;;;;;;2200000;;2100000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";56;"Valtionrahoitus kansallisten taidelaitosten toimintaan";"";65198000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";72;"Kansallisgallerian ja valtion taideteostoimikunnan kokoelmien kartuttaminen";"";1683000;;;;;;;;;;839000;;839000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";75;"Toimitilojen ja kiinteistövarallisuuden perusparannukset ja kunnossapito";"";3249000;;;;;;;;;;4049000;;3899000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";89;"Rahoitus Suomen arkkitehtuuri- ja designmuseosäätiölle ja kiinteistöosakeyhtiölle";"";0;;;;;;;;;;2000000;;4973000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";80;"Taide ja kulttuuri";95;"Kulttuuriympäristön suojelusta aiheutuvat menot";"";40000;;;;;;;;;;40000;;0
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";90;"Liikuntatoimi";20;"Liikuntatoimen yhteiset menot";"";8026000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";90;"Liikuntatoimi";30;"Valtionosuudet kunnille ja liikunnan koulutuskeskuksille";"29.90.52";37462000;;;;;;;;;;33798000;;53776292
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";90;"Liikuntatoimi";50;"Liikunnan ja urheilun edistäminen";"";56971000;;;;;;;;;5000000;115404000;;101459828
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";90;"Liikuntatoimi";51;"Liikunnallisen elämäntavan ja liikuntaolosuhteiden edistäminen";"";45930000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";90;"Liikuntatoimi";56;"Liikunnan ja huippu-urheilun edistäminen";"";0;;;;;;;;;;6000000;;4700000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";91;"Nuorisotyö";20;"Nuorisotyön yhteiset menot";"";712000;;;;;;;;;;;;
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";91;"Nuorisotyö";30;"Valtionosuudet kuntien nuorisotoimeen";"29.91.52";7648000;;;;;;;;;5500000;13780000;;12578000
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";91;"Nuorisotyö";50;"Nuorisotyön edistäminen ";"";36382000;;;;;;;;;;41530000;;36328067
+29;"OPETUS- JA KULTTUURIMINISTERIÖN HALLINNONALA";91;"Nuorisotyö";51;"Nuorten työpajatoiminta, etsivä nuorisotyö sekä koulu- ja oppilaitosnuorisotyö";"";30000000;;;;;;;;;;22452000;;39083000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";01;"Hallinto ja tutkimus";01;"Maa- ja metsätalousministeriön toimintamenot";"";24862000;;;;;;;;;;23744000;;24148000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";01;"Hallinto ja tutkimus";05;"Luonnonvarakeskuksen toimintamenot";"";81777000;;;;;;;;;;79752000;;82189000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";01;"Hallinto ja tutkimus";22;"Tutkimus ja kehittäminen";"";1943000;;;;;;;;;;1943000;;8943000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";01;"Hallinto ja tutkimus";29;"Maa- ja metsätalousministeriön hallinnonalan arvonlisäveromenot";"";30652000;;;;;;;;;;30652000;;33011510
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";01;"Hallinto ja tutkimus";66;"Kansainvälinen toiminta";"";4439000;;;;;;;;;;4439000;;4180468
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";40;"Maatalouden aloittamis- ja investointiavustukset";"";114300000;;;;;;;;;;139500000;;94245000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";41;"Maaseutuelinkeinotoiminnan korkotuki";"";40000000;;;;;;;;;;15000000;;14550765
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";42;"Luopumistuet ja -eläkkeet";"";15100000;;;;;;;;;;21800000;;28500000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";43;"Eläinten hyvinvointikorvaukset ";"";74000000;;;;;;;;;;74000000;;85400000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";50;"Valtionavustus maatalouden neuvontapalveluihin ja eräisiin muihin kehittämistoimiin";"";4356000;;;;;;;;;;5616000;;5566000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";51;"Porotalouden edistäminen";"";2569000;;;;;;;;;;2143000;;1843000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";54;"Hevostalouden edistäminen";"";39192000;;;;;;;;;;39192000;;39892000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";55;"Valtionavustus 4H-toimintaan";"";3305000;;;;;;;;;;4155000;;4105000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";63;"Maaseudun kehittäminen";"";3000000;;;;;;;;;;4300000;;2300000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";10;"Maaseudun kehittäminen";64;"EU:n ja valtion rahoitusosuus alueelliseen ja paikalliseen maaseudun kehittämiseen";"";188349000;;;;;;;;;;139016000;;212616000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";01;"Ruokaviraston toimintamenot";"";74343000;;;;;;;;;2025000;78958000;;85007000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";20;"Eläinlääkintähuolto ja kasvintuhoojien torjunta";"";5868000;;;;;;;;;;7929000;;10606169
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";40;"Maa- ja puutarhatalouden kansallinen tuki";"";350000000;;;;;;;;;;350000000;;352200000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";41;"EU-tulotuki ja EU-markkinatuki";"";522400000;;;;;;;;;;520600000;;507500427
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";42;"Turvepeltojen ilmastotoimet";"";0;;;;;;;;;;30000000;;
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";43;"Ympäristökorvaukset, luonnonmukainen tuotanto, neuvonta ja ei-tuotannolliset investoinnit";"";286816000;;;;;;;;;;286560000;;352996000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";44;"Luonnonhaittakorvaukset";"";496815000;;;;;;;;;;495884000;;637394000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";46;"EU-rahoitteinen ruokaketjun kehittäminen";"";11005000;;;;;;;;;;11030000;;11030000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";47;"Ruokaketjun kehittäminen";"";6587000;;;;;;;;;;2637000;;4255000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";49;"Ravinnekierrätyksen edistäminen biokaasutuotannolla";"";5000000;;;;;;;;;;4000000;;
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";60;"Siirto interventiorahastoon";"";400000;;;;;;;;;;400000;;400000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";20;"Maa- ja elintarviketalous";62;"Eräät valtionavustukset";"";6367000;;;;;;;;;;6467000;;6497000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";20;"Kalakannan hoitovelvoitteet";"";3000000;;;;;;;;;;2800000;;3100000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";21;"Vesivarojen käytön ja hoidon menot";"";14189000;;;;;;;;;;15847000;;14511000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";22;"Luonnonvara- ja biotalouden edistäminen";"";4204000;;;;;;;;;;14966000;;31976833
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";31;"Vesi- ja kalataloushankkeiden tukeminen";"";4636000;;;;;;;;;;8736000;;11136000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";40;"Eräät luonnonvaratalouden korvaukset";"";1541000;;;;;;;;;;1632000;;1856569
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";41;"Hirvieläinten aiheuttamien vahinkojen korvaaminen";"";3590000;;;;;;;;;;4760000;;4760000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";42;"Petoeläinten aiheuttamien vahinkojen korvaaminen";"";8850000;;;;;;;;;;8850000;;9550000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";44;"Tuki puuntuotannon kestävyyden turvaamiseen";"";38377000;;;;;;;;;;47497000;;36899699
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";45;"Metsäluonnon hoidon edistäminen";"";8027000;;;;;;;;;;17500000;;7527000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";46;"Valtionavustus Suomen metsäkeskukselle";"";43025000;;;;;;;;;;45069000;;43835000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";47;"Tuki joutoalueiden metsitykseen";"";3490000;;;;;;;;;;5400000;;6060000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";50;"Riistatalouden edistäminen";"";12908000;;;;;;;;;;13059000;;14498000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";51;"Kalatalouden edistäminen";"";9739000;;;;;;;;;;10975000;;11975000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";53;"Eräät luonnonvaratalouden valtionavustukset";"";1132000;;;;;;;;;;1132000;;1132000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";40;"Luonnonvaratalous";62;"Elinkeinokalatalouden edistäminen";"";25282000;;;;;;;;;2129000;30414000;;31307000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";64;"Metsähallitus";50;"Metsähallituksen eräät julkiset hallintotehtävät";"";7344000;;;;;;;;;;8610000;;8656000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";70;"Maanmittaus ja asunto-osakkeiden kirjaaminen";01;"Maanmittauslaitoksen toimintamenot";"";51017000;;;;;;;;;72000;46184000;;45310000
+30;"MAA- JA METSÄTALOUSMINISTERIÖN HALLINNONALA";70;"Maanmittaus ja asunto-osakkeiden kirjaaminen";40;"Kiinteistötoimitusten tukemisesta aiheutuvat menot";"";2000000;;;;;;;;;;2000000;;3300000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";01;"Hallinto ja toimialan yhteiset menot";01;"Liikenne- ja viestintäministeriön toimintamenot";"";22900000;;;;;;;;;2700000;20448000;;17914000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";01;"Hallinto ja toimialan yhteiset menot";02;"Liikenne- ja viestintäviraston toimintamenot";"";96262000;;;;;;;;;-1015000;102894000;;99262000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";01;"Hallinto ja toimialan yhteiset menot";03;"Väyläviraston toimintamenot";"";62579000;;;;;;;;;;58442000;;56606000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";01;"Hallinto ja toimialan yhteiset menot";04;"Ilmatieteen laitoksen toimintamenot";"";49305000;;;;;;;;;;45198000;;53390000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";01;"Hallinto ja toimialan yhteiset menot";29;"Liikenne- ja viestintäministeriön hallinnonalan arvonlisäveromenot";"";420831000;;;;;;;;;;431250000;;520157936
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";20;"Perusväylänpito";"";1284856000;;;;;;;;;140000;1314806000;;1460567000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";30;"Avustukset liikenne- ja viestintäverkkoihin";"";19940000;;;;;;;;;;24530000;;43451000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";31;"Eräät avustukset";"";12400000;;;;;;;;;;27650000;;74700000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";76;"Maa- ja vesialueiden hankinnat ja korvaukset";"";34997000;;;;;;;;;;34997000;;17067664
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";77;"Väyläverkon kehittäminen";"";286100000;;;;;;;;;7154000;414700000;;458176000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";78;"Eräät väylähankkeet";"";0;;;;;;;;;0;;;0
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";10;"Liikenne- ja viestintäverkot";79;"Elinkaarirahoitushankkeet";"";104000000;;;;;;;;;;108000000;;83000000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";20;"Saaristo- ja yhteysalusliikenteen ostot ja kehittäminen";"";20386000;;;;;;;;;;17886000;;20386000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";43;"Meriliikenteessä käytettävien alusten kilpailukyvyn parantaminen";"";89000000;;;;;;;;;;89000000;;75805381
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";50;"Valtionavustus valtakunnallisen laajakaistahankkeen toteuttamiseen";"";0;;;;;;;;;;16950000;;23221000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";51;"Avustukset liikenteen ja viestinnän palveluihin";"";28491000;;;;;;;;;7283000;28141000;;44012000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";55;"Julkisen henkilöliikenteen palvelujen ostot ja kehittäminen";"";87424000;;;;;;;;;17000000;101724000;;200724000
+31;"LIIKENNE- JA VIESTINTÄMINISTERIÖN HALLINNONALA";20;"Liikenteen ja viestinnän palvelut";60;"Siirto valtion televisio- ja radiorahastoon";"";595379000;;;;;;;;;;575802000;;556868000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";01;"Työ- ja elinkeinoministeriön toimintamenot";"";37729000;;;;;;;;;;36830000;;39436000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";02;"Elinkeino-, liikenne- ja ympäristökeskusten toimintamenot";"";216698000;;;;;;;;;200000;209985000;;201180000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";03;"Työ- ja elinkeinotoimistojen toimintamenot";"";287447000;;;;;;;;;4359000;278769000;;270625000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";04;"Geologian tutkimuskeskuksen toimintamenot";"";32968000;;;;;;;;;;31641000;;33773000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";05;"Innovaatiorahoituskeskus Business Finlandin toimintamenot";"";98926000;;;;;;;;;;102347000;;112446000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";06;"Kilpailu- ja kuluttajaviraston toimintamenot";"";20309000;;;;;;;;;;19300000;;19096000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";07;"Patentti- ja rekisterihallituksen toimintamenot";"";14661000;;;;;;;;;;10961000;;10236000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";08;"Turvallisuus- ja kemikaaliviraston toimintamenot";"";23534000;;;;;;;;;;22760000;;22865000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";09;"Energiaviraston toimintamenot";"";10220000;;;;;;;;;730000;9133000;;8659000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";10;"Digitalisaation kehittäminen";"";23700000;;;;;;;;;4000000;40500000;;37880000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";20;"Siviilipalvelus";"";6139000;;;;;;;;;;6139000;;5022041
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";29;"Työ- ja elinkeinoministeriön hallinnonalan arvonlisäveromenot";"";62072000;;;;;;;;;;62072000;;60150710
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";40;"Valtionavustus kestävää kasvupolitiikkaa edistäville toimijoille";"";2793000;;;;;;;;;;4421000;;7027000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";41;"Erityisavustus Teknologian tutkimuskeskus VTT Oy:n tutkimusinfrastruktuuriin";"";16600000;;;;;;;;;;6950000;;6000000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";49;"Valtionavustus Teknologian tutkimuskeskus VTT Oy:n toimintaan";"";98777000;;;;;;;;;;97020000;;101581000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";50;"Valtionavustus kuluttajajärjestölle";"";0;;;;;;;;;;1472000;;1322000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";51;"Valtion osuus merimiespalvelutoiminnasta";"";2572000;;;;;;;;;;2572000;;2231970
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";53;"Matkustajien paluukuljetukset ja korvaukset";"";400000;;;;;;;;;;400000;;400000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";66;"Kansainvälisten järjestöjen jäsenmaksut ja rahoitusosuudet";"";19456000;;;;;;;;;;18590000;;17714000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";01;"Hallinto";95;"Eräät oikeudenkäyntikulut ja korvaukset";"";50000;;;;;;;;;;50000;;37119
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";20;"Energiatehokkuuden ja uusiutuvan energian käytön edistäminen";"";3400000;;;;;;;;;;4400000;;4420000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";40;"Tutkimus-, kehittämis- ja innovaatiotoiminnan tukeminen";"";516180000;;;;;;;;;0;465488000;;309334374
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";41;"Energiatuki";"";460778000;;;;;;;;;;364090000;;30787456
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";43;"Energiaintensiivisen teollisuuden sähköistämistuki";"";150000000;;;;;;;;;;150000000;;63271972
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";46;"Laivanrakennuksen innovaatiotuki";"";24750000;;;;;;;;;;25343000;;10421199
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";47;"Julkisen liikennesähkön ja -kaasun lataus- ja tankkausinfrastruktuurin edistäminen";"";0;;;;;;;;;;21500000;;13200000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";48;"Uusiutuvan energian tuotantotuki";"";309131000;;;;;;;;;-45000000;135406000;;1616071
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";50;"EU-hankkeiden kansallinen vastinrahoitus korkeakouluille ja valtion tutkimuslaitoksille";"";40000000;;;;;;;;;;;;
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";83;"Lainat tutkimus- ja innovaatiotoimintaan";"";143680000;;;;;;;;;;157160000;;121984825
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";87;"Pääomalainat teollisuuden uudistumiseen ja yritysvetoisten liiketoimintaekosysteemien kehittämiseen";"";4000000;;;;;;;;;;8250000;;6000000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";88;"Pääomasijoitus Ilmastorahasto Oy:lle";"";0;;;;;;;;;;100000000;;0
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";20;"Uudistuminen ja vähähiilisyys";89;"Pääomasijoitus Lääkekehityskeskus Oy:lle";"";0;;;;;;;;;;20000000;;
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";33;"Turveyrittäjien avustaminen";"";0;;;;;;;;;-10000000;30585000;;0
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";35;"Valtion korvaus kunnille TE -palvelu-uudistuksen muutoskulujen kattamiseen ";"";34000000;;;;;;;;;;;;
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";40;"Alueiden kestävän kasvun ja elinvoiman tukeminen";"";9832000;;;;;;;;;0;8700000;;38420000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";41;"Valtionavustus Työkanava Oy:n toimintaan";"";5000000;;;;;;;;;;10000000;;10000000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";42;"Yritysten kehittämishankkeiden tukeminen";"";10200000;;;;;;;;;;25030000;;15037913
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";44;"Alueellinen kuljetustuki";"";6300000;;;;;;;;;;6300000;;6000000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";51;"Julkiset työvoima- ja yrityspalvelut";"";189176000;;;;;;;;;-2137000;220912000;;281235000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";52;"Palkkaturva";"";33460000;;;;;;;;;;33460000;;25928282
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";55;"Toimet työurien pidentämiseksi";"";58500000;;;;;;;;;9125000;22000000;;
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";64;"EU:n ja valtion rahoitusosuus EU:n alue- ja rakennepolitiikan ja muihin koheesiopolitiikan ohjelmiin";"";643967000;;;;;;;;;0;613316000;;358086463
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";87;"Pääomasijoitus Työkanava Oy:lle";"";0;;;;;;;;;;7000000;;10000000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";30;"Työllisyys ja yrittäjyys";95;"Vaikuttavuusinvestointien tuotonmaksu ";"";6000000;;;;;;;;;;8000000;;4223423
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";42;"Valtiontuki sähköhuollon varmistamiseksi";"";900000;;;;;;;;;;1200000;;625650
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";46;"Yöjunarungon vaunukaluston hankinta";"";2090000;;;;;;;;;;490000;;
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";47;"Finnvera Oyj:n tappiokorvaukset";"";65436000;;;;;;;;;;65071000;;36534458
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";48;"Korko- ja muu tuki julkisesti tuetuille vienti- ja alusluotoille";"";98900000;;;;;;;;;36200000;42400000;;77825340
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";60;"Siirrot hallinnonalan rahastoihin";"";20000;;;;;;;;;;20000;;0
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";82;"Lainat Finnvera Oyj:n varainhankintaan";"";10000;;;;;;;;;;10000;;0
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";89;"Pääomasijoitus Business Finland Venture Capital Oy:lle";"";0;;;;;;;;;;110000000;;49400000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";40;"Yritysten erityisrahoitus";95;"Tuotonvaihtosopimus- ja suojausmenot";"";0;;;;;;;;;;73000;;2043344
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";50;"Kotoutuminen ja kansainvälinen osaaminen";03;"Kotoutumisen ja työvoiman maahanmuuton edistäminen";"";4851000;;;;;;;;;;7241000;;8491000
+32;"TYÖ- JA ELINKEINOMINISTERIÖN HALLINNONALA";50;"Kotoutuminen ja kansainvälinen osaaminen";30;"Valtion korvaukset kotoutumisen edistämisestä";"";396378000;;;;;;;;;-15000000;287012000;;140326221
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";01;"Sosiaali- ja terveysministeriön toimintamenot";"";39552000;;;;;;;;;;32923000;;34938000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";04;"Valtion mielisairaaloiden toimintamenot";"";498000;;;;;;;;;0;966000;;978000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";05;"Terveyden ja hyvinvoinnin laitoksen alaisten lastensuojeluyksiköiden toimintamenot";"";2810000;;;;;;;;;;2810000;;1227686
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";06;"Terveyden ja hyvinvoinnin laitoksen alaisen vankiterveydenhuollon yksikön toimintamenot";"";22466000;;;;;;;;;;19509000;;21177000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";07;"Sosiaaliturva-asioiden muutoksenhakulautakunnan toimintamenot";"";9237000;;;;;;;;;;8888000;;8820000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";08;"Vankiterveydenhuollon yksikön ulkopuoliset terveyspalvelut";"";2800000;;;;;;;;;;2800000;;2943583
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";25;"Sosiaali- ja terveydenhuollon valtakunnallinen tiedonhallinta ";"";27770000;;;;;;;;;410000;39800000;;46872000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";29;"Sosiaali- ja terveysministeriön hallinnonalan arvonlisäveromenot";"";30000000;;;;;;;;;;22000000;;30946481
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";01;"Hallinto";66;"Kansainväliset jäsenmaksut ja maksuosuudet";"";5969000;;;;;;;;;;5596000;;6353000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";03;"Säteilyturvakeskuksen toimintamenot";"";22128000;;;;;;;;;;19284000;;18236000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";05;"Sosiaali- ja terveysalan lupa- ja valvontaviraston toimintamenot";"";14734000;;;;;;;;;;15868000;;15125000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";06;"Lääkealan turvallisuus- ja kehittämiskeskuksen toimintamenot";"";5035000;;;;;;;;;;4798000;;4784000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";07;"Työsuojelun aluehallintoviranomaisten toimintamenot";"";29663000;;;;;;;;;;28220000;;28223000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";08;"Sosiaali- ja terveydenhuollon tietolupaviranomaisen toimintamenot ";"";2200000;;;;;;;;;;2200000;;2200000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";09;"Lääkeasioiden tiekartan toimeenpano";"";2000000;;;;;;;;;;1000000;;4000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";02;"Valvonta";20;"Oikeuslääketieteellisen kuolemansyyn selvittämisen menot";"";12782000;;;;;;;;;;12041000;;13535919
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";03;"Tutkimus- ja kehittämistoiminta";04;"Terveyden ja hyvinvoinnin laitoksen toimintamenot";"";77653000;;;;;;;;;;77278000;;72993000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";03;"Tutkimus- ja kehittämistoiminta";50;"Valtionosuus Työterveyslaitoksen toimintaan";"";23991000;;;;;;;;;;23042000;;28442000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";03;"Tutkimus- ja kehittämistoiminta";63;"Eräät erityishankkeet";"";11437000;;;;;;;;;;6937000;;6652000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";50;"Perhe-etuudet";"";1636800000;;;;;;;;;;1611300000;;1673187997
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";53;"Sotilasavustus";"";21600000;;;;;;;;;;20200000;;19100000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";54;"Asumistuki";"";1743900000;;;;;;;;;;1759200000;;1558700000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";56;"Vammaisten henkilöiden tulkkauspalvelut";"";60500000;;;;;;;;;;58500000;;50176307
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";57;"Perustoimeentulotuki";"";810300000;;;;;;;;;;702600000;;700000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";10;"Perhe- ja asumiskustannusten tasaus, perustoimeentulotuki ja eräät palvelut";60;"Kansaneläkelaitoksen sosiaaliturvarahastojen toimintakulut";"";519800000;;;;;;;;;;513100000;;490534000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";20;"Työttömyysturva";31;"Valtion korvaus hyvinvointialueille kuntouttavan työtoiminnan järjestämisestä";"";30484000;;;;;;;;;;30484000;;17616272
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";20;"Työttömyysturva";50;"Valtionosuus työttömyysetuuksien ansioturvasta ja vuorottelukorvauksesta";"";737600000;;;;;;;;;-3425000;919960000;;843390606
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";20;"Työttömyysturva";52;"Valtionosuus työttömyysetuuksien perusturvasta";"";1294690000;;;;;;;;;-3000000;1451900000;;1229763741
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";20;"Työttömyysturva";55;"Valtionosuudet Työllisyysrahastolle";"";3300000;;;;;;;;;;3500000;;2657529
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";30;"Sairausvakuutus";50;"Korvaukset rajat ylittävästä terveydenhuollosta";"";10000000;;;;;;;;;10000000;;;
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";30;"Sairausvakuutus";60;"Valtion osuus sairausvakuutuslaista johtuvista menoista";"";2264700000;;;;;;;;;3000000;2292700000;;2165221923
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";50;"Valtion osuus merimieseläkekassan menoista";"";66800000;;;;;;;;;;63300000;;58700000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";51;"Valtion osuus maatalousyrittäjän eläkelaista johtuvista menoista";"";840900000;;;;;;;;;;778300000;;735500000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";52;"Valtion osuus yrittäjän eläkelaista johtuvista menoista";"";542300000;;;;;;;;;;503500000;;408999994
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";53;"Valtion korvaus lapsen hoidon ja opiskelun ajalta kertyvästä eläkkeestä";"";23300000;;;;;;;;;;18200000;;15538632
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";54;"Valtion osuus maatalousyrittäjien tapaturmavakuutuksen kustannuksista";"";14500000;;;;;;;;;;13580000;;13672992
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";40;"Eläkkeet";60;"Valtion osuus kansaneläkelaista ja eräistä muista laeista johtuvista menoista";"";3977400000;;;;;;;;;;3880800000;;3681582755
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";30;"Valtion korvaus sodista kärsineiden huoltoon";"";700000;;;;;;;;;;700000;;550623
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";50;"Rintamalisät";"";3900000;;;;;;;;;;5700000;;6929312
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";51;"Sotilasvammakorvaukset";"";0;;;;;;;;;;33000000;;39362994
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";52;"Sotilasvammalain mukaiset korvaukset";"";42630000;;;;;;;;;;17000000;;20000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";53;"Valtionapu sotainvalidien puolisoiden kuntoutustoimintaan";"";1080000;;;;;;;;;;1360000;;1690000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";54;"Rintama-avustus eräille ulkomaalaisille vapaaehtoisille rintamasotilaille";"";9000;;;;;;;;;;13000;;24000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";55;"Eräät kuntoutustoiminnan menot";"";400000;;;;;;;;;;600000;;400000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";56;"Rintamaveteraanien kuntoutustoiminnan menot";"";0;;;;;;;;;;20000000;;23000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";57;"Valtionapu rintamaveteraanien kuntoutustoimintaan";"";0;;;;;;;;;;8000;;8000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";50;"Veteraanien tukeminen";58;"Rintamaveteraanien kuntoutus ja kotona asumista tukevat palvelut";"";85000000;;;;;;;;;;80000000;;95200000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";01;"Kansallinen lapsistrategia-toiminto";"";0;;;;;;;;;;840000;;
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";30;"Valtion korvaus terveydenhuollon ja sosiaalihuollon valtakunnallisen valmiuden kustannuksiin";"";350000;;;;;;;;;;350000;;30350000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";31;"Sosiaali- ja terveydenhuollon kansallinen kehittäminen ";"";2800000;;;;;;;;;;2800000;;2800000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";32;"Valtion rahoitus terveydenhuollon yksiköille yliopistotasoiseen tutkimukseen sekä sosiaalityön yliopistotasoiseen tutkimukseen";"";35000000;;;;;;;;;;30000000;;25000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";33;"Valtion korvaus sosiaali- ja terveydenhuollon yksiköille sosiaali- ja terveydenhuollon henkilöstön erikoistumiskoulutukseen";"";108000000;;;;;;;;;;108000000;;92044076
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";34;"Valtion korvaus erinäisistä terveydenhuollon kustannuksista";"";15700000;;;;;;;;;;15200000;;12776674
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";35;"Valtionosuus korkeakouluopiskelijoiden terveydenhuoltoon ";"";68712000;;;;;;;;;;67500000;;65800000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";36;"Valtionavustus sosiaali- ja terveyspalvelujen turvaamiseksi";"";562000;;;;;;;;;;1662000;;562000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";37;"Valtion korvaus hyvinvointialueille kielteisen turvapaikkapäätöksen saaneiden henkilöiden kiireellisen sosiaalihuollon kustannuksiin";"";2000000;;;;;;;;;;2000000;;1199522
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";39;"Palvelurakenteen kehittäminen";"";300000;;;;;;;;;0;9500000;;62920000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";40;"Valtion rahoitus lääkäri- ja lääkintähelikopteritoiminnan menoihin";"";47500000;;;;;;;;;;36635000;;33000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";52;"Valtion rahoitus turvakotitoiminnan menoihin";"";25550000;;;;;;;;;;25150000;;24550000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";61;"Elpymis- ja palautumissuunnitelman rahoitus sosiaali- ja terveydenhuoltoon";"";43000000;;;;;;;;;;118000000;;132500000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";63;"Valtionavustus sosiaalialan osaamiskeskusten toimintaan";"";2250000;;;;;;;;;;3500000;;3000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";60;"Sosiaali- ja terveydenhuollon tukeminen";64;"Valtion korvaus rikosasioiden sovittelun järjestämisen kustannuksiin";"";7100000;;;;;;;;;;7100000;;7100000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";20;"Rokotteiden hankinta";"";42440000;;;;;;;;;;70940000;;102090000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";21;"Terveysvalvonta";"";460000;;;;;;;;;;460000;;545000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";22;"Tartuntatautien valvonta";"";460000;;;;;;;;;;460000;;24510000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";50;"Terveyden edistäminen";"";1800000;;;;;;;;;;1800000;;2000000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";51;"Valtion korvaus työterveyshuollon erikoislääkärikoulutuksesta aiheutuviin kustannuksiin";"";2900000;;;;;;;;;;2900000;;2900000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";70;"Terveyden ja toimintakyvyn edistäminen";52;"Valtionavustus UKK-instituutin toimintaan";"";928000;;;;;;;;;;928000;;928000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";80;"Maatalousyrittäjien ja turkistuottajien lomitustoiminta";40;"Valtion korvaus maatalousyrittäjien lomituspalvelujen kustannuksiin";"";112000000;;;;;;;;;;107200000;;111021897
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";80;"Maatalousyrittäjien ja turkistuottajien lomitustoiminta";41;"Valtion korvaus turkistuottajien lomituspalvelujen kustannuksiin";"";1700000;;;;;;;;;;1900000;;1900000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";80;"Maatalousyrittäjien ja turkistuottajien lomitustoiminta";42;"Valtion korvaus poronhoitajien sijaisavun kustannuksiin";"";450000;;;;;;;;;;450000;;420000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";80;"Maatalousyrittäjien ja turkistuottajien lomitustoiminta";50;"Valtion korvaus maatalousyrittäjien ja turkistuottajien lomituspalvelujen hallintomenoihin";"";15140000;;;;;;;;;;17140000;;19140000
+33;"SOSIAALI- JA TERVEYSMINISTERIÖN HALLINNONALA";90;"Avustukset terveyden ja sosiaalisen hyvinvoinnin edistämiseen";50;"Avustukset yhdistyksille ja säätiöille terveyden ja sosiaalisen hyvinvoinnin edistämiseen";"";383588000;;;;;;;;;;373600000;;362440000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";01;"Ympäristöhallinnon toimintamenot";01;"Ympäristöministeriön toimintamenot";"";32764000;;;;;;;;;1620000;31376000;;34080000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";01;"Ympäristöhallinnon toimintamenot";04;"Suomen ympäristökeskuksen toimintamenot";"";27447000;;;;;;;;;119000;25896000;;24860000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";01;"Ympäristöhallinnon toimintamenot";29;"Ympäristöministeriön hallinnonalan arvonlisäveromenot";"";12435000;;;;;;;;;;12435000;;8890525
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";01;"Ympäristöhallinnon toimintamenot";65;"Avustukset järjestöille ja ympäristönhoitoon";"";2190000;;;;;;;;;;3298000;;2480000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";20;"Ympäristövahinkojen ehkäiseminen ja jälkihoito";"";2260000;;;;;;;;;;5620000;;2440000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";21;"Eräät luonnonsuojelun menot";"";15540000;;;;;;;;;;12790000;;25720000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";22;"Eräät ympäristömenot";"";7120000;;;;;;;;;;11615000;;25190000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";23;"Itämeren ja vesien suojelun edistäminen";"";10735000;;;;;;;;;;12635000;;
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";31;"Avustukset kuntien ilmastosuunnitelmiin";"";0;;;;;;;;;;2631000;;
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";52;"Metsähallituksen julkiset hallintotehtävät";"";44100000;;;;;;;;;2200000;50737000;;58068000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";60;"Siirto Öljysuojarahastoon";"";0;;;;;;;;;;4000000;;4000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";61;"Vesien- ja ympäristönhoidon tukeminen";"";7042000;;;;;;;;;;47892000;;39272000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";63;"Luonnonsuojelualueiden hankinta- ja korvausmenot";"";37630000;;;;;;;;;;46630000;;44130000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";10;"Ympäristön- ja luonnonsuojelu";66;"Kansainvälisen yhteistyön jäsenmaksut ja rahoitusosuudet";"";2162000;;;;;;;;;;2162000;;1882000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";01;"Asumisen rahoitus- ja kehittämiskeskuksen toimintamenot";"";6216000;;;;;;;;;1400000;7501000;;6986000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";04;"Rakennetun ympäristön digitaalisen rekisterin ja alustan luominen  ";"";0;;;;;;;;;;2300000;;3000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";06;"Vähähiilisen rakennetun ympäristön ohjelma";"";0;;;;;;;;;;2000000;;3000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";31;"Asumisneuvonnan kehittäminen ja laajentaminen";"";2000000;;;;;;;;;;4000000;;3000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";34;"Avustukset kuntien kiinteistöjen öljylämmityksestä luopumiseen ";"";0;;;;;;;;;;10860000;;9860000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";35;"Avustukset alueiden käytön ja rakentamisen digitalisaatioon";"";3700000;;;;;;;;;2880000;;;
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";37;"Avustukset vihreää siirtymää tukevan rakentamisen toteuttamiseen";"";0;;;;;;;;;0;2500000;;2000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";52;"Avustukset asuinrakennusten sähköisen liikenteen infrastruktuurin edistämiseen";"";0;;;;;;;;;;9000000;;21500000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";53;"Avustukset työpaikkakiinteistöjen sähköisen liikenteen infrastruktuurin edistämiseen";"";0;;;;;;;;;;1000000;;1000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";55;"Avustukset korjaustoimintaan";"";9550000;;;;;;;;;;450000;;6250000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";56;"Avustukset asuinrakennusten öljy- ja kaasulämmityksestä luopumiseksi";"";0;;;;;;;;;-5000000;45600000;;40000000
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";60;"Siirto Valtion asuntorahastoon";"";0;;;;;;;;;;0;;0
+35;"YMPÄRISTÖMINISTERIÖN HALLINNONALA";20;"Yhdyskunnat, rakentaminen ja asuminen";64;"Avustukset rakennusperinnön hoitoon";"";1700000;;;;;;;;;;1700000;;1700000
+36;"VALTIONVELAN KOROT";01;"Valtionvelan korko";90;"Valtionvelan korko";"";3169000000;;;;;;;;;1073000000;1513000000;;822703968
+36;"VALTIONVELAN KOROT";09;"Muut menot valtionvelasta";20;"Palkkiot ja muut menot valtionvelasta";"";21510000;;;;;;;;;;17760000;;17563029
+Osaston numero;Osaston nimi;Tuloluvun numero;Tuloluvun nimi;Tulomomentin numero;Tulomomentin nimi;Tulomomentin info-osa;Määräraha;Aiemmin budjetoitu IX lisätalousarvio 2023;Aiemmin budjetoitu VIII lisätalousarvio 2023;Aiemmin budjetoitu VII lisätalousarvio 2023;Aiemmin budjetoitu VI lisätalousarvio 2023;Aiemmin budjetoitu V lisätalousarvio 2023;Aiemmin budjetoitu IV lisätalousarvio 2023;Aiemmin budjetoitu III lisätalousarvio 2023;Aiemmin budjetoitu II lisätalousarvio 2023;Aiemmin budjetoitu I lisätalousarvio 2023;Aiemmin budjetoitu 2023;Toteutuma 2023;Toteutuma 2022
+11;"VEROT JA VERONLUONTEISET TULOT";01;"Tulon ja varallisuuden perusteella kannettavat verot";01;"Ansio- ja pääomatuloverot";"";26834000000;;;;;;;;;;23907000000;;12784019782
+11;"VEROT JA VERONLUONTEISET TULOT";01;"Tulon ja varallisuuden perusteella kannettavat verot";02;"Yhteisövero";"";6110000000;;;;;;;;;;5998000000;;5538201118
+11;"VEROT JA VERONLUONTEISET TULOT";01;"Tulon ja varallisuuden perusteella kannettavat verot";03;"Korkotulojen lähdevero";"";177000000;;;;;;;;;94000000;80000000;;15265100
+11;"VEROT JA VERONLUONTEISET TULOT";01;"Tulon ja varallisuuden perusteella kannettavat verot";04;"Perintö- ja lahjavero";"";1160000000;;;;;;;;;;903000000;;901192597
+11;"VEROT JA VERONLUONTEISET TULOT";01;"Tulon ja varallisuuden perusteella kannettavat verot";05;"Sähköalan ja fossiilisten polttoaineiden alan väliaikainen voittovero";"";400000000;;;;;;;;;;;;
+11;"VEROT JA VERONLUONTEISET TULOT";04;"Liikevaihdon perusteella kannettavat verot ja maksut";01;"Arvonlisävero";"";22930000000;;;;;;;;;;22244000000;;21321760312
+11;"VEROT JA VERONLUONTEISET TULOT";04;"Liikevaihdon perusteella kannettavat verot ja maksut";02;"Eräistä vakuutusmaksuista suoritettava vero";"";942000000;;;;;;;;;;921000000;;875365499
+11;"VEROT JA VERONLUONTEISET TULOT";04;"Liikevaihdon perusteella kannettavat verot ja maksut";03;"Apteekkivero";"";190000000;;;;;;;;;;186000000;;206510257
+11;"VEROT JA VERONLUONTEISET TULOT";08;"Valmisteverot";01;"Tupakkavero";"";1223000000;;;;;;;;;;1215000000;;1115461061
+11;"VEROT JA VERONLUONTEISET TULOT";08;"Valmisteverot";04;"Alkoholijuomavero";"";1470000000;;;;;;;;;;1518000000;;1497457849
+11;"VEROT JA VERONLUONTEISET TULOT";08;"Valmisteverot";05;"Virvoitusjuomavero";"";215000000;;;;;;;;;;213000000;;220258960
+11;"VEROT JA VERONLUONTEISET TULOT";08;"Valmisteverot";07;"Energiaverot";"";4132000000;;;;;;;;;;4455000000;;4488409603
+11;"VEROT JA VERONLUONTEISET TULOT";08;"Valmisteverot";08;"Eräiden juomapakkausten valmistevero";"";16000000;;;;;;;;;;16000000;;16485747
+11;"VEROT JA VERONLUONTEISET TULOT";10;"Muut verot";03;"Autovero";"";357000000;;;;;;;;;;541000000;;488369661
+11;"VEROT JA VERONLUONTEISET TULOT";10;"Muut verot";05;"Varainsiirtovero";"";722000000;;;;;;;;;-139000000;984000000;;936399468
+11;"VEROT JA VERONLUONTEISET TULOT";10;"Muut verot";06;"Arpajaisvero";"";137000000;;;;;;;;;;60000000;;46112584
+11;"VEROT JA VERONLUONTEISET TULOT";10;"Muut verot";07;"Ajoneuvovero";"";1036000000;;;;;;;;;;1060000000;;1108069625
+11;"VEROT JA VERONLUONTEISET TULOT";10;"Muut verot";08;"Jätevero";"";8000000;;;;;;;;;;8000000;;4234284
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";04;"Eräät viestinnän maksut";"";14770000;;;;;;;;;;30312000;;29609169
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";05;"Eräät liikenteen maksut";"";25600000;;;;;;;;;;23438000;;16862837
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";06;"Väylämaksut";"";51000000;;;;;;;;;;45000000;;51736968
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";09;"Muut verotulot";"";7410000;;;;;;;;;;8965000;;12069661
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";10;"Sähkö- ja maakaasuverkkomaksut ja Perämeren tuulivoima-alueella perittävä tuulivoimamaksu     ";"";5860000;;;;;;;;;;5230000;;5402233
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";11;"Rahoitusvakausviraston hallintomaksut";"";8080000;;;;;;;;;38000;6135000;;3373174
+11;"VEROT JA VERONLUONTEISET TULOT";19;"Muut veronluonteiset tulot";12;"Säteilytoimintavero";"";2833000;;;;;;;;;;2833000;;2536030
+12;"SEKALAISET TULOT";23;"Valtioneuvoston kanslia";99;"Valtioneuvoston kanslian muut tulot";"";50000;;;;;;;;;;50000;;3948
+12;"SEKALAISET TULOT";24;"Ulkoministeriön hallinnonala";20;"Tiede- ja kulttuuri-instituuttikiinteistöjen vuokratulot";"";1102000;;;;;;;;;;1005000;;1008400
+12;"SEKALAISET TULOT";24;"Ulkoministeriön hallinnonala";99;"Ulkoministeriön hallinnonalan tulot";"";20842000;;;;;;;;;;13479000;;23149100
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";10;"Tuomioistuintulot";"";44750000;;;;;;;;;;44860000;;37333278
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";14;"Oikeusapumaksutulot";"";3911000;;;;;;;;;;3911000;;
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";15;"Yleisen edunvalvonnan tulot";"";32144000;;;;;;;;;;30144000;;28747311
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";20;"Ulosottomaksut";"";82000000;;;;;;;;;;82000000;;91444253
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";21;"Korot ulosoton säilytettävänä olevista varoista";"";0;;;;;;;;;;1000;;353906
+12;"SEKALAISET TULOT";25;"Oikeusministeriön hallinnonala";99;"Oikeusministeriön hallinnonalan muut tulot";"";2750000;;;;;;;;;;2750000;;3167199
+12;"SEKALAISET TULOT";26;"Sisäministeriön hallinnonala";98;"EU:lta saatavat tulot ";"";144152000;;;;;;;;;;96611000;;30774636
+12;"SEKALAISET TULOT";26;"Sisäministeriön hallinnonala";99;"Sisäministeriön hallinnonalan muut tulot";"";2100000;;;;;;;;;;2100000;;6121202
+12;"SEKALAISET TULOT";27;"Puolustusministeriön hallinnonala";20;"Tulot irtaimen omaisuuden myynnistä ja rojaltimaksuista";"";18000;;;;;;;;;;18000;;18000
+12;"SEKALAISET TULOT";27;"Puolustusministeriön hallinnonala";99;"Puolustusministeriön hallinnonalan muut tulot";"";31020000;;;;;;;;;;6719000;;5861121
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";11;"Kuntien osuudet verotuskustannuksista";"";63552000;;;;;;;;;;58822000;;124734967
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";12;"Kansaneläkelaitoksen osuus verotuskustannuksista";"";25062000;;;;;;;;;;23197000;;24003980
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";13;"Evankelisluterilaisten seurakuntien osuudet verotuskustannuksista";"";14321000;;;;;;;;;;13255000;;13716560
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";14;"Tulot positiivisen luottotietorekisterin käyttömaksuista";"";5400000;;;;;;;;;;;;
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";20;"Valtion tieto- ja viestintätekniikkakeskuksen eräät tulot";"";10056000;;;;;;;;;;11540000;;13188128
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";50;"Siirto valtion eläkerahastosta";"";2266877000;;;;;;;;;;2125515000;;1981995519
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";51;"Muiden eläkelaitosten puolesta maksettujen eläkemenojen hyvitykset";"";362857000;;;;;;;;;;324471000;;283681961
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";52;"Vakuutusmaksuja vastaavat maksut";"";19420000;;;;;;;;;;19670000;;19282989
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";60;"Työturvallisuusmaksu";"";1010000;;;;;;;;;;980000;;1006174
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";92;"Euroopan unionin perinteisten omien varojen kantopalkkiot";"";55600000;;;;;;;;;;50000000;;74447737
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";93;"Euroopan unionilta saatavat tulot matkamenojen korvaamiseen";"";1400000;;;;;;;;;;1000000;;1975580
+12;"SEKALAISET TULOT";28;"Valtiovarainministeriön hallinnonala";99;"Valtiovarainministeriön hallinnonalan muut tulot";"";25970000;;;;;;;;;;18500000;;70944332
+12;"SEKALAISET TULOT";29;"Opetus- ja kulttuuriministeriön hallinnonala";70;"Opintotukitoiminnan tulot";"";34000000;;;;;;;;;;33300000;;34975786
+12;"SEKALAISET TULOT";29;"Opetus- ja kulttuuriministeriön hallinnonala";88;"Opetus- ja kulttuuriministeriön osuus rahapelitoiminnan tuotoista";"";0;;;;;;;;;5000000;386250000;;364240000
+12;"SEKALAISET TULOT";29;"Opetus- ja kulttuuriministeriön hallinnonala";99;"Opetus- ja kulttuuriministeriön hallinnonalan muut tulot";"";4000000;;;;;;;;;;4000000;;84213398
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";01;"EU:n maataloustukirahastosta saatavat tulot";"";533205000;;;;;;;;;;531430000;;526324486
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";02;"Maaseudun kehittämiseen saatavat tulot EU:lta";"";340000000;;;;;;;;;;340000000;;460053411
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";03;"Elinkeinokalatalouden kehittämiseen saatavat tulot EU:lta";"";9000000;;;;;;;;;;9000000;;9753317
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";04;"EU:lta saatavat muut tulot";"";160000;;;;;;;;;;410000;;332791
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";20;"Maa- ja metsätalousministeriön osuus rahapelitoiminnan tuotosta";"";0;;;;;;;;;;29000000;;28074578
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";40;"Vesioikeudelliset kalatalousmaksut";"";3000000;;;;;;;;;;2800000;;2965915
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";41;"Tenojoen kalastuslupamaksut";"";45000;;;;;;;;;;50000;;30175
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";42;"Hirvieläinten metsästysmaksut";"";3590000;;;;;;;;;;4760000;;4610059
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";44;"Kalastonhoitomaksut ";"";9739000;;;;;;;;;;10175000;;9327406
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";45;"Riistanhoitomaksut";"";12908000;;;;;;;;;;13059000;;11733540
+12;"SEKALAISET TULOT";30;"Maa- ja metsätalousministeriön hallinnonala";99;"Maa- ja metsätalousministeriön hallinnonalan muut tulot";"";4400000;;;;;;;;;;4000000;;4468522
+12;"SEKALAISET TULOT";31;"Liikenne- ja viestintäministeriön hallinnonala";10;"Hallinnonalan virastojen tulot";"";1500000;;;;;;;;;904000;1500000;;35292954
+12;"SEKALAISET TULOT";31;"Liikenne- ja viestintäministeriön hallinnonala";99;"Liikenne- ja viestintäministeriön hallinnonalan muut tulot";"";20050000;;;;;;;;;;850000;;6952087
+12;"SEKALAISET TULOT";32;"Työ- ja elinkeinoministeriön hallinnonala";20;"Turvallisuus- ja kemikaaliviraston tulot";"";3650000;;;;;;;;;;3744000;;3501935
+12;"SEKALAISET TULOT";32;"Työ- ja elinkeinoministeriön hallinnonala";21;"Päästöoikeuksien huutokauppatulot";"";528000000;;;;;;;;;;;;
+12;"SEKALAISET TULOT";32;"Työ- ja elinkeinoministeriön hallinnonala";31;"Palkkaturvamaksujen palautukset";"";33270000;;;;;;;;;;33230000;;20446655
+12;"SEKALAISET TULOT";32;"Työ- ja elinkeinoministeriön hallinnonala";50;"EU:n alue- ja rakennepolitiikan ja muista koheesiopolitiikan rahastoista saatavat tulot";"";240000000;;;;;;;;;;257000000;;210203585
+12;"SEKALAISET TULOT";32;"Työ- ja elinkeinoministeriön hallinnonala";99;"Työ- ja elinkeinoministeriön hallinnonalan muut tulot";"";147600000;;;;;;;;;33100000;526000000;;635989002
+12;"SEKALAISET TULOT";33;"Sosiaali- ja terveysministeriön hallinnonala";02;"Sosiaali- ja terveysalan lupa- ja valvontaviraston tulot";"";2690000;;;;;;;;;;2690000;;3279007
+12;"SEKALAISET TULOT";33;"Sosiaali- ja terveysministeriön hallinnonala";03;"Terveyden ja hyvinvoinnin laitoksen tulot";"";100000;;;;;;;;;;100000;;0
+12;"SEKALAISET TULOT";33;"Sosiaali- ja terveysministeriön hallinnonala";90;"Sosiaali- ja terveysministeriön osuus rahapelitoiminnan tuotosta";"";0;;;;;;;;;;361750000;;356028000
+12;"SEKALAISET TULOT";33;"Sosiaali- ja terveysministeriön hallinnonala";98;"Valtionapujen palautukset";"";93700000;;;;;;;;;;163200000;;101903000
+12;"SEKALAISET TULOT";33;"Sosiaali- ja terveysministeriön hallinnonala";99;"Sosiaali- ja terveysministeriön hallinnonalan muut tulot";"";15600000;;;;;;;;;;10100000;;14999727
+12;"SEKALAISET TULOT";35;"Ympäristöministeriön hallinnonala";10;"Korvaukset ympäristövahinkojen torjuntatoimista";"";150000;;;;;;;;;;150000;;0
+12;"SEKALAISET TULOT";35;"Ympäristöministeriön hallinnonala";20;"Siirto Valtion asuntorahastosta";"";2700000;;;;;;;;;;400000;;1000000
+12;"SEKALAISET TULOT";35;"Ympäristöministeriön hallinnonala";99;"Ympäristöministeriön hallinnonalan muut tulot";"";806000;;;;;;;;;;964000;;458837
+12;"SEKALAISET TULOT";39;"Muut sekalaiset tulot";01;"Sakkotulot ja tulot hallinnollisista maksuseuraamuksista";"";130000000;;;;;;;;;;130000000;;156111930
+12;"SEKALAISET TULOT";39;"Muut sekalaiset tulot";02;"Verotukseen liittyvät korkotulot";"";79000000;;;;;;;;;;79000000;;91729402
+12;"SEKALAISET TULOT";39;"Muut sekalaiset tulot";04;"Siirrettyjen määrärahojen peruutukset";"";300000000;;;;;;;;;;300000000;;646860402
+12;"SEKALAISET TULOT";39;"Muut sekalaiset tulot";10;"Muut sekalaiset tulot";"";7000000;;;;;;;;;;7000000;;47819821
+12;"SEKALAISET TULOT";39;"Muut sekalaiset tulot";20;"Elpymis- ja palautumistukivälineen tulot";"";703000000;;;;;;;;;;391000000;;0
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";01;"Korkotulot";04;"Korot valtion lainoista liikelaitoksille";"";1600000;;;;;;;;;;2000000;;2848313
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";01;"Korkotulot";05;"Korot muista lainoista";"";44386000;;;;;;;;;;20994000;;23905053
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";01;"Korkotulot";07;"Korot talletuksista";"";182500000;;;;;;;;;;7100000;;26971928
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";01;"Korkotulot";09;"Muiden eläkelaitosten puolesta maksettujen eläkemenojen ja valtion muille eläkelaitoksille maksamien ennakoiden korkotulot";"";27213000;;;;;;;;;;19194000;;14798917
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";03;"Osinkotulot ja osakkeiden myyntitulot";01;"Osinkotulot, pääomanpalautukset ja osakkeiden myyntitulot";"";1150000000;;;;;;;;;;1597000000;;1392818612
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";03;"Osinkotulot ja osakkeiden myyntitulot";02;"Rahapelitoiminnan tuotto";"";673000000;;;;;;;;;;;;
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";04;"Osuus valtion rahalaitosten voitosta";01;"Osuus Suomen Pankin voitosta";"";10000000;;;;;;;;;;100000000;;26300000
+13;"KORKOTULOT, OSAKKEIDEN MYYNTITULOT JA VOITON TULOUTUKSET";05;"Valtion liikelaitosten voiton tuloutukset";01;"Valtion liikelaitosten voiton tuloutukset";"";145000000;;;;;;;;;;154000000;;145000000
+15;"LAINAT";01;"Valtiolle takaisin maksettavat lainat";02;"Takaisinmaksut valtion lainoista liikelaitoksille";"";9100000;;;;;;;;;;11500000;;21491199
+15;"LAINAT";01;"Valtiolle takaisin maksettavat lainat";04;"Muiden lainojen lyhennykset";"";139323000;;;;;;;;;;138448000;;207307347
+15;"LAINAT";03;"Valtion nettolainanotto ja velanhallinta";01;"Nettolainanotto ja velanhallinta";"";10117346000;;;;;;;;;2127305000;8291725000;;11313723566

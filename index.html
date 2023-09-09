@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <label>Budjettitiedosto</label>
+    <input type="file" id="csvFileInput" accept=".csv">
+    
+    
+    <!-- Input field for new values -->
+    <textarea id="newValuesInput" rows="10" cols="15" placeholder=
+"Vanha budjettipuu
+21.
+21.01.
+21.01.01.
+21.10.
+21.10.01.
+21.10.29.
+..."></textarea>
+    <button id="syncButton">Synchronize Table</button>
+
+    <div id="tableContainer"></div>
+    <script src="script.js"></script>
+</body>
+</html>
