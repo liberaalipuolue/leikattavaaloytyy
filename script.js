@@ -1,9 +1,20 @@
 // Initialize an array to store unique values from the third column
 const uniqueValues3c = [];
 const uniqueValues1c = [];
+const uniqueValues3and1 = [];
 // Create a table element
-const table = document.createElement("table");
 const tableContainer = document.getElementById("tableContainer");
+const table = document.createElement("table");
+const tbody = document.createElement("tbody"); // Create the tbody element
+
+// Add an event listener to the file input element
+const fileInput = document.getElementById("UTF8csvFileInput");
+fileInput.addEventListener("change", (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+        handleCSVFile(selectedFile);
+    }
+});
 
 // Function to read a CSV file in "Nordic (ISO 8859-10)" encoding and convert it to UTF-8
 function handleCSVFile(file) {
@@ -12,102 +23,176 @@ function handleCSVFile(file) {
     reader.onload = function (e) {
         const contents = e.target.result;
 
-
         // Convert the CSV data to UTF-8 encoding
-        //budjetti.vm.fi https://budjetti.vm.fi/indox/opendata/ = iso-8859-10
+        // A:
+        // budjetti.vm.fi https://budjetti.vm.fi/indox/opendata/ = iso-8859-10
+        //const iso8859_10Decoder = new TextDecoder("iso-8859-10");
+        //const utf8Text = iso8859_10Decoder.decode(contents);
+        // B:
         //Good practice is UTF-8
         const encryptionDecoder = new TextDecoder("utf-8"); 
         const utf8Text = encryptionDecoder.decode(contents);
 
-        const lines = utf8Text.split("\n");
+        // Remove double quotes from the CSV text
+        const cleanedText = utf8Text.replace(/"/g, "");
+        const lines = cleanedText.split("\n");
+        console.log("Saatiin rivejä:", lines.length);
 
-
+        const table = document.createElement("table");
+        const tbody = document.createElement("tbody"); // Create a tbody element
 
         // Initialize a flag to identify the header row
         let isFirstRow = true;
 
         // Loop through CSV lines
-        lines.forEach((line, index) => {
-            const row = document.createElement("tr");
-            const cells = line.split(";"); // Use semicolon as the separator
-
-            cells.forEach((cell, cellIndex) => {
-                const cellElement = isFirstRow ? document.createElement("th") : document.createElement("td");
-                cellElement.textContent = cell.trim();
-
-                // If it's the header row, set the cell as a table header (th)
-                if (isFirstRow) {
-                    cellElement.scope = "col";
-                }
-
-                row.appendChild(cellElement);
-            });
-
-            // Add the "Budjettipuu" column to the header and data rows
-            if (isFirstRow) {
-                // For the header row, add headers
-                const budjettipuuHeader = document.createElement("th");
-                budjettipuuHeader.textContent = "Budjettipuu";
-                row.insertBefore(budjettipuuHeader, row.firstChild);
-                const momenttitasoHeader = document.createElement("th");
-                momenttitasoHeader.textContent = "Momenttitaso";
-                row.insertBefore(momenttitasoHeader, row.firstChild);
-            } else {
-                // For data rows, calculate and add the "Budjettipuu" value
-                const firstColumn = cells[0] ? cells[0].trim() : "";
-                const thirdColumn = cells[2] ? cells[2].trim() : "";
-                const fifthColumn = cells[4] ? cells[4].trim() : "";
-                const budjettipuuCell = document.createElement("td");
-                budjettipuuCell.textContent = `${firstColumn}.${thirdColumn}.${fifthColumn}.`;
-                row.insertBefore(budjettipuuCell, row.firstChild);
-
-                const momenttitasoCell = document.createElement("td");
-                momenttitasoCell.textContent = `3`;
-                row.insertBefore(momenttitasoCell, row.firstChild);
-
-                // Store unique values from the first column
-                if (cells[0]) {
-                    const uniqueValue1 = cells[0].trim();
-                    if (!uniqueValues1c.includes(uniqueValue1)) {
-                        uniqueValues1c.push(uniqueValue1);
-                    }
-                    // Store unique values from the third column
-                    if (cells[2]) {
-                        const uniqueValue3and1 = `${cells[0].trim()}.${cells[2].trim()}`;
-                        if (!uniqueValues3c.includes(uniqueValue3and1)) {
-                            uniqueValues3c.push(uniqueValue3and1);
-                        }
-                    }
-
-                }
-            }
-
-            table.appendChild(row);
-
-            // After processing the first row, set the flag to false
-            if (isFirstRow) {
-                isFirstRow = false;
-            }
-        });
-
-        // Create new rows based on unique values in the third column
-        uniqueValues3c.forEach((uniqueValue) => {
-            const newRow = createMomenttitaso2(lines, uniqueValue);
-            table.appendChild(newRow);
-        });
-
-        // Create new rows based on unique values in the first column
-        uniqueValues1c.forEach((uniqueValue) => {
-            const newRow = createMomenttitaso1(lines, uniqueValue);
-            table.appendChild(newRow);
-        });
+        isFirstRow = processCSVLines(lines, tbody, isFirstRow); // Call the processCSVLines function
 
         // Clear previous table and append the new one
         tableContainer.innerHTML = "";
+        table.innerHTML = "";
         tableContainer.appendChild(table);
+        table.appendChild(tbody);
     };
 
     reader.readAsArrayBuffer(file);
+}
+
+// Add an event listener to the file input element
+const fileInput2 = document.getElementById("ISO885910csvFileInput");
+fileInput2.addEventListener("change", (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+        handleISOCSVFile(selectedFile);
+    }
+});
+
+// Function to read a CSV file in "Nordic (ISO 8859-10)" encoding and convert it to UTF-8
+function handleISOCSVFile(file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        const contents = e.target.result;
+
+        // Convert the CSV data to UTF-8 encoding
+        // A:
+        // budjetti.vm.fi https://budjetti.vm.fi/indox/opendata/ = iso-8859-10
+        const iso8859_10Decoder = new TextDecoder("iso-8859-10");
+        const utf8Text = iso8859_10Decoder.decode(contents);
+        // B:
+        //Good practice is UTF-8
+        //const encryptionDecoder = new TextDecoder("utf-8"); 
+        //const utf8Text = encryptionDecoder.decode(contents);
+
+        // Remove double quotes from the CSV text
+        const cleanedText = utf8Text.replace(/"/g, "");
+        const lines = cleanedText.split("\n");
+        console.log("Saatiin rivejä:", lines.length);
+
+        const table = document.createElement("table");
+        const tbody = document.createElement("tbody"); // Create a tbody element
+
+        // Initialize a flag to identify the header row
+        let isFirstRow = true;
+
+        // Loop through CSV lines
+        isFirstRow = processCSVLines(lines, tbody, isFirstRow); // Call the processCSVLines function
+
+        // Clear previous table and append the new one
+        tableContainer.innerHTML = "";
+        table.innerHTML = "";
+        tableContainer.appendChild(table);
+        table.appendChild(tbody);
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function processCSVLines(lines, tbody, isFirstRow) {
+    lines.forEach((line, index) => {
+        const row = document.createElement("tr");
+        const cells = line.split(";"); // Use semicolon as the separator
+
+        cells.forEach((cell, cellIndex) => {
+            const cellElement = isFirstRow ? document.createElement("th") : document.createElement("td");
+            cellElement.textContent = cell.trim();
+
+            // If it's the header row, set the cell as a table header (th)
+            if (isFirstRow) {
+                cellElement.scope = "col";
+            }
+
+            row.appendChild(cellElement);
+        });
+
+        // Add the "Budjettipuu" column to the header and data rows
+        if (isFirstRow) {
+            // For the header row, add headers
+            const budjettipuuHeader = document.createElement("th");
+            budjettipuuHeader.textContent = "Budjettipuu";
+            row.insertBefore(budjettipuuHeader, row.firstChild);
+            const momenttitasoHeader = document.createElement("th");
+            momenttitasoHeader.textContent = "Momenttitaso";
+            row.insertBefore(momenttitasoHeader, row.firstChild);
+        } else {
+            // For data rows, calculate and add the "Budjettipuu" value
+            const firstColumn = cells[0] ? cells[0].trim() : "";
+            const thirdColumn = cells[2] ? cells[2].trim() : "";
+            const fifthColumn = cells[4] ? cells[4].trim() : "";
+            const budjettipuuCell = document.createElement("td");
+            budjettipuuCell.textContent = `${firstColumn}.${thirdColumn}.${fifthColumn}.`;
+            row.insertBefore(budjettipuuCell, row.firstChild);
+
+            const momenttitasoCell = document.createElement("td");
+            momenttitasoCell.textContent = `3`;
+            row.insertBefore(momenttitasoCell, row.firstChild);
+
+            // Store unique values from the first column
+            if (cells[0]) {
+                const uniqueValue1 = cells[0].trim();
+                if (!uniqueValues1c.includes(uniqueValue1)) {
+                    uniqueValues1c.push(uniqueValue1);
+                }
+                // Store unique values from the third column
+                if (cells[2]) {
+                    const uniqueValue3and1 = `${cells[0].trim()}.${cells[2].trim()}`;
+                    if (!uniqueValues3c.includes(uniqueValue3and1)) {
+                        uniqueValues3c.push(uniqueValue3and1);
+                    }
+                }
+            }
+            // Store unique values from the combined first and third columns
+            if (cells[0] && cells[2]) {
+                const uniqueValue3and1 = `${cells[0].trim()}.${cells[2].trim()}`;
+                if (!uniqueValues3and1.includes(uniqueValue3and1)) {
+                    uniqueValues3and1.push(uniqueValue3and1);
+                }
+            }
+
+            tbody.appendChild(row);
+        }
+
+        // After processing the first row, set the flag to false
+        if (isFirstRow) {
+            isFirstRow = false;
+        }
+    });
+
+    console.log("Tehdään momenttitaso 2 ja summaus puuttuneille");
+    console.log(uniqueValues3and1);
+    // Create new rows based on unique values in the combined first and third columns
+    uniqueValues3and1.forEach((uniqueValue) => {
+        const newRow = createMomenttitaso2(lines, uniqueValue);
+        tbody.appendChild(newRow);
+    });
+    console.log("Tehdään momenttitaso 1 ja summaus puuttuneille");
+    console.log(uniqueValues1c);
+    // Create new rows based on unique values in the first column
+    uniqueValues1c.forEach((uniqueValue) => {
+        const newRow = createMomenttitaso1(lines, uniqueValue);
+        tbody.appendChild(newRow);
+    });
+
+    return isFirstRow;
 }
 
 // Function to create a new row based on a unique value in the third column
@@ -222,16 +307,6 @@ function calculateSumsOfMatchingCells(lines, firstCellValue, thirdCellValue) {
     return sums;
 }
 
-
-// Add an event listener to the file input element
-const fileInput = document.getElementById("csvFileInput");
-fileInput.addEventListener("change", (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-        handleCSVFile(selectedFile);
-    }
-});
-
 // Add an HTML input field for the new values
 const newValuesInput = document.getElementById("newValuesInput");
 
@@ -243,20 +318,56 @@ syncButton.addEventListener("click", syncTable);
 function syncTable() {
     const newValues = newValuesInput.value.split("\n").map((value) => value.trim());
 
+    // Add this before the filtering code
+    console.log("Annetut vanhan budjetin kaikki momentit:", newValues);
+
+    const uniqueBudjettipuuValues = getUniqueBudjettipuuValues();
+    console.log("Uuden budjetin momentit:", uniqueBudjettipuuValues);
+
     // Find values that are in newValues but not in the current "Budjettipuu" column
     const missingValues = newValues.filter((newValue) => {
-        // Extract the "Budjettipuu" value from the newValue
-        const budjettipuuValue = newValue.split(".")[0];
-
         // Check if it doesn't exist in the current "Budjettipuu" values
-        return !uniqueValues1c.includes(budjettipuuValue);
+        return !uniqueBudjettipuuValues.includes(newValue);
     });
 
-    // Create empty table rows for missing values
+    console.log("Vanhan budjetin momentit joita ei ollut uudessa:", missingValues);
+
+
+    // Check if there's an existing table
+    const existingTable = document.querySelector("#tableContainer table");
+    const tbody = existingTable ? existingTable.querySelector("tbody") : null;
+
+    // Create empty table rows for missing values and add them inside the tbody
     missingValues.forEach((missingValue) => {
         const newRow = createEmptyRow(missingValue);
-        table.appendChild(newRow);
+        if (tbody) {
+            tbody.appendChild(newRow);
+        } else {
+            console.error("Table or tbody not found.");
+        }
     });
+}
+
+function getUniqueBudjettipuuValues() {
+    const uniqueBudjettipuuValues = [];
+
+    // Select the table element
+    const table = document.querySelector("table");
+
+    // Iterate through the rows of the table
+    const rows = table.querySelectorAll("tr");
+    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+        const row = rows[i];
+        const budjettipuuCell = row.querySelector("td:nth-child(2)"); // Assuming the "Budjettipuu" cell is the first one
+        if (budjettipuuCell) {
+            const budjettipuuValue = budjettipuuCell.textContent.trim();
+            if (!uniqueBudjettipuuValues.includes(budjettipuuValue)) {
+                uniqueBudjettipuuValues.push(budjettipuuValue);
+            }
+        }
+    }
+
+    return uniqueBudjettipuuValues;
 }
 
 // Function to create an empty row based on missingValues input

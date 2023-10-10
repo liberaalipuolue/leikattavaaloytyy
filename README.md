@@ -1,39 +1,27 @@
-# leikattavaaloytyy
- #LeikattavaaLöytyy pohjatyöt, julkaistu budjettiehdotus taulukkomuotoon
+# uusi_budjetti
+ Tämä skripti muuntaa VM:n antamat CSV:t taulukkomuotoon josta on helpompi työstää budjettia taulukko-ohjelmissa. 
+ * Laskee VM:n CSV:stä puuttuvat 2. ja 1. tason momentit valmiiksi.
+ * Tekee CSV:stä saatavan uuden budjetin vanhaan taulukkomuodossa olevaan budjettiin sopivaksi.
 
-# 
+ Aarne Leinonen, ChatGPT3.5 apuna. Vapaasti vaihtoehtobudjettien tekijöiden iloksi. Liberaalipuolue - Vapaus valita 2024 vaihtoehtobudjetin nopeaa rutistusta varsinkin auttamaan. Kehitysehdotukset voi välittää pull requesteilla ja kiitokset somessa.
 
-1. Seikkaile budjetin numerotaulu-sivulle https://budjetti.vm.fi/indox/sisalto.jsp?year=2023&lang=fi&maindoc=/2023/tae/hallituksenEsitys/hallituksenEsitys.xml&opennode=0:1:143:&
-2. kopioi HTML tablet
-3. pyörittele tablet ATK:lla (esim Sublime Text editorilla) CSV-muotoon
-    style="margin-left: 10px" aria-level="3"> --> momenttitaso 3
-    style="margin-left: 5px" aria-level="2"> --> momenttitaso 2
-    aria-level="1"> --> momenttitaso 1
-    </a></span></td>
-     <td class="tableContent" style="text-align: right"><span class="LihavaTeksti"> --> ,
-        </a></td>
-     <td class="tableContent" style="text-align: right"> --> ,
-    url alku https://budjetti.vm.fi/
-    <tr> 
-     <td class="tableContent" style="text-align: left"> --> meno tai tulo alkuun
-    span-tagit pois
-    urlista momenttinumerot
-    " ,momenttitaso --> ,momenttitaso (eli hipsut ja väli pois)
-    </td> 
-    </tr> 
-    --> rivinvaihto 
-    0-tason otsikkorivien koostaminen
-    CSV otsikkorivi
-    tallennus CSV-muotoon
-    pilkkujen korjaus CSV-yhteensopivaksi (olisi voinut aiemmin tajuta)
-    poistettavien momenttien momenttinumeroiden korjaaminen
-    &amp; --> & urlien korjaaminen
-    &nbsp; --> " " (binding space on erikoismerkki, korvaaminen normaalilla)
-4. Siirrä haluamaasi taulukkoohjelmaan
-   momenttipuuhun "." loppuun concat()-komennolla (koska unohtui), sarake tekstimuotoon
-   eurot momenttitasoittain eri sarakkeisiin. 4 uutta saraketta "eurot 0 momenttitaso".."eurot 3 momenttitaso"
-   momenttinimi 0-tasolta  momenttinimi-sarakkeeseen, momenttipuu arvoksi 0
-   ehdollinen muotoilu muotoiltu kaava (=D1=A1)
-   Mätsäilyä ja rivien liikuttelua.
-   RIKKI: Jotkut momenttipuun viimeinen numero on korvautunut väärällä numerolla (28 tai 29 tai 30 tai 32 tai 33 tai 35), tekstissä ne on oikein.
-   uusi sarake: sorttausapuri 2022+2023 yhdistelmä momenttipuista rivien sorttaukseen jälkikäteen EI TODELLINEN MOMENTTIPUU HUOM =CONCATENATE(C139;E139;)
+## Seuraa näitä vaiheita:
+ 0. Lataa tämän repositorion tiedostot, tai ainakin index.html ja script.js samaan kansioon tietokoneellasi ja avaa selaimella index.html-tiedosto.
+
+## Hae Budjetti
+ 1. Valtiovarainministeriön sivuilta https://budjetti.vm.fi/indox/opendata-csv.jsp
+ 2. Esimerkiksi https://budjetti.vm.fi/indox/opendata/2024/tae/valtiovarainministerionKanta/2024-tae-valtiovarainministerionKanta.html _tai jos VM jumittaa niin https://web.archive.org/web/20231007062101/https://budjetti.vm.fi/indox/opendata/2024/tae/valtiovarainministerionKanta/2024-tae-valtiovarainministerionKanta.html ._
+ 3. Lataa haluamasi CSV tiedostot.
+ 4. Yhdistä kaikki CSV tiedostot notepadilla yhteen tiedostoon. _Vaihtoehtoisesti käytä kansiossa data olevaa "yhdistelmä budjetti TAE 2024.csv"-tiedostoa. Varmista että VM ei ole lisäillyt ylimääräisiä puolipisteitä tai muita merkkejä joilla CSV sekoaa tai tekee virheellisiä rivimittoja. Otsikkorivejä voi vähentää nyt tai taulukko-ohjelmassa._
+
+## Avaa index.html
+ 5. Syötä CSV tiedosto kenttään. _Valitse Nordic (ISO 8859-10) jos käytät VM:n CSV-tiedostoa suoraan sellaisenaan. Jos puolestaan sinulla on UTF-8 enkoodattu tiedosto, niin valitse se._
+
+## Vertaa vanhaan budjettiin
+ 6. Käytä edellisen vuoden budjetin "budjettipuu"-kolumnia jonka muoto on momenttitasot eroteltuna pisteillä, tyyliin "33.40.54." _Vaihtoehtoisesti käytä kansiossa data olevaa "Budjettipuu 2023.txt"-tiedostoa, joka on Liberaalipuolueen 2023 vaihtoehtobudjetin rakenne._
+
+## Kopioi taulukko haluamaasi taulukko-ohjelmaan
+ 7. Kopioi HTML-sivun taulukko-osuus maalaamalla kaikki taulukon rivit ja kopioimalla ne taulukko-ohjelmaan.
+ 8. Luo kadonnut otsikkorivi uudelleen. _Esimerkiksi kopioimalla tämä: "Momenttitaso	Budjettipuu	Pääluokan numero	Pääluokan nimi	Menoluvun numero	Menoluvun nimi	Menomomentin numero	Menomomentin nimi	Menomomentin info-osa	Määräraha	Aiemmin budjetoitu IX lisätalousarvio 2023	Aiemmin budjetoitu VIII lisätalousarvio 2023	Aiemmin budjetoitu VII lisätalousarvio 2023	Aiemmin budjetoitu VI lisätalousarvio 2023	Aiemmin budjetoitu V lisätalousarvio 2023	Aiemmin budjetoitu IV lisätalousarvio 2023	Aiemmin budjetoitu III lisätalousarvio 2023	Aiemmin budjetoitu II lisätalousarvio 2023	Aiemmin budjetoitu I lisätalousarvio 2023	Aiemmin budjetoitu 2023	Toteutuma 2023	Toteutuma 2022"_
+ 8. Google Spreadsheetissä pitää muuttaa "budjettipuu"-kolumni "Pelkkä teksti" formaattiin, jotta sitä ei kohdella lukuna ja sorttaaminen oikeaan järjestykseen mahdollistuu.
+ 9. "Budjettipuoli"-sarake sisältönään riveittäin "tulo" tai "meno" kannattaa myös luoda.

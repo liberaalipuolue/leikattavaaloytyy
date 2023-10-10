@@ -22,10 +22,12 @@
     </style>
 </head>
 <body>
-    <label>Budjettitiedosto</label>
-    <input type="file" id="csvFileInput" accept=".csv">
-    
-    
+    <label>Budjettitiedosto UTF-8</label>
+    <input type="file" id="UTF8csvFileInput" accept=".csv" />
+    <br>
+    <label>Budjettitiedosto Nordic (ISO 8859-10)</label>
+    <input type="file" id="ISO885910csvFileInput" accept=".csv" />
+    <br>
     <!-- Input field for new values -->
     <textarea id="newValuesInput" rows="10" cols="15" placeholder=
 "Vanha budjettipuu
@@ -38,7 +40,11 @@
 ..."></textarea>
     <button id="syncButton">Synchronize Table</button>
 
-    <div id="tableContainer"></div>
+    <div id="tableContainer">
+      <table>
+        <!-- Your table rows will go here -->
+      </table>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
