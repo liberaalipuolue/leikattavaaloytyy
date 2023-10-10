@@ -1,3 +1,7 @@
+# Tämä repo on yhdistelmä skriptejä budjetin tekemiseen
+uusi_budjetti-osiossa kerrotaan CSV-muokkaukseen tarkoitetuista skripteistä.
+Lisäksi Python-skriptillä voi Googlen spreadsheetistä ajaa HTML-taulukon Wordpressiin julkaistavaksi.
+
 # uusi_budjetti
  Tämä skripti muuntaa VM:n antamat CSV:t taulukkomuotoon josta on helpompi työstää budjettia taulukko-ohjelmissa. 
  * Laskee VM:n CSV:stä puuttuvat 2. ja 1. tason momentit valmiiksi.
