@@ -26,10 +26,20 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 try:
     SPREADSHEET_ID = config.get('google', 'SPREADSHEET_ID')
     SHEET_NAME = config.get('google', 'SHEET_NAME')
-    COLUMN_MOMENTTI_NRO = config.getint('google', 'COLUMN_INDEX_MOMENTTI_NRO')
-    COLUMN_MOMENTTI_NIMI = config.getint('google', 'COLUMN_INDEX_MOMENTTI_NIMI')
-except configparser.NoOptionError:
-    print("Mandatory config key missing, please review %s" % CONFIG_INI)
+    COL_IDX_TULO = config.getint('google', 'COL_IDX_TULO')
+    COL_IDX_SYVYYS = config.getint('google', 'COL_IDX_SYVYYS')
+    COL_IDX_PAALUOKKA = config.getint('google', 'COL_IDX_PAALUOKKA')
+    COL_IDX_PAALUOKKA_SELITE = config.getint('google', 'COL_IDX_PAALUOKKA_SELITE')
+    COL_IDX_MENOLUOKKA = config.getint('google', 'COL_IDX_MENOLUOKKA')
+    COL_IDX_MENOLUOKKA_SELITE = config.getint('google', 'COL_IDX_MENOLUOKKA_SELITE')
+    COL_IDX_MOMENTTI = config.getint('google', 'COL_IDX_MOMENTTI')
+    COL_IDX_MOMENTTI_SELITE = config.getint('google', 'COL_IDX_MOMENTTI_SELITE')    
+    COL_IDX_HALLITUS = config.getint('google', 'COL_IDX_HALLITUS')
+    COL_IDX_LIB = config.getint('google', 'COL_IDX_LIB')
+    COL_IDX_PERUSTELU = config.getint('google', 'COL_IDX_PERUSTELU')
+    COL_IDX_OSOITE = config.getint('google', 'COL_IDX_OSOITE')
+except configparser.NoOptionError as e:
+    print("Mandatory config key missing, please review %s. %r" % (CONFIG_INI, e))
     sys.exit(1)
 
 # Wordpress
@@ -51,7 +61,30 @@ HEADERS = {
     'Content-Type': 'application/json'
 }
 
-def get_data():
+# html generation
+from yattag import Doc
+
+from decimal import Decimal, InvalidOperation
+from dataclasses import dataclass
+
+@dataclass
+class DataObject:
+    tulo: bool          # Tulo vai meno
+    syvyys: int         # 1, 2 vai 3 tason rivi
+    paaluokka: int      # Ensimmäinen nro
+    paaluokkaSelite: str # Ensimmäinen selite
+    menoluokka: int       # Toinen nro
+    menoluokkaSelite: str # Toinen selite
+    momentti: int       # Kolmas nro
+    momenttiSelite: str # Kolman selite
+    osoite: str         # Ensimmainen nro.Toinen nro.Kolmas nro
+    libLisays: bool     # Jos rivi on Liberaalipuolueen lisäys
+    hallitus: Decimal   # Hallituksen esitys
+    lib: Decimal # Liberaalipuolueen esitys
+    perustelu: str      # Leikkauksen perustelu
+    linkki: str         # Budjettikirjan linkki
+
+def get_data() -> list[DataObject]:
     """
     Acquires Vaihtoehtobudjetti data over Sheets API.
     TODO: Convert Sheets API return value to data object
@@ -74,6 +107,7 @@ def get_data():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
+    values = False
     try:
         service = build('sheets', 'v4', credentials=creds)
 
@@ -82,30 +116,226 @@ def get_data():
         result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                                     range=SHEET_NAME).execute()
         values = result.get('values', [])
-
-        if not values:
-            print('No data found.')
-            return
-        else:
-            # TODO: Convert to data object
-            return values
-        
     except HttpError as err:
         raise err
+    
+    data = []
+    if not values:
+        print('No data found.')
+        return
+    else:
+        for row in values:
+            try:
+                tuloStr = row[COL_IDX_TULO]
+                tuloBool = tuloStr == 'tulo'
 
-def print_data(data):
-    for row in data:
-        print('%s, %s' % (row[COLUMN_MOMENTTI_NRO], row[COLUMN_MOMENTTI_NIMI]))    
+                syvyysInt = 0
+                syvyysStr = row[COL_IDX_SYVYYS]
+                try:
+                    syvyysInt = int(syvyysStr)
+                except ValueError:
+                    pass
+
+                paaluokkaInt = 0
+                paaluokkaStr = row[COL_IDX_MENOLUOKKA]
+                try:
+                    paaluokkaInt = int(paaluokkaStr)
+                except ValueError:
+                    pass
+
+                menoLuokkaInt = 0
+                menoLuokkaStr = row[COL_IDX_PAALUOKKA]
+                try:
+                    menoLuokkaInt = int(menoLuokkaStr)
+                except ValueError:
+                    pass
+
+                # Empty with lib additions
+                momenttiInt = 0
+                momenttiStr = row[COL_IDX_MOMENTTI]
+                try:
+                    momenttiInt = int(momenttiStr)
+                except ValueError:
+                    pass
+
+                momenttiSelite = row[COL_IDX_MOMENTTI_SELITE]
+                libLisays = 'lib.' in momenttiSelite
+
+                hallitusDecimal = Decimal('0.0')
+                hallitusStr = row[COL_IDX_HALLITUS]
+                if (len(hallitusStr) > 0):
+                    # Remove non-breaking spaces
+                    hallitusStr = hallitusStr.replace('\xa0', '')
+                    try:
+                        hallitusDecimal = Decimal(hallitusStr)
+                    except InvalidOperation:
+                        print("Failed to convert hallitusStr %r to Decimal" % hallitusStr)
+                        continue
+
+                libDecimal = Decimal('0.0')
+                libStr = row[COL_IDX_LIB]
+                if (len(libStr) > 0):
+                    # Remove non-breaking spaces
+                    libStr = libStr.replace('\xa0', '')
+                    try:
+                        libDecimal = Decimal(libStr)
+                    except InvalidOperation:
+                        print("Failed to convert libStr %r to Decimal" % hallitusStr)
+                        continue
+
+                # TODO: build full url
+                linkki = "https://budjetti.vm.fi"
+
+                dataObj = DataObject(
+                    tulo=tuloBool,
+                    syvyys=syvyysInt,
+                    paaluokka=paaluokkaInt,
+                    paaluokkaSelite=row[COL_IDX_PAALUOKKA_SELITE],
+                    menoluokka=menoLuokkaInt,
+                    menoluokkaSelite=row[COL_IDX_MENOLUOKKA_SELITE],
+                    momentti=momenttiInt,
+                    momenttiSelite=momenttiSelite,
+                    osoite=row[COL_IDX_OSOITE],
+                    libLisays=libLisays,
+                    hallitus=hallitusDecimal,
+                    lib=libDecimal,
+                    perustelu=row[COL_IDX_PERUSTELU],
+                    linkki=linkki
+                )
+                data.append(dataObj)
+            except Exception as e:
+                print("Failed to process row %r due %r" % (row, e))
+    return data
+
+def sort_data(data: list[DataObject]):
+    """
+    Groups dataRows based on their common paaluokka and menoluokka numbers
+
+    TODO
+    """
+    pass
+
+def print_data(data: list[DataObject]) -> None:
+    for d in data:
+        print('%r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r' % (d.tulo, d.syvyys, d.paaluokka, d.paaluokkaSelite, d.menoluokka, d.menoluokkaSelite, 
+                        d.momentti, d.momenttiSelite, d.osoite, d.libLisays, d.hallitus, d.lib, d.perustelu, d.linkki))
 
 def generate_html(data):
-    html = "<h1>Hello world</h1>"
-    for item in data:
-        html += "<p>%s</p>" % data[COLUMN_MOMENTTI_NRO]
-    return html
+
+    doc, tag, text = Doc().tagtext()
+    with tag('h1'):
+        text("Hello world")
+    doc.asis(generate_level_2(data))
+
+    return doc.getvalue()
+
+
+def generate_level_2(data):
+    """
+    Returns table as yattag doc
+
+    Kakkostason momentti, otsikko osio taulukolle
+
+    Data:
+    1. tason momenttinumero
+    2. tason momentin nimi
+    -> esim 25. Oikeusministeriön hallinnonala
+    Linkki budjettikirjaan
+
+    Hallituksen esitys €
+    Liberaalipuolueen esitys €
+    Erotus €
+    Liberaalipuolueen leikkausten kuvaus
+
+    Lista 3. tason momenteista
+
+
+    <section class="av_toggle_section"  itemscope="itemscope" itemtype="https://schema.org/CreativeWork"  >
+        <div role="tablist" class="single_toggle" data-tags="{All} "  >        
+        <p data-fake-id="#25_oikeusministerion_hallinnonala" class="toggler "  itemprop="headline"    role="tab" tabindex="0" aria-controls="25_oikeusministerion_hallinnonala">
+        25. Oikeusministeriön hallinnonala
+        <span class="toggle_icon" >
+        <span class="vert_icon"></span>
+        <span class="hor_icon"></span>
+        </span><
+        /p>        
+        <div id="25_oikeusministerion_hallinnonala" class="toggle_wrap "   >
+        <div class="toggle_content invers-color "  itemprop="text"   >
+        <p>
+        <a href="https://budjetti.vm.fi/indox/sisalto.jsp?year=2023&#038;lang=fi&#038;maindoc=/2023/tae/hallituksenEsitys/hallituksenEsitys.xml&#038;id=/2023/tae/hallituksenEsitys/YksityiskohtaisetPerustelut/25/25.html" target="_blank" rel="noopener">Linkki</a>
+        </p>
+    <h4>Hallituksen esitys: 1 076 795 000€</h4>
+    <h4>Liberaalipuolueen esitys: 998 883 761€</h4>
+    <h4>Leikattavaa löytyy: −77 911 239€</h4>
+    <p><span style="font-size: 14pt;" data-sheets-value="{" data-sheets-userformat="{">
+    Oikeusvaltion ylläpito tulee turvata riittävällä rahoituksella. IT-hankkeiden resurssitehokkuutta tulee parantaa.</span>
+    </p>
+    """
+
+    doc, tag, text = Doc().tagtext()
+    with tag('section', klass='av_toggle_section', itemscope='itemscope', itemtype='https://schema.org/CreativeWork'):
+        with tag('div', role='tablist', klass='single_toggle', data_tags="{All}"):
+            with tag('p', data_fake_id="#25_oikeusministerion_hallinnonala", klass="toggler ",  itemprop="headline", role="tab", tabindex="0", aria_controls="25_oikeusministerion_hallinnonala"):
+                text("1. Hello")
+            #<span class="toggle_icon" >
+            #<span class="vert_icon"></span>
+            #<span class="hor_icon"></span>
+            #</span>
+            with tag('h4'):
+                text("Hallituksen esitys: 1 076 795 000€")
+            with tag('h4'):
+                text("Liberaalipuolueen esitys: 998 883 761€")
+            with tag('h4'):
+                text("Leikattavaa löytyy: −77 911 239€")
+            with tag('p', style="font-size: 14pt;"):
+                text('Oikeusvaltion ylläpito tulee turvata riittävällä rahoituksella. IT-hankkeiden resurssitehokkuutta tulee parantaa.')
+
+    doc.asis(generate_level_3(data))
+
+    return doc
+
+
+def generate_level_3(data):
+    """
+    Returns table as yattag doc
+
+    Kolmostason momentit
+
+    
+
+    <table id="tablepress-11_verot" class="tablepress tablepress-id-11_verot tablepress-responsive tablepress-responsive-stack-tablet">
+    <caption style="caption-side:bottom;text-align:left;border:none;background:none;margin:0;padding:0;"><a href="https://liberaalipuolue.fi/wp-admin/admin.php?page=tablepress&#038;action=edit&#038;table_id=11_verot" rel="nofollow">Muokkaa</a></caption>
+    <thead>
+    <tr class="row-1 odd">
+	<th class="column-1">Momentti</th><th class="column-2">Hallituksen esitys</th><th class="column-3">Liberaalien esitys</th><th class="column-4">Leikattavaa löytyy</th><th class="column-5">Selite</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="row-2 even">
+	    <td class="column-1"><h4 class="table_header">11.01. Tulon ja varallisuuden perusteella kannettavat verot</h4><a href="https://budjetti.vm.fi/indox/sisalto.jsp?year=2023&amp;lang=fi&amp;maindoc=/2023/tae/hallituksenEsitys/hallituksenEsitys.xml&amp;id=/2023/tae/hallituksenEsitys/YksityiskohtaisetPerustelut/11/01/01.html"target="_blank">Linkki</a></td><td class="column-2"><h4 class="table_header"><span class="mobileview">Hallituksen esitys: </span>30 857 000 000</h4></td><td class="column-3"><h4 class="table_header"><span class="mobileview">Liberaalipuolueen esitys: </span>27 791 335 988</h4></td><td class="column-4"><h4 class="table_header"><span class="mobileview">Leikattavaa löytyy: </span>−3 065 664 012</h4></td><td class="column-5"></td>
+    </tr>
+    <tr class="row-3 odd">
+    	<td class="column-1"><p>11.01.01. Ansio- ja pääomatuloverot</p><a href="https://budjetti.vm.fi/indox/sisalto.jsp?year=2023&amp;lang=fi&amp;maindoc=/2023/tae/hallituksenEsitys/hallituksenEsitys.xml&amp;id=/2023/tae/hallituksenEsitys/YksityiskohtaisetPerustelut/11/01/01/01.html"target="_blank">Linkki</a></td><td class="column-2"><p><span class="mobileview">Hallituksen esitys: </span>23 876 000 000</p></td><td class="column-3"><p><span class="mobileview">Liberaalipuolueen esitys: </span>21 506 335 988</p></td><td class="column-4"><p><span class="mobileview">Leikattavaa löytyy: </span>−2 369 664 012</p></td><td class="column-5"><p>Työn verotusta tulee laskea merkittävästi. Liberaalipuolue ehdottaa palkkatulojen verotukseen 4,3 miljardin kevennystä. Työn verotusta ovat kaikki palkkasidonnaiset maksut, esimerkiksi eläkemaksut, sosiaalivakuutusmaksut, kunnallisvero ja valtion tulovero. Markkinoita vääristävistä ja verojärjestelmää monimutkaistavista verovähennyksistä tulee luopua samalla kun työn verotusta lasketaan merkittävästi. Tuloverotuksen kevennys katetaan karsimalla valtion toissijaisista tehtävistä 2,4 mrd € eriteltynä muissa momenteissa, sekä poistamalla verotukia 1,9 mrd €. Poistettavia verotukia ovat oman asunnon myyntivoiton verottomuus 1,5 mrd €, työmarkkinajärjestöjen jäsenmaksujen vähennys 0,21 mrd €. Kansalaisilla on oltava varaa ostaa palveluita ilman verovähennyksiä; nykyinen verokiila tekee sen mahdottomaksi. Verotuksen yksinkertaistamiseksi myös erillinen Yleisradiovero poistetaan. Lisäksi luovutusvoittoveron kertymä nousee 90 M€ perintöveron poistamisen myötä. Näiden ansio- ja pääomatuloverojen sisällä tapahtuvien painopistemuutosten avulla työhön kohdistuvaa verotusta voidaan laskea 4,3 mrd €/v, eli 21 % nykyisestä 2023 vuodelle suunnitellusta 20,5 mrd kertymästä.</p></td>
+    </tr>
+    </tbody>
+    </table>
+    """
+
+    doc, tag, text = Doc().tagtext()
+    with tag('table'):
+        for i in range(1, 3):
+            with tag('tr'):
+                for j in range(1, 3):
+                    with tag('td'):
+                        text(f"Row{i} Col{j}")
+    return doc
 
 def update_wordpress_page(page_id, content):
     """
     Update Vaihtoehtobudjetti page at Wordpress site
+
+    Note: Page must be saved in "Classic editor" mode for REST api pushed content to be visible
+          If page is saved using "Advanced Layout Editor" active, the will have completly different content
     """
     # Endpoint URL for updating a page
     endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages/{page_id}'
@@ -164,8 +394,11 @@ def main():
         sys.exit(10)
     
     print("Got data")
-    # print_data(data)
+
+    print_data(data)
     
+    sys.exit(0)
+
     html = generate_html(data)
     if html is None:
         print("Failed to generate html")
