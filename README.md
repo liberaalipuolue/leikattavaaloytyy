@@ -29,3 +29,8 @@ Lisäksi Python-skriptillä voi Googlen spreadsheetistä ajaa HTML-taulukon Word
  8. Luo kadonnut otsikkorivi uudelleen. _Esimerkiksi kopioimalla tämä: "Momenttitaso	Budjettipuu	Pääluokan numero	Pääluokan nimi	Menoluvun numero	Menoluvun nimi	Menomomentin numero	Menomomentin nimi	Menomomentin info-osa	Määräraha	Aiemmin budjetoitu IX lisätalousarvio 2023	Aiemmin budjetoitu VIII lisätalousarvio 2023	Aiemmin budjetoitu VII lisätalousarvio 2023	Aiemmin budjetoitu VI lisätalousarvio 2023	Aiemmin budjetoitu V lisätalousarvio 2023	Aiemmin budjetoitu IV lisätalousarvio 2023	Aiemmin budjetoitu III lisätalousarvio 2023	Aiemmin budjetoitu II lisätalousarvio 2023	Aiemmin budjetoitu I lisätalousarvio 2023	Aiemmin budjetoitu 2023	Toteutuma 2023	Toteutuma 2022"_
  8. Google Spreadsheetissä pitää muuttaa "budjettipuu"-kolumni "Pelkkä teksti" formaattiin, jotta sitä ei kohdella lukuna ja sorttaaminen oikeaan järjestykseen mahdollistuu.
  9. "Budjettipuoli"-sarake sisältönään riveittäin "tulo" tai "meno" kannattaa myös luoda.
+
+## Budjetin julkaisu Googlesta Wordpressiin
+
+vaihtoehtobudjetti-wordpress.py skriptillä voidaan Google Sheetissä oleva budjetti julkaista wordpress sivuna.
+Skripta hakee asetukset vaihtoehtobudjetti-wordpress.ini tiedostosta, jossa viittaukset auhtentikointiin tarvittaviin tietoihin ja skriptin ajoon tarvittavat tiedot. Skriptalle voi määritellä mistä taulukosta ja sarakkeista julkaistavat tiedot löytyvät, ja millä sivulla ne julkaistaan. Toteutuksen nopeuttamiseksi skripta sisältää ennalta generoitua HTML sisältöä, joka ei tule sellaisenaan toimimaan muissa Wordpress asennuksissa, kun tässä tapauksessa käytössä olevassa.
