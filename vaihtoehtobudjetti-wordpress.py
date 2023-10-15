@@ -1,6 +1,8 @@
 from __future__ import print_function
 from collections import defaultdict
 
+import datetime
+
 import sys
 import os.path
 import configparser
@@ -286,6 +288,8 @@ def get_data() -> list[DataObject]:
                         continue
 
                 eroDecimal = hallitusDecimal - libDecimal
+                # flip ero to match 2023 convetion
+                eroDecimal = -eroDecimal
 
                 # TODO: build full url
                 linkki = "https://budjetti.vm.fi"
@@ -523,23 +527,50 @@ def get_wordpress_pages():
         print(f"Failed to get the pages. Status code: {response.status_code}")
         return None
 
-
-
 def euros(number) -> str:
     """
     Format currency
     """
-    return locale.currency(number, grouping=True, symbol=False) + ' €'
+    formatted = locale.currency(number, grouping=True, symbol=False)
+    # Remove empty cents
+    formatted = formatted.replace(",00", '')
+    formatted += ' €'
+    return formatted
 
 def generate_html(data) -> str:
 
     doc, tag, text = Doc().tagtext()
-    doc.asis(generate_intro(data))
-    doc.asis(generate_tables(data))
+    doc.asis(generate_intro())
+
+    # TODO: Tulokset section
+    # TODO: "Säästöjä löydetty ministeriöittän" -section
+
+    with tag('div', klass='main_color av_default_container_wrap container_wrap fullsize'):
+        with tag('div', klass='container'):
+            with tag('div', klass='template-page content  av-content-full alpha units'):
+                with tag('div', klass='entry-content-wrapper clearfix'):
+                    with tag('div', klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-56  el_after_av_layout_row  el_before_av_one_full  avia-builder-el-first  '):                        
+                        doc.asis("""  
+                            <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti</span></p>
+                        </div></section>""")
+                        doc.asis(generate_tulot(data))
+                        doc.asis(generate_menot(data))
+
+    doc.asis(generate_outro())
+
+    # Generate release version
+    current_datetime = datetime.datetime.now()
+    timestamp = current_datetime.timestamp()
+    formatted_time = current_datetime.strftime('%c')
+    with tag('h6'):
+        text("Versio %s" % formatted_time)
 
     return doc.getvalue()
 
-def generate_intro(data) -> str:
+def generate_intro_yt(data) -> str:
+    """
+    Complicated to write
+    """
     doc, tag, text = Doc().tagtext()
     with tag('div', 
         klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full avia-builder-el-first',
@@ -570,20 +601,119 @@ def generate_intro(data) -> str:
 
     return doc.getvalue()
 
-def generate_tables(data) -> str:
+def generate_intro() -> str:
+    """
+    Intro block
+    """
+    return """    
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full  avia-builder-el-first  " style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p><img decoding="async" fetchpriority="high" class="wp-image-8978  aligncenter" src="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png" alt="" width="593" height="354" srcset="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png 300w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1030x616.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-768x459.png 768w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1536x919.png 1536w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-2048x1225.png 2048w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1500x897.png 1500w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-705x422.png 705w" sizes="(max-width: 593px) 100vw, 593px"></p>
+    </div></section></div>
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><div class="hr hr-default   avia-builder-el-3  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><h4 style="text-align: center;"></h4>
+<h4 style="text-align: center;"></h4>
+<p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.</span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;">Varjobudjetissa ei käytetä juustohöylää, vaan karsitaan kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Menokohteet tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille. Veronalennuksiinkin on varaa ilman alijäämiä ja lisävelkaa.</span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;">Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Me haluamme valita toisin, Suomen tulevaisuuden tähden.</span></p>
+</div></section>
+<div style="height:50px" class="hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<div style="height:50px" class="hr hr-invisible   avia-builder-el-8  el_after_av_textblock  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<div class="hr hr-default   avia-builder-el-9  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy mediassa</span></p>
+</div></section></div>
+
+
+
+<div class="flex_column av_one_half  flex_column_div av-zero-column-padding first  avia-builder-el-11  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Aarne Leinonen | Heikelä&amp;Koskelo 23 minuuttia -podcastissa</p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe title="YouTube video player" src="//www.youtube.com/embed/1nTK69pd6io?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+</div></section></div>
+
+
+<div class="flex_column av_one_half  flex_column_div av-zero-column-padding   avia-builder-el-14  el_after_av_one_half  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Aarne Leinonen | Puheenaihe -podcastissa</p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/MHwC4YUPThs?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+</div></section></div>
+
+
+<div class="flex_column av_one_half  flex_column_div av-zero-column-padding first  avia-builder-el-17  el_after_av_one_half  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Lassi Kivinen | Rahapodin Vaalipodissa</p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/IpV46VM23aY?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+</div></section></div>
+
+
+<div class="flex_column av_one_half  flex_column_div av-zero-column-padding   avia-builder-el-20  el_after_av_one_half  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Lassi Kivinen | Neuvottelija -podcastissä</p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/Lyd94PaRmxo?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+</div></section></div>
+
+
+    """
+
+def generate_outro() -> str:
+    """
+    Contact and call to action -buttons
+    """
+    return """
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-96  el_after_av_one_third  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-97  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="hr hr-default   avia-builder-el-98  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div style="height:50px" class="hr hr-invisible   avia-builder-el-99  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Lisätietoja:<br>
+    <a href="mailto:hallitus@liberaalipuolue.fi">hallitus@liberaalipuolue.fi</a></span></p>
+    </div></section></div>
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-101  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-102  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="hr hr-default   avia-builder-el-103  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-106  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-107  avia-builder-el-no-sibling "><a href="https://liberaalipuolue.fi/eduskuntavaalit-2023/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Äänestä meitä!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
+    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
+    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-112  el_after_av_one_third  avia-builder-el-last  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-113  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="hr hr-default   avia-builder-el-114  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div style="height:50px" class="hr hr-invisible   avia-builder-el-115  el_after_av_hr  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div></div>
+    """
+
+def generate_tulot(data):
+    doc, tag, text = Doc().tagtext()
+
+    # Header
+    doc.asis("""
+    <div id="tulot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+    <span style="font-size: 24pt;">Tulot</span></p>
+</div></section>"""
+    )
+
+    doc.asis(generate_tables(data, include_tulot=True, include_menot=False))
+
+    return doc.getvalue()
+
+def generate_menot(data):
+    doc, tag, text = Doc().tagtext()
+
+    # Header
+    doc.asis("""
+    <div id="menot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+    <span style="font-size: 24pt;">Menot</span></p>
+</div></section>"""
+    )
+
+    doc.asis(generate_tables(data, include_tulot=False, include_menot=True))
+
+    return doc.getvalue()
+
+def generate_tables(data, include_tulot=True, include_menot=True) -> str:
     """        
     """
     doc, tag, text = Doc().tagtext()
 
     for row in data.values():
+        if row.tulo and not include_tulot:
+            continue
+        if not row.tulo and not include_menot:
+            continue
         with tag('h1'):
             text(row.osoite + " " + row.paaluokka_selite)
         for subrow in row.subrows.values():
             doc.asis(generate_level_2(subrow))
-
-            #print("%r %r %r subrows" % (subrow.osoite, subrow.menoluokka_selite, len(subrow.subrows)))
-            for subsubrow in subrow.subrows.values():
-                print("%r %r %r subrows" % (subsubrow.osoite, subsubrow.momentti_selite, len(subsubrow.subrows)))
     return doc.getvalue()
 
 def generate_level_2(subrow) -> str:
@@ -614,22 +744,26 @@ def generate_level_2(subrow) -> str:
 
     with tag('section', klass='av_toggle_section', itemscope='itemscope', itemtype='https://schema.org/CreativeWork'):
         with tag('div', role='tablist', klass='single_toggle', data_tags="{All}"):
-            with tag('p', klass="toggler ",  itemprop="headline", role="tab", tabindex="0"):
-                text(subrow.osoite + " " + subrow.menoluokka_selite)
-            #<span class="toggle_icon" >
-            #<span class="vert_icon"></span>
-            #<span class="hor_icon"></span>
-            #</span>
-            with tag('h4'):
-                text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
-            with tag('h4'):
-                text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
-            with tag('h4'):
-                text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
-            with tag('p', style="font-size: 14pt;"):
-                text(subrow.perustelu)
-
-    doc.asis(generate_level_2_table(subrow))
+            doc.asis(f'<p data-fake-id="#{subrow.osoite}" class="toggler " itemprop="headline" role="tab" tabindex="0" aria-controls="{subrow.osoite}">{subrow.osoite} {subrow.menoluokka_selite}<span class="toggle_icon"><span class="vert_icon"></span><span class="hor_icon"></span></span></p>')
+            # Unknown how to pass data-fake-id as attribute
+            #with tag('p', klass="toggler ", data_fake_id='#'+subrow.osoite, itemprop="headline", role="tab", tabindex="0"):
+            #    text(subrow.osoite + " " + subrow.menoluokka_selite)
+            #with tag('span', klass='toggle_icon'):
+            #    with tag('span', klass='vert_icon'):
+            #        pass
+            #    with tag('span', klass='hor_icon'):
+            #        pass
+            with tag('div', id=subrow.osoite, klass='DISABLE_toggle_wrap'):
+                with tag('div', klass='DISABLE_toggle_content invers-color', itemprop='text'):
+                    with tag('h4'):
+                        text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
+                    with tag('h4'):
+                        text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
+                    with tag('h4'):
+                        text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
+                    with tag('p', style="font-size: 14pt;"):
+                        text(subrow.perustelu)
+                    doc.asis(generate_level_2_table(subrow))
 
     return doc.getvalue()
 
