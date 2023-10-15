@@ -90,11 +90,11 @@ from dataclasses import dataclass
 class DataObject:
     tulo: bool          # Tulo vai meno
     syvyys: int         # 1, 2 vai 3 tason rivi
-    paaluokka: int      # Ensimmäinen nro
+    paaluokka: str      # Ensimmäinen nro
     paaluokkaSelite: str # Ensimmäinen selite
-    menoluokka: int       # Toinen nro
+    menoluokka: str       # Toinen nro
     menoluokkaSelite: str # Toinen selite
-    momentti: int       # Kolmas nro
+    momentti: str      # Kolmas nro
     momenttiSelite: str # Kolman selite
     osoite: str         # Ensimmainen nro.Toinen nro.Kolmas nro
     libLisays: bool     # Jos rivi on Liberaalipuolueen lisäys
@@ -117,12 +117,8 @@ def main():
         print('No data found')
         sys.exit(10)
     
-    print("Got data")
-    
-
+    print("Got data, %d rows" % (len(data)))    
     dataDict = sort_data(data)
-
-    print("Got dataDict")
 
     print_sorted_data(dataDict)
 
@@ -210,7 +206,7 @@ def get_data() -> list[DataObject]:
                 if lastIndex >= COL_IDX_MENOLUOKKA_SELITE:
                     menoluokkaSelite=row[COL_IDX_MENOLUOKKA_SELITE]
                 if lastIndex >= COL_IDX_OSOITE:
-                    osoite=row[COL_IDX_OSOITE]
+                    osoiteStr=row[COL_IDX_OSOITE]
                 if lastIndex >= COL_IDX_PERUSTELU:
                     perustelu=row[COL_IDX_PERUSTELU]
                 if lastIndex >= COL_IDX_MOMENTTI_SELITE:
@@ -247,7 +243,9 @@ def get_data() -> list[DataObject]:
                 #    momenttiInt = int(momenttiStr)
                 #except ValueError:
                 #    pass                
-                (paaluokkaInt, menoLuokkaInt, momenttiInt, libLisays) = extract_osoite(osoiteStr)
+                (paaluokka, menoLuokka, momentti, libLisays) = extract_osoite(osoiteStr)
+
+                #print("%s was parsed to %r.%r.%r" % (osoiteStr, paaluokka, menoLuokka, momentti))
 
                 tuloBool = tuloStr == 'tulo'
 
@@ -288,13 +286,13 @@ def get_data() -> list[DataObject]:
                 dataObj = DataObject(
                     tulo=tuloBool,
                     syvyys=syvyysInt,
-                    paaluokka=paaluokkaInt,
+                    paaluokka=paaluokka,
                     paaluokkaSelite=paaluokkaSelite,
-                    menoluokka=menoLuokkaInt,
+                    menoluokka=menoLuokka,
                     menoluokkaSelite=menoluokkaSelite,
-                    momentti=momenttiInt,
+                    momentti=momentti,
                     momenttiSelite=momenttiSelite,
-                    osoite=osoite,
+                    osoite=osoiteStr,
                     libLisays=libLisays,
                     hallitus=hallitusDecimal,
                     lib=libDecimal,
@@ -307,7 +305,10 @@ def get_data() -> list[DataObject]:
                 print("Failed to process row %r due %r" % (row, e))
     return data
 
-def extract_osoite(osoite: str) -> (int, int, int, bool):
+def extract_osoite_int(osoite: str) -> (int, int, int, bool):
+    """
+    Extracts and converts to ints. Cannot be used due sheet using non-numeric identiefiers too, such as 30.lib.60.
+    """
     # Check for 'lib' ending
     isLib = osoite.endswith('lib') or osoite.endswith('lib.')
     
@@ -321,6 +322,20 @@ def extract_osoite(osoite: str) -> (int, int, int, bool):
     
     # Convert to integers and return
     return int(parts[0] or 0), int(parts[1] or 0), int(parts[2] or 0), isLib
+
+def extract_osoite(osoite: str) -> (str, str, str, bool):
+    # Check for 'lib' ending
+    isLib = 'lib' in osoite
+    
+    # Normalize ' lib' to 'lib
+    osoite = osoite.replace(' lib', 'lib')
+    
+    # Split by dot and ensure we have three segments
+    parts = osoite.split('.') + ['', '', '']
+    
+    # Convert to integers and return
+    return parts[0], parts[1], parts[2], isLib
+
 
 def sort_data_tree(data: list[DataObject]) -> defaultdict:
     """
@@ -356,17 +371,15 @@ def sort_data(data: list[DataObject]) -> dict:
     # XXX Initial sort required, as we want to first assign top level rows to dict, then second level and finally third level
     initial_sort = sorted(data, key=lambda row:(row.syvyys, row.paaluokka, row.menoluokka, row.momentti))
 
-    for item in initial_sort[:50]:  # inspect the first 10 items
-        print(item.syvyys, item.paaluokka, item.menoluokka, item.momentti, item.osoite)
+    tempDict = {}
+    sorted_count = 0
 
-
-    tempDict = {}    
     for row in initial_sort:
-        # Skip suspicious rows
+        # Skip suspicious rows -> 
         if not validate_syvyys(row):
             continue
 
-        print("Sorted a row %s" % row.osoite)
+        #print("Sorted a row %s" % row.osoite)
 
         if row.syvyys == 3:
             if row.paaluokka not in tempDict:
@@ -381,6 +394,7 @@ def sort_data(data: list[DataObject]) -> dict:
                     sys.exit(2)
                 else:
                     tempDict[row.paaluokka].subrows[row.menoluokka].subrows[row.momentti] = row
+                    sorted_count += 1
         elif row.syvyys == 2:
             if row.paaluokka not in tempDict:
                 print("Unknown paaluokka in row with syvyys 2. Unable to find paaluokka %d. Implementation error?" % row.paaluokka)
@@ -388,20 +402,30 @@ def sort_data(data: list[DataObject]) -> dict:
                 sys.exit(2)
             else:
                 tempDict[row.paaluokka].subrows[row.menoluokka] = row
+                sorted_count += 1
         elif row.syvyys == 1:
-            tempDict[row.paaluokka] = row
+            tempDict[row.paaluokka] = row            
+            sorted_count += 1
         else:
             print("Unexpected syvyys value %r, don't know what to do!" % row.syvyys)
+
+    print("Sorted data contains %d rows" % sorted_count)
+    
     return tempDict
 
 def validate_syvyys(row) -> bool:
     """
+    @deprecated: due lib values, can not assume int values
+    Just check that syvyys is 1, 2, or 3
+
     Expecting syvyys = 1 row to have integer value in paaluokka
     Expecting syvyys = 2 row to have integer value in paaluokka and menoluokka
     Expecting syvyys = 3 row to have integer value in paaluokka and menoluokka and momentti
     Any other value for syvyys, assume invalid row
     Return True if syvyys validates OK
     """
+    return row.syvyys in [1,2,3]
+    
     try:
         if row.syvyys == 3:
             int(row.paaluokka)
@@ -428,23 +452,13 @@ def print_data2(data: list[DataObject]) -> None:
     for d in data:
         print('%r, %r, %r, %r, %r' % (d.syvyys, d.paaluokka, d.menoluokka, d.momentti, d.osoite))
 
-def print_sorted_tree(tree) -> None:
-    for row in tree['root']:
-        print("%r %r" % (row.osoite, row.paaluokkaSelite))
-        for subrow in tree[row.paaluokka]:
-            print("%r %r" % (subrow.osoite, subrow.menoluokkaSelite))
-            for subsubrow in tree[row.paaluokka][subrow.menoluokka]:
-                print("%r %r" % (subsubrow.osoite, subsubrow.momenttiSelite))
-
-def print_sorted_data(dataDict) -> None:
+def print_sorted_data(dataDict) -> None:    
     for row in dataDict.values():
-        print('%r %r' % (row.osoite, row.paaluokkaSelite))
+        print("%r %r %r subrows" % (row.osoite, row.paaluokkaSelite, len(row.subrows)))        
         for subrow in row.subrows.values():
-            print("%r %r" % (subrow.osoite, subrow.menoluokkaSelite))
+            print("%r %r %r subrows" % (subrow.osoite, subrow.menoluokkaSelite, len(subrow.subrows)))
             for subsubrow in subrow.subrows.values():
-                print("%r %r" % (subsubrow.osoite, subsubrow.momenttiSelite))
-
-
+                print("%r %r %r subrows" % (subsubrow.osoite, subsubrow.momenttiSelite, len(subsubrow.subrows)))
 
 def update_wordpress_page(page_id, content):
     """
