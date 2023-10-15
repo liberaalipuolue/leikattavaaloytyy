@@ -1,4 +1,5 @@
 from __future__ import print_function
+from collections import defaultdict
 
 import sys
 import os.path
@@ -101,6 +102,49 @@ class DataObject:
     lib: Decimal # Liberaalipuolueen esitys
     perustelu: str      # Leikkauksen perustelu
     linkki: str         # Budjettikirjan linkki
+    subrows: dict        # Sorttausta varten, alemman tason rivit
+
+
+
+def main():
+    data = None
+    try:
+        data = get_data()        
+    except HttpError as err:
+        print(err)
+
+    if data is None:
+        print('No data found')
+        sys.exit(10)
+    
+    print("Got data")
+
+    sys.exit(0)
+
+    dataDict = sort_data(data)
+
+    print("Got dataDict")
+
+    print_sorted_data(dataDict)
+    
+    
+
+    html = generate_html(data)
+    if html is None:
+        print("Failed to generate html")
+        sys.exit(20)
+    print("Generated HTML")
+    
+    response = update_wordpress_page(PAGE_ID, html)
+    if response is None:
+        print("Failed to update wordpress page")
+        sys.exit(30)
+    else:
+        print("Page updated")
+
+    print("Job's done")
+
+
 
 def get_data() -> list[DataObject]:
     """
@@ -141,6 +185,10 @@ def get_data() -> list[DataObject]:
         return
     else:
         for row in values:
+            # Skip empty rows
+            if not row:                
+                continue
+
             try:
                 tuloStr = row[COL_IDX_TULO]
                 tuloBool = tuloStr == 'tulo'
@@ -152,27 +200,30 @@ def get_data() -> list[DataObject]:
                 except ValueError:
                     pass
 
-                paaluokkaInt = 0
-                paaluokkaStr = row[COL_IDX_MENOLUOKKA]
-                try:
-                    paaluokkaInt = int(paaluokkaStr)
-                except ValueError:
-                    pass
-
-                menoLuokkaInt = 0
-                menoLuokkaStr = row[COL_IDX_PAALUOKKA]
-                try:
-                    menoLuokkaInt = int(menoLuokkaStr)
-                except ValueError:
-                    pass
-
+                # FIXME: API/Sheet is returning 1 for 11 in for some rows
+                #     due unknown issue.
+                # Skip accessing number cells and extract values from osoite cell            
+                #paaluokkaInt = 0
+                #paaluokkaStr = row[COL_IDX_MENOLUOKKA]
+                #try:
+                #    paaluokkaInt = int(paaluokkaStr)
+                #except ValueError:
+                #    pass
+                #menoLuokkaInt = 0
+                #menoLuokkaStr = row[COL_IDX_PAALUOKKA]
+                #try:
+                #    menoLuokkaInt = int(menoLuokkaStr)
+                #except ValueError:
+                #    pass
                 # Empty with lib additions
-                momenttiInt = 0
-                momenttiStr = row[COL_IDX_MOMENTTI]
-                try:
-                    momenttiInt = int(momenttiStr)
-                except ValueError:
-                    pass
+                #momenttiInt = 0
+                #momenttiStr = row[COL_IDX_MOMENTTI]
+                #try:
+                #    momenttiInt = int(momenttiStr)
+                #except ValueError:
+                #    pass                
+                (paaluokkaInt, menoLuokkaInt, momenttiInt, libLisays) = extract_osoite(row[COL_IDX_OSOITE])
+
 
                 momenttiSelite = row[COL_IDX_MOMENTTI_SELITE]
                 libLisays = 'lib.' in momenttiSelite
@@ -216,25 +267,206 @@ def get_data() -> list[DataObject]:
                     hallitus=hallitusDecimal,
                     lib=libDecimal,
                     perustelu=row[COL_IDX_PERUSTELU],
-                    linkki=linkki
+                    linkki=linkki,
+                    subrows={}
                 )
                 data.append(dataObj)
             except Exception as e:
                 print("Failed to process row %r due %r" % (row, e))
     return data
 
-def sort_data(data: list[DataObject]):
+def extract_osoite(osoite: str) -> (int, int, int, bool):
+    # Check for 'lib' ending
+    isLib = osoite.endswith('lib') or osoite.endswith('lib.')
+    
+    # Remove 'lib' or 'lib.' or ' lib' if it's there
+    osoite = osoite.replace('lib.', '')
+    osoite = osoite.replace(' lib', '')
+    osoite = osoite.replace('lib', '')
+    
+    # Split by dot and ensure we have three segments
+    parts = osoite.split('.') + [0, 0, 0]
+    
+    # Convert to integers and return
+    return int(parts[0] or 0), int(parts[1] or 0), int(parts[2] or 0), isLib
+
+def sort_data_tree(data: list[DataObject]) -> defaultdict:
     """
     Groups dataRows based on their common paaluokka and menoluokka numbers
 
-    TODO
+    FIXME
+    
+    tree['root'] Top level rows
+    tree[paaluokka_nro] 
+    tree[paaluokka_nro][menoluokka_nro]
     """
-    pass
+    initial_sort = sorted(data, key=lambda x:(x.syvyys))
+    tree = defaultdict(lambda: defaultdict(list))
+    tree['root'] = list # XXX Generate special position to hold top level rows
+    for row in initial_sort:
+        if row.syvyys == 3:
+            tree[row.paaluokka][row.menoluokka].append(row)
+        elif row.syvyys == 2:
+            tree[row.paaluokka].append(row)
+        elif row.syvyys == 1:
+            tree['root'].append(row)
+        else:
+            print("Unexpected syvyys value %r, don't know what to do!" % row.syvyys)
+    return tree 
+
+def sort_data(data: list[DataObject]) -> dict:
+    """
+    Groups dataRows based on their common paaluokka and menoluokka numbers
+    
+    Returns
+        dict of top level rows, other rows inserted into subrows dicts inside each row object
+    """
+    # XXX Initial sort required, as we want to first assign top level rows to dict, then second level and finally third level
+    initial_sort = sorted(data, key=lambda row:(row.syvyys, row.paaluokka, row.menoluokka, row.momentti))
+
+    for item in initial_sort[:50]:  # inspect the first 10 items
+        print(item.syvyys, item.paaluokka, item.menoluokka, item.momentti, item.osoite)
+
+
+    tempDict = {}    
+    for row in initial_sort:
+        # Skip suspicious rows
+        if not validate_syvyys(row):
+            continue
+
+        print("Sorted a row %s" % row.osoite)
+
+        if row.syvyys == 3:
+            if row.paaluokka not in tempDict:
+                print("Unknown paaluokka in row with syvyys 3. Implementation error")
+                print("%r" % row)
+                sys.exit(2)
+            else:  
+                if row.menoluokka not in tempDict[row.paaluokka].subrows:
+                    print("Unknown menoluokka %d in paaluokka %d in row with syvyys 3. Implementation error" % (row.menoluokka, row.paaluokka))
+                    print("%r" % row)
+                    print("%r" % tempDict[row.paaluokka].subrows)
+                    sys.exit(2)
+                else:
+                    tempDict[row.paaluokka].subrows[row.menoluokka].subrows[row.momentti] = row
+        elif row.syvyys == 2:
+            if row.paaluokka not in tempDict:
+                print("Unknown paaluokka in row with syvyys 2. Unable to find paaluokka %d. Implementation error?" % row.paaluokka)
+                print("%r" % row)
+                sys.exit(2)
+            else:
+                tempDict[row.paaluokka].subrows[row.menoluokka] = row
+        elif row.syvyys == 1:
+            tempDict[row.paaluokka] = row
+        else:
+            print("Unexpected syvyys value %r, don't know what to do!" % row.syvyys)
+    return tempDict
+
+def validate_syvyys(row) -> bool:
+    """
+    Expecting syvyys = 1 row to have integer value in paaluokka
+    Expecting syvyys = 2 row to have integer value in paaluokka and menoluokka
+    Expecting syvyys = 3 row to have integer value in paaluokka and menoluokka and momentti
+    Any other value for syvyys, assume invalid row
+    Return True if syvyys validates OK
+    """
+    try:
+        if row.syvyys == 3:
+            int(row.paaluokka)
+            int(row.menoluokka)
+            int(row.momentti)
+        elif row.syvyys == 2:
+            int(row.paaluokka)
+            int(row.menoluokka)
+        elif row.syvyys == 1:
+            int(row.paaluokka)
+        else:
+            return False
+        return True
+    except ValueError:
+        print("Row %r failed syvyys validation" % row)
+        return False
 
 def print_data(data: list[DataObject]) -> None:
     for d in data:
         print('%r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r' % (d.tulo, d.syvyys, d.paaluokka, d.paaluokkaSelite, d.menoluokka, d.menoluokkaSelite, 
                         d.momentti, d.momenttiSelite, d.osoite, d.libLisays, d.hallitus, d.lib, d.perustelu, d.linkki))
+
+def print_data2(data: list[DataObject]) -> None:
+    for d in data:
+        print('%r, %r, %r, %r, %r' % (d.syvyys, d.paaluokka, d.menoluokka, d.momentti, d.osoite))
+
+def print_sorted_tree(tree) -> None:
+    for row in tree['root']:
+        print("%r %r" % (row.osoite, row.paaluokkaSelite))
+        for subrow in tree[row.paaluokka]:
+            print("%r %r" % (subrow.osoite, subrow.menoluokkaSelite))
+            for subsubrow in tree[row.paaluokka][subrow.menoluokka]:
+                print("%r %r" % (subsubrow.osoite, subsubrow.momenttiSelite))
+
+def print_sorted_data(dataDict) -> None:
+    for row in dataDict.values():
+        print('%r %r' % (row.osoite, row.paaluokkaSelite))
+        for subrow in row.subrows.values():
+            print("%r %r" % (subrow.osoite, subrow.menoluokkaSelite))
+            for subsubrow in subrow.subrows.values():
+                print("%r %r" % (subsubrow.osoite, subsubrow.momenttiSelite))
+
+
+
+def update_wordpress_page(page_id, content):
+    """
+    Update Vaihtoehtobudjetti page at Wordpress site
+
+    Note: Page must be saved in "Classic editor" mode for REST api pushed content to be visible
+          If page is saved using "Advanced Layout Editor" active, the will have completly different content
+    """
+    # Endpoint URL for updating a page
+    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages/{page_id}'
+    
+    print(f'Writing to {endpoint}')
+
+    # Page data
+    page_data = {
+        'content': content
+    }
+    response = requests.post(endpoint, headers=HEADERS, json=page_data)
+    
+    if response.status_code == 200:
+        print("Page updated successfully!")
+        return response.json()
+    else:
+        print(f"Failed to update the page. Status code: {response.status_code}")
+        print(f"Error: {response}")
+        return None
+
+def get_wordpress_page(page_id):
+    """
+    Gets page content
+    Note that content and title are returned as "rendered" (i.e. different than wordpress editor shows with shortcodes etc)
+    Note that password protected pages can be returned as empty content
+    Note that hidden pages can return 401
+    """
+    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages/{page_id}'
+    response = requests.get(endpoint, headers=HEADERS)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get the page {page_id}. Status code: {response.status_code}")
+        return None
+
+def get_wordpress_pages():
+    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages'
+    response = requests.get(endpoint, headers=HEADERS)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get the pages. Status code: {response.status_code}")
+        return None
+
+
 
 def generate_html(data):
 
@@ -345,90 +577,6 @@ def generate_level_3(data):
                     with tag('td'):
                         text(f"Row{i} Col{j}")
     return doc
-
-def update_wordpress_page(page_id, content):
-    """
-    Update Vaihtoehtobudjetti page at Wordpress site
-
-    Note: Page must be saved in "Classic editor" mode for REST api pushed content to be visible
-          If page is saved using "Advanced Layout Editor" active, the will have completly different content
-    """
-    # Endpoint URL for updating a page
-    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages/{page_id}'
-    
-    print(f'Writing to {endpoint}')
-
-    # Page data
-    page_data = {
-        'content': content
-    }
-    response = requests.post(endpoint, headers=HEADERS, json=page_data)
-    
-    if response.status_code == 200:
-        print("Page updated successfully!")
-        return response.json()
-    else:
-        print(f"Failed to update the page. Status code: {response.status_code}")
-        print(f"Error: {response}")
-        return None
-
-def get_wordpress_page(page_id):
-    """
-    Gets page content
-    Note that content and title are returned as "rendered" (i.e. different than wordpress editor shows with shortcodes etc)
-    Note that password protected pages can be returned as empty content
-    Note that hidden pages can return 401
-    """
-    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages/{page_id}'
-    response = requests.get(endpoint, headers=HEADERS)
-    
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Failed to get the page {page_id}. Status code: {response.status_code}")
-        return None
-
-def get_wordpress_pages():
-    endpoint = f'{WORDPRESS_URL}/wp-json/wp/v2/pages'
-    response = requests.get(endpoint, headers=HEADERS)
-    
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Failed to get the pages. Status code: {response.status_code}")
-        return None
-
-def main():
-    data = None
-    try:
-        data = get_data()        
-    except HttpError as err:
-        print(err)
-
-    if data is None:
-        print('No data found')
-        sys.exit(10)
-    
-    print("Got data")
-
-    print_data(data)
-    
-    sys.exit(0)
-
-    html = generate_html(data)
-    if html is None:
-        print("Failed to generate html")
-        sys.exit(20)
-    print("Generated HTML")
-    
-    response = update_wordpress_page(PAGE_ID, html)
-    if response is None:
-        print("Failed to update wordpress page")
-        sys.exit(30)
-    else:
-        print("Page updated")
-
-    print("Job's done")
 
 if __name__ == '__main__':
     main()
