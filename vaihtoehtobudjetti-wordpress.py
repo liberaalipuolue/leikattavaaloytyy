@@ -4,12 +4,32 @@ import sys
 import os.path
 import configparser
 
-CONFIG_INI = './secrets/credentials-wp.ini'
-
+# Main config file, paths to secrets and google and worpress configuration
+CONFIG_INI = 'vaihtoehtobudjetti-wordpress.ini'
+print("Current working directory %s" % os.getcwd())
+if not os.path.exists(CONFIG_INI):
+    print("Mandatory config file missing, expected to find %s" % CONFIG_INI)
+    sys.exit(1)
 config = configparser.ConfigParser()
-# The file contains sheets config, and wordpress stuff
-# TODO: Add example ini file to git repo
 config.read(CONFIG_INI)
+
+try:
+    WORDPRESS_AUTHENTICATION_FILE = config.get('secrets', 'WORDPRESS_AUTHENTICATION')
+    GOOGLE_AUTHENTICATION_FILE = config.get('secrets', 'GOOGLE_AUTHENTICATION')
+    GOOGLE_TOKEN_FILE = config.get('secrets', 'GOOGLE_TOKEN')
+except configparser.NoOptionError as e:
+    print("Mandatory config key missing, please review %s. %r" % (CONFIG_INI, e))
+    sys.exit(1)
+
+# Wordpress authentication config
+wpconfig = configparser.ConfigParser()
+wpconfig.read(WORDPRESS_AUTHENTICATION_FILE)
+try:
+    WP_USERNAME = wpconfig.get('wordpress', 'USERNAME')
+    WP_APP_PASSWORD = wpconfig.get('wordpress', 'APP_PASSWORD')
+except configparser.NoOptionError as e:
+    print("Mandatory config key missing, please review %s. %r" % (WORDPRESS_AUTHENTICATION_FILE, e))
+    sys.exit(1)
 
 # Google sheets
 # How to run, see: https://developers.google.com/sheets/api/quickstart/python
@@ -19,7 +39,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# If modifying these scopes, delete the file token.json.
+# If modifying these scopes, delete the file GOOGLE_TOKEN_FILE
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 # The ID and range of a sample spreadsheet.
@@ -49,15 +69,13 @@ import requests
 try:
     WORDPRESS_URL = config.get('wordpress', 'WORDPRESS_URL')
     PAGE_ID = config.getint('wordpress', 'PAGE_ID') 
-    USERNAME = config.get('wordpress', 'USERNAME')
-    APP_PASSWORD = config.get('wordpress', 'APP_PASSWORD')
 except configparser.NoOptionError:
     print("Mandatory config key missing, please review %s" % CONFIG_INI)
     sys.exit(1)
 
 # Headers for the API request
 HEADERS = {
-    'Authorization': f'{requests.auth._basic_auth_str(USERNAME, APP_PASSWORD)}',
+    'Authorization': f'{requests.auth._basic_auth_str(WP_USERNAME, WP_APP_PASSWORD)}',
     'Content-Type': 'application/json'
 }
 
@@ -87,24 +105,22 @@ class DataObject:
 def get_data() -> list[DataObject]:
     """
     Acquires Vaihtoehtobudjetti data over Sheets API.
-    TODO: Convert Sheets API return value to data object
     """
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
+    # The file GOOGLE_TOKEN_FILE stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists(GOOGLE_TOKEN_FILE):
+        creds = Credentials.from_authorized_user_file(GOOGLE_TOKEN_FILE, SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                './secrets/credentials-vaihtoehtobudjetti.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(GOOGLE_AUTHENTICATION_FILE, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open('token.json', 'w') as token:
+        with open(GOOGLE_TOKEN_FILE, 'w') as token:
             token.write(creds.to_json())
 
     values = False
