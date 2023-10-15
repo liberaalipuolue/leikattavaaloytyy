@@ -182,23 +182,49 @@ def get_data() -> list[DataObject]:
     data = []
     if not values:
         print('No data found.')
-        return
+        sys.exit(1)
     else:
-        for row in values:
-            # Skip empty rows
+        headerRow = True
+        for row in values:            
+            # Skip empty rows and first (header) row
             if not row:                
                 continue
-
+            if headerRow:
+                headerRow = False
+                continue
+            
             try:
-                tuloStr = row[COL_IDX_TULO]
-                tuloBool = tuloStr == 'tulo'
-
-                syvyysInt = 0
-                syvyysStr = row[COL_IDX_SYVYYS]
-                try:
-                    syvyysInt = int(syvyysStr)
-                except ValueError:
-                    pass
+                # NOTE: Lenght of rows varies due Sheets API leaving out empty trailing cell values
+                # XXX Handle varying row lengths by assuming default values and reading values only if row length is long enough
+                lastIndex = len(row) - 1
+                paaluokkaSelite = ''
+                menoluokkaSelite = ''
+                momenttiSelite = ''
+                perustelu = ''
+                hallitusStr = ''
+                libStr = ''
+                tuloStr = ''
+                syvyysStr = ''
+                osoiteStr = ''
+                if lastIndex >= COL_IDX_PAALUOKKA_SELITE:
+                    paaluokkaSelite=row[COL_IDX_PAALUOKKA_SELITE]
+                if lastIndex >= COL_IDX_MENOLUOKKA_SELITE:
+                    menoluokkaSelite=row[COL_IDX_MENOLUOKKA_SELITE]
+                if lastIndex >= COL_IDX_OSOITE:
+                    osoite=row[COL_IDX_OSOITE]
+                if lastIndex >= COL_IDX_PERUSTELU:
+                    perustelu=row[COL_IDX_PERUSTELU]
+                if lastIndex >= COL_IDX_MOMENTTI_SELITE:
+                    momenttiSelite=row[COL_IDX_MOMENTTI_SELITE]
+                if lastIndex >= COL_IDX_HALLITUS:
+                    hallitusStr = row[COL_IDX_HALLITUS]
+                if lastIndex >= COL_IDX_LIB:
+                    libStr = row[COL_IDX_LIB]
+                if lastIndex >= COL_IDX_TULO:
+                    tuloStr = row[COL_IDX_TULO]
+                if lastIndex >= COL_IDX_SYVYYS:
+                    syvyysStr = row[COL_IDX_SYVYYS]                
+                
 
                 # FIXME: API/Sheet is returning 1 for 11 in for some rows
                 #     due unknown issue.
@@ -222,25 +248,32 @@ def get_data() -> list[DataObject]:
                 #    momenttiInt = int(momenttiStr)
                 #except ValueError:
                 #    pass                
-                (paaluokkaInt, menoLuokkaInt, momenttiInt, libLisays) = extract_osoite(row[COL_IDX_OSOITE])
+                (paaluokkaInt, menoLuokkaInt, momenttiInt, libLisays) = extract_osoite(osoiteStr)
 
+                tuloBool = tuloStr == 'tulo'
 
-                momenttiSelite = row[COL_IDX_MOMENTTI_SELITE]
-                libLisays = 'lib.' in momenttiSelite
+                syvyysInt = 0
+                try:
+                    syvyysInt = int(syvyysStr)
+                except ValueError:
+                    pass
+
 
                 hallitusDecimal = Decimal('0.0')
-                hallitusStr = row[COL_IDX_HALLITUS]
                 if (len(hallitusStr) > 0):
                     # Remove non-breaking spaces
                     hallitusStr = hallitusStr.replace('\xa0', '')
+                    # XXX Another header row? Not sure, but filter it out
+                    if hallitusStr == 'Määräraha':
+                        print("Skipping another header row like row.")
+                        continue
                     try:
                         hallitusDecimal = Decimal(hallitusStr)
                     except InvalidOperation:
-                        print("Failed to convert hallitusStr %r to Decimal" % hallitusStr)
+                        print("Failed to convert hallitusStr %r to Decimal %r" % (hallitusStr, row))
                         continue
 
                 libDecimal = Decimal('0.0')
-                libStr = row[COL_IDX_LIB]
                 if (len(libStr) > 0):
                     # Remove non-breaking spaces
                     libStr = libStr.replace('\xa0', '')
@@ -257,16 +290,16 @@ def get_data() -> list[DataObject]:
                     tulo=tuloBool,
                     syvyys=syvyysInt,
                     paaluokka=paaluokkaInt,
-                    paaluokkaSelite=row[COL_IDX_PAALUOKKA_SELITE],
+                    paaluokkaSelite=paaluokkaSelite,
                     menoluokka=menoLuokkaInt,
-                    menoluokkaSelite=row[COL_IDX_MENOLUOKKA_SELITE],
+                    menoluokkaSelite=menoluokkaSelite,
                     momentti=momenttiInt,
                     momenttiSelite=momenttiSelite,
-                    osoite=row[COL_IDX_OSOITE],
+                    osoite=osoite,
                     libLisays=libLisays,
                     hallitus=hallitusDecimal,
                     lib=libDecimal,
-                    perustelu=row[COL_IDX_PERUSTELU],
+                    perustelu=perustelu,
                     linkki=linkki,
                     subrows={}
                 )
