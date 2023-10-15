@@ -82,28 +82,29 @@ HEADERS = {
 
 # html generation
 from yattag import Doc
-
 from decimal import Decimal, InvalidOperation
 from dataclasses import dataclass
+import locale # For currency formatting
+locale.setlocale(locale.LC_ALL, 'fi_FI.UTF-8')
 
 @dataclass
 class DataObject:
     tulo: bool          # Tulo vai meno
     syvyys: int         # 1, 2 vai 3 tason rivi
     paaluokka: str      # Ensimmäinen nro
-    paaluokkaSelite: str # Ensimmäinen selite
+    paaluokka_selite: str # Ensimmäinen selite
     menoluokka: str       # Toinen nro
-    menoluokkaSelite: str # Toinen selite
+    menoluokka_selite: str # Toinen selite
     momentti: str      # Kolmas nro
-    momenttiSelite: str # Kolman selite
+    momentti_selite: str # Kolman selite
     osoite: str         # Ensimmainen nro.Toinen nro.Kolmas nro
     libLisays: bool     # Jos rivi on Liberaalipuolueen lisäys
     hallitus: Decimal   # Hallituksen esitys
     lib: Decimal # Liberaalipuolueen esitys
+    ero: Decimal # Erotus, "Leikattavaa löytyy" -luku
     perustelu: str      # Leikkauksen perustelu
     linkki: str         # Budjettikirjan linkki
     subrows: dict        # Sorttausta varten, alemman tason rivit
-
 
 
 def main():
@@ -120,16 +121,20 @@ def main():
     print("Got data, %d rows" % (len(data)))    
     dataDict = sort_data(data)
 
-    print_sorted_data(dataDict)
+    #print_sorted_data(dataDict)
 
-    sys.exit(0)    
-
-    html = generate_html(data)
+    html = generate_html(dataDict)
     if html is None:
         print("Failed to generate html")
         sys.exit(20)
     print("Generated HTML")
-    
+    html_file = 'output.html'
+    with open(html_file, 'w') as file:
+        file.write(html)
+        print("Wrote to %s" % html_file)
+
+    #sys.exit(0)    
+
     response = update_wordpress_page(PAGE_ID, html)
     if response is None:
         print("Failed to update wordpress page")
@@ -192,9 +197,9 @@ def get_data() -> list[DataObject]:
                 # NOTE: Lenght of rows varies due Sheets API leaving out empty trailing cell values
                 # XXX Handle varying row lengths by assuming default values and reading values only if row length is long enough
                 lastIndex = len(row) - 1
-                paaluokkaSelite = ''
-                menoluokkaSelite = ''
-                momenttiSelite = ''
+                paaluokka_selite = ''
+                menoluokka_selite = ''
+                momentti_selite = ''
                 perustelu = ''
                 hallitusStr = ''
                 libStr = ''
@@ -202,15 +207,15 @@ def get_data() -> list[DataObject]:
                 syvyysStr = ''
                 osoiteStr = ''
                 if lastIndex >= COL_IDX_PAALUOKKA_SELITE:
-                    paaluokkaSelite=row[COL_IDX_PAALUOKKA_SELITE]
+                    paaluokka_selite=row[COL_IDX_PAALUOKKA_SELITE]
                 if lastIndex >= COL_IDX_MENOLUOKKA_SELITE:
-                    menoluokkaSelite=row[COL_IDX_MENOLUOKKA_SELITE]
+                    menoluokka_selite=row[COL_IDX_MENOLUOKKA_SELITE]
                 if lastIndex >= COL_IDX_OSOITE:
                     osoiteStr=row[COL_IDX_OSOITE]
                 if lastIndex >= COL_IDX_PERUSTELU:
                     perustelu=row[COL_IDX_PERUSTELU]
                 if lastIndex >= COL_IDX_MOMENTTI_SELITE:
-                    momenttiSelite=row[COL_IDX_MOMENTTI_SELITE]
+                    momentti_selite=row[COL_IDX_MOMENTTI_SELITE]
                 if lastIndex >= COL_IDX_HALLITUS:
                     hallitusStr = row[COL_IDX_HALLITUS]
                 if lastIndex >= COL_IDX_LIB:
@@ -277,8 +282,10 @@ def get_data() -> list[DataObject]:
                     try:
                         libDecimal = Decimal(libStr)
                     except InvalidOperation:
-                        print("Failed to convert libStr %r to Decimal" % hallitusStr)
+                        print("Failed to convert libStr %r to Decimal" % libStr)
                         continue
+
+                eroDecimal = hallitusDecimal - libDecimal
 
                 # TODO: build full url
                 linkki = "https://budjetti.vm.fi"
@@ -287,15 +294,16 @@ def get_data() -> list[DataObject]:
                     tulo=tuloBool,
                     syvyys=syvyysInt,
                     paaluokka=paaluokka,
-                    paaluokkaSelite=paaluokkaSelite,
+                    paaluokka_selite=paaluokka_selite,
                     menoluokka=menoLuokka,
-                    menoluokkaSelite=menoluokkaSelite,
+                    menoluokka_selite=menoluokka_selite,
                     momentti=momentti,
-                    momenttiSelite=momenttiSelite,
+                    momentti_selite=momentti_selite,
                     osoite=osoiteStr,
                     libLisays=libLisays,
                     hallitus=hallitusDecimal,
                     lib=libDecimal,
+                    ero=eroDecimal,
                     perustelu=perustelu,
                     linkki=linkki,
                     subrows={}
@@ -388,7 +396,7 @@ def sort_data(data: list[DataObject]) -> dict:
                 sys.exit(2)
             else:  
                 if row.menoluokka not in tempDict[row.paaluokka].subrows:
-                    print("Unknown menoluokka %d in paaluokka %d in row with syvyys 3. Implementation error" % (row.menoluokka, row.paaluokka))
+                    print("Unknown menoluokka %r in paaluokka %r in row with syvyys 3. Implementation error" % (row.menoluokka, row.paaluokka))
                     print("%r" % row)
                     print("%r" % tempDict[row.paaluokka].subrows)
                     sys.exit(2)
@@ -397,7 +405,10 @@ def sort_data(data: list[DataObject]) -> dict:
                     sorted_count += 1
         elif row.syvyys == 2:
             if row.paaluokka not in tempDict:
-                print("Unknown paaluokka in row with syvyys 2. Unable to find paaluokka %d. Implementation error?" % row.paaluokka)
+                print("Unknown paaluokka in row with syvyys 2. Unable to find paaluokka %r. Implementation error?" % row.paaluokka)
+                print("Known paaluokka values:")
+                for paaluokkaRow in tempDict.values():
+                    print("%r" % paaluokkaRow.paaluokka)
                 print("%r" % row)
                 sys.exit(2)
             else:
@@ -445,8 +456,8 @@ def validate_syvyys(row) -> bool:
 
 def print_data(data: list[DataObject]) -> None:
     for d in data:
-        print('%r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r' % (d.tulo, d.syvyys, d.paaluokka, d.paaluokkaSelite, d.menoluokka, d.menoluokkaSelite, 
-                        d.momentti, d.momenttiSelite, d.osoite, d.libLisays, d.hallitus, d.lib, d.perustelu, d.linkki))
+        print('%r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r' % (d.tulo, d.syvyys, d.paaluokka, d.paaluokka_selite, d.menoluokka, d.menoluokka_selite, 
+                        d.momentti, d.momentti_selite, d.osoite, d.libLisays, d.hallitus, d.lib, d.perustelu, d.linkki))
 
 def print_data2(data: list[DataObject]) -> None:
     for d in data:
@@ -454,11 +465,11 @@ def print_data2(data: list[DataObject]) -> None:
 
 def print_sorted_data(dataDict) -> None:    
     for row in dataDict.values():
-        print("%r %r %r subrows" % (row.osoite, row.paaluokkaSelite, len(row.subrows)))        
+        print("%r %r %r subrows" % (row.osoite, row.paaluokka_selite, len(row.subrows)))        
         for subrow in row.subrows.values():
-            print("%r %r %r subrows" % (subrow.osoite, subrow.menoluokkaSelite, len(subrow.subrows)))
+            print("%r %r %r subrows" % (subrow.osoite, subrow.menoluokka_selite, len(subrow.subrows)))
             for subsubrow in subrow.subrows.values():
-                print("%r %r %r subrows" % (subsubrow.osoite, subsubrow.momenttiSelite, len(subsubrow.subrows)))
+                print("%r %r %r subrows" % (subsubrow.osoite, subsubrow.momentti_selite, len(subsubrow.subrows)))
 
 def update_wordpress_page(page_id, content):
     """
@@ -514,36 +525,69 @@ def get_wordpress_pages():
 
 
 
-def generate_html(data):
+def euros(number) -> str:
+    """
+    Format currency
+    """
+    return locale.currency(number, grouping=True, symbol=False) + ' €'
+
+def generate_html(data) -> str:
 
     doc, tag, text = Doc().tagtext()
-    with tag('h1'):
-        text("Hello world")
-    doc.asis(generate_level_2(data))
+    doc.asis(generate_intro(data))
+    doc.asis(generate_tables(data))
 
     return doc.getvalue()
 
+def generate_intro(data) -> str:
+    doc, tag, text = Doc().tagtext()
+    with tag('div', 
+        klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full avia-builder-el-first',
+        style='border-radius:0px;'):
+        with tag('section', klass='av_textblock_section'):
+            with tag('div', klass='avia_textblock'):
+                with tag('p'):
+                    with tag('img', decoding='async', loading='lazy', klass='wp-image-8978 aligncenter',
+                        src='https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png',
+                        width='593', height='354',
+                        srcset='https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png 300w, shttps://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1030x616.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-768x459.png 768w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1536x919.png 1536w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-2048x1225.png 2048w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1500x897.png 1500w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-705x422.png 705w',
+                        sizes='(max-width: 593px) 100vw, 593px'):
+                            pass
+    with tag('div', 
+        klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin',
+        style='border-radius:0px;'):
+            with tag('div', klass='avia_textblock'):
+                with tag('h4', style="text-align: center;"):                    
+                    with tag('p'):
+                        with tag('span', style="font-size: 24pt"):
+                            text('#LeikattavaaLöytyy on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.')
+                    with tag('p'):
+                        with tag('span', style="font-size: 18pt"):
+                            text('Varjobudjetissa ei käytetä juustohöylää, vaan karsitaan kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Menokohteet tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille. Veronalennuksiinkin on varaa ilman alijäämiä ja lisävelkaa')
+                    with tag('p'):
+                        with tag('span', style="font-size: 18pt"):
+                            text('Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Me haluamme valita toisin, Suomen tulevaisuuden tähden.')
 
-def generate_level_2(data):
+    return doc.getvalue()
+
+def generate_tables(data) -> str:
+    """        
     """
-    Returns table as yattag doc
+    doc, tag, text = Doc().tagtext()
 
-    Kakkostason momentti, otsikko osio taulukolle
+    for row in data.values():
+        with tag('h1'):
+            text(row.osoite + " " + row.paaluokka_selite)
+        for subrow in row.subrows.values():
+            doc.asis(generate_level_2(subrow))
 
-    Data:
-    1. tason momenttinumero
-    2. tason momentin nimi
-    -> esim 25. Oikeusministeriön hallinnonala
-    Linkki budjettikirjaan
+            #print("%r %r %r subrows" % (subrow.osoite, subrow.menoluokka_selite, len(subrow.subrows)))
+            for subsubrow in subrow.subrows.values():
+                print("%r %r %r subrows" % (subsubrow.osoite, subsubrow.momentti_selite, len(subsubrow.subrows)))
+    return doc.getvalue()
 
-    Hallituksen esitys €
-    Liberaalipuolueen esitys €
-    Erotus €
-    Liberaalipuolueen leikkausten kuvaus
-
-    Lista 3. tason momenteista
-
-
+def generate_level_2(subrow) -> str:
+    """
     <section class="av_toggle_section"  itemscope="itemscope" itemtype="https://schema.org/CreativeWork"  >
         <div role="tablist" class="single_toggle" data-tags="{All} "  >        
         <p data-fake-id="#25_oikeusministerion_hallinnonala" class="toggler "  itemprop="headline"    role="tab" tabindex="0" aria-controls="25_oikeusministerion_hallinnonala">
@@ -567,34 +611,32 @@ def generate_level_2(data):
     """
 
     doc, tag, text = Doc().tagtext()
+
     with tag('section', klass='av_toggle_section', itemscope='itemscope', itemtype='https://schema.org/CreativeWork'):
         with tag('div', role='tablist', klass='single_toggle', data_tags="{All}"):
-            with tag('p', data_fake_id="#25_oikeusministerion_hallinnonala", klass="toggler ",  itemprop="headline", role="tab", tabindex="0", aria_controls="25_oikeusministerion_hallinnonala"):
-                text("1. Hello")
+            with tag('p', klass="toggler ",  itemprop="headline", role="tab", tabindex="0"):
+                text(subrow.osoite + " " + subrow.menoluokka_selite)
             #<span class="toggle_icon" >
             #<span class="vert_icon"></span>
             #<span class="hor_icon"></span>
             #</span>
             with tag('h4'):
-                text("Hallituksen esitys: 1 076 795 000€")
+                text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
             with tag('h4'):
-                text("Liberaalipuolueen esitys: 998 883 761€")
+                text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
             with tag('h4'):
-                text("Leikattavaa löytyy: −77 911 239€")
+                text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
             with tag('p', style="font-size: 14pt;"):
-                text('Oikeusvaltion ylläpito tulee turvata riittävällä rahoituksella. IT-hankkeiden resurssitehokkuutta tulee parantaa.')
+                text(subrow.perustelu)
 
-    doc.asis(generate_level_3(data))
+    doc.asis(generate_level_2_table(subrow))
 
-    return doc
+    return doc.getvalue()
 
 
-def generate_level_3(data):
+def generate_level_2_table(subrow) -> str:
     """
     Returns table as yattag doc
-
-    Kolmostason momentit
-
     
 
     <table id="tablepress-11_verot" class="tablepress tablepress-id-11_verot tablepress-responsive tablepress-responsive-stack-tablet">
@@ -616,13 +658,39 @@ def generate_level_3(data):
     """
 
     doc, tag, text = Doc().tagtext()
-    with tag('table'):
-        for i in range(1, 3):
+    odd = True
+    with tag('table', klass='tablepress tablepress-id-11_verot tablepress-responsive tablepress-responsive-stack-tablet'):
+        with tag('thead'):
             with tag('tr'):
-                for j in range(1, 3):
+                with tag('th'):
+                    text('Momentti')
+                with tag('th'):
+                    text('Hallituksen esitys')
+                with tag('th'):
+                    text('Liberaalipuolueen esitys')
+                with tag('th'):
+                    text('Leikattavaa löytyy')
+                with tag('th'):
+                    text('Perustelu')
+        with tag('tbody'):
+            for subsubrow in subrow.subrows.values():
+                odd = not odd
+                class_text = 'even'
+                if odd:
+                    class_text = 'odd'
+                with tag('tr', klass=class_text):
                     with tag('td'):
-                        text(f"Row{i} Col{j}")
-    return doc
+                        text(subsubrow.osoite + " " + subsubrow.momentti_selite)
+                    with tag('td'):
+                        text(euros(subsubrow.hallitus))
+                    with tag('td'):
+                        text(euros(subsubrow.lib))
+                    with tag('td'):
+                        text(euros(subsubrow.ero))
+                    with tag('td'):
+                        text(subsubrow.perustelu)
+            
+    return doc.getvalue()
 
 if __name__ == '__main__':
     main()
