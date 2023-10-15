@@ -118,16 +118,15 @@ def main():
         sys.exit(10)
     
     print("Got data")
-
-    sys.exit(0)
+    
 
     dataDict = sort_data(data)
 
     print("Got dataDict")
 
     print_sorted_data(dataDict)
-    
-    
+
+    sys.exit(0)    
 
     html = generate_html(data)
     if html is None:
