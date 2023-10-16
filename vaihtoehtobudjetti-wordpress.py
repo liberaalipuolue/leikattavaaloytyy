@@ -6,6 +6,7 @@ import datetime
 import sys
 import os.path
 import configparser
+from unicodedata import decimal
 
 # Main config file, paths to secrets and google and worpress configuration
 CONFIG_INI = 'vaihtoehtobudjetti-wordpress.ini'
@@ -61,6 +62,7 @@ try:
     COL_IDX_LIB = config.getint('google', 'COL_IDX_LIB')
     COL_IDX_PERUSTELU = config.getint('google', 'COL_IDX_PERUSTELU')
     COL_IDX_OSOITE = config.getint('google', 'COL_IDX_OSOITE')
+    COL_IDX_LINKKI = config.getint('google', 'COL_IDX_LINKKI')
 except configparser.NoOptionError as e:
     print("Mandatory config key missing, please review %s. %r" % (CONFIG_INI, e))
     sys.exit(1)
@@ -208,6 +210,7 @@ def get_data() -> list[DataObject]:
                 tuloStr = ''
                 syvyysStr = ''
                 osoiteStr = ''
+                linkkiStr = ''
                 if lastIndex >= COL_IDX_PAALUOKKA_SELITE:
                     paaluokka_selite=row[COL_IDX_PAALUOKKA_SELITE]
                 if lastIndex >= COL_IDX_MENOLUOKKA_SELITE:
@@ -225,8 +228,9 @@ def get_data() -> list[DataObject]:
                 if lastIndex >= COL_IDX_TULO:
                     tuloStr = row[COL_IDX_TULO]
                 if lastIndex >= COL_IDX_SYVYYS:
-                    syvyysStr = row[COL_IDX_SYVYYS]                
-                
+                    syvyysStr = row[COL_IDX_SYVYYS]
+                if lastIndex >= COL_IDX_LINKKI:
+                    linkkiStr = row[COL_IDX_LINKKI]
 
                 # FIXME: API/Sheet is returning 1 for 11 in for some rows
                 #     due unknown issue.
@@ -291,9 +295,6 @@ def get_data() -> list[DataObject]:
                 # flip ero to match 2023 convetion
                 eroDecimal = -eroDecimal
 
-                # TODO: build full url
-                linkki = "https://budjetti.vm.fi"
-
                 dataObj = DataObject(
                     tulo=tuloBool,
                     syvyys=syvyysInt,
@@ -309,7 +310,7 @@ def get_data() -> list[DataObject]:
                     lib=libDecimal,
                     ero=eroDecimal,
                     perustelu=perustelu,
-                    linkki=linkki,
+                    linkki=linkkiStr,
                     subrows={}
                 )
                 data.append(dataObj)
@@ -503,13 +504,19 @@ def euros(number) -> str:
     formatted += ' €'
     return formatted
 
+def calc_saastoja_percent(hallitus, lib):
+    percentage = 100 - (lib/hallitus) * 100
+    rounded = round(percentage, 0)
+    rounded = abs(max(rounded, 0))
+    return rounded
+
 def generate_html(data) -> str:
 
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
 
-    # TODO: Tulokset section
-    # TODO: "Säästöjä löydetty ministeriöittän" -section
+    doc.asis(generate_tulokset(data))
+    doc.asis(generate_saastoja(data))
 
     with tag('div', klass='main_color av_default_container_wrap container_wrap fullsize'):
         with tag('div', klass='container'):
@@ -522,6 +529,7 @@ def generate_html(data) -> str:
                         doc.asis(generate_tulot(data))
                         doc.asis(generate_menot(data))
 
+    doc.asis(generate_naamat())
     doc.asis(generate_outro())
     doc.asis(generate_js())
 
@@ -579,7 +587,6 @@ def generate_intro() -> str:
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/Lyd94PaRmxo?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
 </div></section></div>
 
-
     """
 
 def generate_outro() -> str:
@@ -602,6 +609,113 @@ def generate_outro() -> str:
     <div class="hr hr-default   avia-builder-el-114  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <div style="height:50px" class="hr hr-invisible   avia-builder-el-115  el_after_av_hr  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div></div>
     """
+
+def generate_naamat() -> str:
+    """
+    #LeikattavaaLöytyy -työryhmä
+    """
+    return """
+
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-76  el_after_av_one_fourth  el_before_av_one_third  column-top-margin" style="border-radius:0px; " id="tyoryhma"><div class="hr hr-default   avia-builder-el-77  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<div style="height:50px" class="hr hr-invisible   avia-builder-el-78  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy -työryhmä<br>
+</span></p>
+</div></section></div>
+
+
+<div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-80  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><section class="avia-team-member   avia-builder-el-81  el_before_av_button  avia-builder-el-first " itemscope="itemscope" itemtype="https://schema.org/Person"><div class="team-img-container"><img decoding="async" width="300" height="300" class="wp-image-11180 avia-img-lazy-loading-not-11180 avia_image avia_image_team" src="https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-300x300.jpg" alt="Lassi Kivinen" itemprop="image" srcset="https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-300x300.jpg 300w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-80x80.jpg 80w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-768x768.jpg 768w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-36x36.jpg 36w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-180x180.jpg 180w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen-705x705.jpg 705w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Lassi_Kivinen.jpg 800w" sizes="(max-width: 300px) 100vw, 300px"></div><h3 class="team-member-name" itemprop="name"><span class="ez-toc-section" id="lassi_kivinen"></span>Lassi Kivinen<span class="ez-toc-section-end"></span></h3><div class="team-member-description " itemprop="description"><p>Liberaalipuolueen puheenjohtaja<br>
+Myyntipäällikkö<br>
+</div><span class="hidden team-member-affiliation" itemprop="affiliation">Liberaalipuolue</span></section>
+</div>
+
+
+<div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-83  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><section class="avia-team-member   avia-builder-el-84  el_before_av_button  avia-builder-el-first " itemscope="itemscope" itemtype="https://schema.org/Person"><div class="team-img-container"><img decoding="async" width="300" height="300" class="wp-image-10678 avia-img-lazy-loading-not-10678 avia_image avia_image_team" src="https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-300x300.jpg" alt="Aarne Leinonen" itemprop="image" srcset="https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-300x300.jpg 300w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-80x80.jpg 80w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-768x768.jpg 768w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-36x36.jpg 36w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-180x180.jpg 180w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen-705x705.jpg 705w, https://liberaalipuolue.fi/wp-content/uploads/2023/02/Aarne_Leinonen.jpg 974w" sizes="(max-width: 300px) 100vw, 300px"></div><h3 class="team-member-name" itemprop="name"><span class="ez-toc-section" id="aarne_leinonen"></span>Aarne Leinonen<span class="ez-toc-section-end"></span></h3><div class="team-member-description " itemprop="description"><p>Liberaalipuolueen puoluesihteeri<br>
+Palvelumuotoilija, tohtorikoulutettava<br>
+</div><span class="hidden team-member-affiliation" itemprop="affiliation">Liberaalipuolue</span></section>
+</div>
+
+
+<div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-86  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><section class="avia-team-member   avia-builder-el-87  el_before_av_button  avia-builder-el-first " itemscope="itemscope" itemtype="https://schema.org/Person"><div class="team-img-container"><img decoding="async" width="300" height="300" class="wp-image-11375 avia-img-lazy-loading-not-11375 avia_image avia_image_team" src="https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-300x300.jpg" alt="Jussi Mäkipelto" itemprop="image" srcset="https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-300x300.jpg 300w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-1030x1030.jpg 1030w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-80x80.jpg 80w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-768x768.jpg 768w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-36x36.jpg 36w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-180x180.jpg 180w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM-705x705.jpg 705w, https://liberaalipuolue.fi/wp-content/uploads/2023/03/crop-3C3A9362-Jussi-Makipelto-022023-MEDIUM.jpg 1353w" sizes="(max-width: 300px) 100vw, 300px"></div><h3 class="team-member-name" itemprop="name"><span class="ez-toc-section" id="jussi_makipelto"></span>Jussi Mäkipelto<span class="ez-toc-section-end"></span></h3><div class="team-member-description " itemprop="description"><p>Vaasan piirijärjestön puheenjohtaja<br>
+Tietotekniikan diplomi-insinööri<br>
+</div><span class="hidden team-member-affiliation" itemprop="affiliation">Liberaalipuolue</span></section>
+</div>
+
+    """
+
+# TODO: calculate actual numbers needs still to be done
+def generate_tulokset(data) -> str:
+
+    hallitus_total = Decimal(0)
+    lib_total = Decimal(0)
+
+    tulot_hallitus_total = Decimal(0)
+    tulot_hallitus_total = Decimal(0)
+
+    for row in data.values():
+        # Include only menot
+        if row.tulo:
+            continue
+
+
+    cut_percent = str(0)
+    saved = 0
+
+
+    return """
+    
+    <div class="hr hr-default   avia-builder-el-24  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#Leikkattavaalöytyy -työryhmän tulokset</span></p>
+</div></section>
+
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">
+Valtionbudjetista leikattu """ + cut_percent + """%</span></p>
+</div></section>
+
+<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer">
+<div class="bar" style="width: """ + cut_percent + """%" data-progress="""" + cut_percent + """"></div></div></div></div></div>
+
+<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Veronmaksajien rahaa säästetty</span></p>
+</div></section>
+
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 36pt;">
+""" + euros(saved) + """</span></p>
+</div></section>
+
+    """
+
+# "Säästöjä löydetty ministeriöittän"
+def generate_saastoja(data) -> str:
+    doc, tag, text = Doc().tagtext()
+
+    doc.asis("""
+    <div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">Säästöjä löydetty ministeriöittäin.</span></p>
+</div></section>    
+    """)
+
+    # Generate "Säästöjä löydetty ministeriöittäin" progress bar for each ministeriö
+    for row in data.values():
+        # Include only menot
+        if row.tulo:
+            continue
+        title = row.osoite + " " + row.paaluokka_selite
+        try:
+            cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
+        except ZeroDivisionError:
+            print("Unable to calculate cut percent for %s due hallitus value zero. Skipping" % title)
+            continue
+        doc.asis("""<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-39 el_after_av_textblock el_before_av_progress av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-yes"><div class="progressbar-title-wrap"><div class="progressbar-icon"><span class="progressbar-char" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span></div>""")
+        with tag('div', klass='progressbar-title'):
+            text(title)
+        doc.asis("""</div><div class="progressbar-percent avia_sc_animated_number_active number_prepared avia_animation_done" data-timer="2200">""")
+        doc.asis('<span class="av-bar-counter __av-single-number" data-number="' + cut_percent + '">' + cut_percent + '</span>%</div><div class="progress avia_start_animation" style="height:12px;"><div class="bar-outer">')
+        doc.asis('<div class="bar" style="width: ' + cut_percent + '%" data-progress="' + cut_percent + '"></div></div></div></div></div>')
+                
+    return doc.getvalue()
 
 def generate_tulot(data):
     doc, tag, text = Doc().tagtext()
@@ -643,10 +757,26 @@ def generate_tables(data, include_tulot=True, include_menot=True) -> str:
             continue
         if not row.tulo and not include_menot:
             continue
-        with tag('h1'):
-            text(row.osoite + " " + row.paaluokka_selite)
-        for subrow in row.subrows.values():
-            doc.asis(generate_level_2(subrow))
+        with tag('div', klass='toggle-section', style='border: none;'):
+            with tag('h2', klass='toggle-button av-elegant-toggle toggler'):
+                text(row.osoite + " " + row.paaluokka_selite)
+            with tag('div', klass='section-content'):
+
+                with tag('br'):
+                    pass
+                with tag('h4'):
+                    text(f'Hallituksen esitys: {euros(row.hallitus)}')
+                with tag('h4'):
+                    text(f'Liberaalipuolueen esitys: {euros(row.lib)}')
+                with tag('h4'):
+                    text(f'Leikattavaa löytyy: {euros(row.ero)}')
+                with tag('p', style="font-size: 14pt;"):
+                    text(row.perustelu)
+
+                # TODO: Search
+
+                for subrow in row.subrows.values():
+                    doc.asis(generate_level_2(subrow))
     return doc.getvalue()
 
 def generate_level_2(subrow) -> str:
@@ -675,28 +805,22 @@ def generate_level_2(subrow) -> str:
 
     doc, tag, text = Doc().tagtext()
 
-    with tag('section', klass='av_toggle_section', itemscope='itemscope', itemtype='https://schema.org/CreativeWork'):
-        with tag('div', role='tablist', klass='single_toggle', data_tags="{All}"):
-            doc.asis(f'<p data-fake-id="#{subrow.osoite}" class="toggler " itemprop="headline" role="tab" tabindex="0" aria-controls="{subrow.osoite}">{subrow.osoite} {subrow.menoluokka_selite}<span class="toggle_icon"><span class="vert_icon"></span><span class="hor_icon"></span></span></p>')
-            # Unknown how to pass data-fake-id as attribute
-            #with tag('p', klass="toggler ", data_fake_id='#'+subrow.osoite, itemprop="headline", role="tab", tabindex="0"):
-            #    text(subrow.osoite + " " + subrow.menoluokka_selite)
-            #with tag('span', klass='toggle_icon'):
-            #    with tag('span', klass='vert_icon'):
-            #        pass
-            #    with tag('span', klass='hor_icon'):
-            #        pass
-            with tag('div', id=subrow.osoite, klass='DISABLE_toggle_wrap'):
-                with tag('div', klass='DISABLE_toggle_content invers-color', itemprop='text'):
-                    with tag('h4'):
-                        text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
-                    with tag('h4'):
-                        text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
-                    with tag('h4'):
-                        text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
-                    with tag('p', style="font-size: 14pt;"):
-                        text(subrow.perustelu)
-                    doc.asis(generate_level_2_table(subrow))
+    with tag('section', klass='inner-toggle-section'):
+        with tag('p', klass="inner-toggle-button"):
+            with tag('span', style="font-size: 16pt;"):
+                text(subrow.osoite + " " + subrow.menoluokka_selite)            
+        with tag('div',klass='inner-section-content'):
+            with tag('p'):
+                pass           
+            with tag('h5'):
+                text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
+            with tag('h5'):
+                text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
+            with tag('h5'):
+                text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
+            with tag('p', style="font-size: 14pt;"):
+                text(subrow.perustelu)
+            doc.asis(generate_level_2_table(subrow))
 
     return doc.getvalue()
 
@@ -764,7 +888,17 @@ def generate_js() -> str:
     Add js for:
     * Collapsing tables
     """
-    return ""
+    return """    
+     <script>
+        jQuery(document).ready(function(){
+            jQuery(".toggle-button").click(function(){
+                var section = jQuery(this).closest(".toggle-section");              
+                section.find(".section-content").slideToggle();
+            });
+            jQuery(".section-content").slideToggle(0);
+        });
+    </script>
+    """
     
 
 
