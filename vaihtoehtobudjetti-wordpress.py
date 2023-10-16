@@ -348,31 +348,6 @@ def extract_osoite(osoite: str) -> (str, str, str, bool):
     # Convert to integers and return
     return parts[0], parts[1], parts[2], isLib
 
-
-def sort_data_tree(data: list[DataObject]) -> defaultdict:
-    """
-    Groups dataRows based on their common paaluokka and menoluokka numbers
-
-    FIXME
-    
-    tree['root'] Top level rows
-    tree[paaluokka_nro] 
-    tree[paaluokka_nro][menoluokka_nro]
-    """
-    initial_sort = sorted(data, key=lambda x:(x.syvyys))
-    tree = defaultdict(lambda: defaultdict(list))
-    tree['root'] = list # XXX Generate special position to hold top level rows
-    for row in initial_sort:
-        if row.syvyys == 3:
-            tree[row.paaluokka][row.menoluokka].append(row)
-        elif row.syvyys == 2:
-            tree[row.paaluokka].append(row)
-        elif row.syvyys == 1:
-            tree['root'].append(row)
-        else:
-            print("Unexpected syvyys value %r, don't know what to do!" % row.syvyys)
-    return tree 
-
 def sort_data(data: list[DataObject]) -> dict:
     """
     Groups dataRows based on their common paaluokka and menoluokka numbers
@@ -457,15 +432,6 @@ def validate_syvyys(row) -> bool:
     except ValueError:
         print("Row %r failed syvyys validation" % row)
         return False
-
-def print_data(data: list[DataObject]) -> None:
-    for d in data:
-        print('%r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r' % (d.tulo, d.syvyys, d.paaluokka, d.paaluokka_selite, d.menoluokka, d.menoluokka_selite, 
-                        d.momentti, d.momentti_selite, d.osoite, d.libLisays, d.hallitus, d.lib, d.perustelu, d.linkki))
-
-def print_data2(data: list[DataObject]) -> None:
-    for d in data:
-        print('%r, %r, %r, %r, %r' % (d.syvyys, d.paaluokka, d.menoluokka, d.momentti, d.osoite))
 
 def print_sorted_data(dataDict) -> None:    
     for row in dataDict.values():
@@ -557,6 +523,7 @@ def generate_html(data) -> str:
                         doc.asis(generate_menot(data))
 
     doc.asis(generate_outro())
+    doc.asis(generate_js())
 
     # Generate release version
     current_datetime = datetime.datetime.now()
@@ -564,40 +531,6 @@ def generate_html(data) -> str:
     formatted_time = current_datetime.strftime('%c')
     with tag('h6'):
         text("Versio %s" % formatted_time)
-
-    return doc.getvalue()
-
-def generate_intro_yt(data) -> str:
-    """
-    Complicated to write
-    """
-    doc, tag, text = Doc().tagtext()
-    with tag('div', 
-        klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full avia-builder-el-first',
-        style='border-radius:0px;'):
-        with tag('section', klass='av_textblock_section'):
-            with tag('div', klass='avia_textblock'):
-                with tag('p'):
-                    with tag('img', decoding='async', loading='lazy', klass='wp-image-8978 aligncenter',
-                        src='https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png',
-                        width='593', height='354',
-                        srcset='https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png 300w, shttps://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1030x616.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-768x459.png 768w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1536x919.png 1536w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-2048x1225.png 2048w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1500x897.png 1500w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-705x422.png 705w',
-                        sizes='(max-width: 593px) 100vw, 593px'):
-                            pass
-    with tag('div', 
-        klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin',
-        style='border-radius:0px;'):
-            with tag('div', klass='avia_textblock'):
-                with tag('h4', style="text-align: center;"):                    
-                    with tag('p'):
-                        with tag('span', style="font-size: 24pt"):
-                            text('#LeikattavaaLöytyy on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.')
-                    with tag('p'):
-                        with tag('span', style="font-size: 18pt"):
-                            text('Varjobudjetissa ei käytetä juustohöylää, vaan karsitaan kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Menokohteet tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille. Veronalennuksiinkin on varaa ilman alijäämiä ja lisävelkaa')
-                    with tag('p'):
-                        with tag('span', style="font-size: 18pt"):
-                            text('Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Me haluamme valita toisin, Suomen tulevaisuuden tähden.')
 
     return doc.getvalue()
 
@@ -825,6 +758,15 @@ def generate_level_2_table(subrow) -> str:
                         text(subsubrow.perustelu)
             
     return doc.getvalue()
+
+def generate_js() -> str:
+    """
+    Add js for:
+    * Collapsing tables
+    """
+    return ""
+    
+
 
 if __name__ == '__main__':
     main()
