@@ -8,6 +8,14 @@ import os.path
 import configparser
 from unicodedata import decimal
 
+#
+# TODO:
+#   Search boxes
+#   Collapse needs icon/text
+#   Parse % from sheet
+#   Parse extra sheet
+#
+
 # Main config file, paths to secrets and google and worpress configuration
 CONFIG_INI = 'vaihtoehtobudjetti-wordpress.ini'
 print("Current working directory %s" % os.getcwd())
@@ -802,28 +810,26 @@ def generate_level_2(subrow) -> str:
     Oikeusvaltion ylläpito tulee turvata riittävällä rahoituksella. IT-hankkeiden resurssitehokkuutta tulee parantaa.</span>
     </p>
     """
-
     doc, tag, text = Doc().tagtext()
 
     with tag('section', klass='inner-toggle-section'):
-        with tag('p', klass="inner-toggle-button"):
-            with tag('span', style="font-size: 16pt;"):
-                text(subrow.osoite + " " + subrow.menoluokka_selite)            
-        with tag('div',klass='inner-section-content'):
-            with tag('p'):
-                pass           
-            with tag('h5'):
-                text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
-            with tag('h5'):
-                text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
-            with tag('h5'):
-                text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
-            with tag('p', style="font-size: 14pt;"):
-                text(subrow.perustelu)
-            doc.asis(generate_level_2_table(subrow))
+#        with tag('p', klass="inner-toggle-button"):
+#            with tag('span', style="font-size: 16pt;"):
+#                text(subrow.osoite + " " + subrow.menoluokka_selite)
+#        with tag('div',klass='inner-section-content'):
+#            with tag('p'):
+#                pass           
+#            with tag('h5'):
+#                text(f'Hallituksen esitys: {euros(subrow.hallitus)}')
+#            with tag('h5'):
+#                text(f'Liberaalipuolueen esitys: {euros(subrow.lib)}')
+#            with tag('h5'):
+#                text(f'Leikattavaa löytyy: {euros(subrow.ero)}')
+#            with tag('p', style="font-size: 14pt;"):
+#                text(subrow.perustelu)
+        doc.asis(generate_level_2_table(subrow))
 
     return doc.getvalue()
-
 
 def generate_level_2_table(subrow) -> str:
     """
@@ -863,7 +869,28 @@ def generate_level_2_table(subrow) -> str:
                     text('Leikattavaa löytyy')
                 with tag('th'):
                     text('Perustelu')
+
         with tag('tbody'):
+
+            # Draw menoluokka as special row
+            # #ffd90 Bright yellow
+            with tag('tr', klass='menoluokka_row', style='background-color: rgb(255, 217, 0) !important;'):
+                with tag('td'):
+                    with tag('h4', klass='table_header'):
+                        text(subrow.osoite + " " + subrow.menoluokka_selite)
+                with tag('td'):
+                    with tag('h4', klass='table_header'):
+                        text(euros(subrow.hallitus))
+                with tag('td'):
+                    with tag('h4', klass='table_header'):
+                        text(euros(subrow.lib))
+                with tag('td'):
+                    with tag('h4', klass='table_header'):
+                        text(euros(subrow.ero))
+                with tag('td'):
+                    with tag('h4', klass='table_header'):
+                        text(subrow.perustelu)
+
             for subsubrow in subrow.subrows.values():
                 odd = not odd
                 class_text = 'even'
