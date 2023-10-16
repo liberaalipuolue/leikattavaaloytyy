@@ -527,15 +527,18 @@ def generate_html(data) -> str:
     doc.asis(generate_saastoja(data))
 
     with tag('div', klass='main_color av_default_container_wrap container_wrap fullsize'):
-        with tag('div', klass='container'):
-            with tag('div', klass='template-page content  av-content-full alpha units'):
-                with tag('div', klass='entry-content-wrapper clearfix'):
-                    with tag('div', klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-56  el_after_av_layout_row  el_before_av_one_full  avia-builder-el-first  '):                        
-                        doc.asis("""  
-                            <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti</span></p>
-                        </div></section>""")
-                        doc.asis(generate_tulot(data))
-                        doc.asis(generate_menot(data))
+        with tag('div', klass='template-page content  av-content-full alpha units'):
+            with tag('div', klass='entry-content-wrapper clearfix'):
+                with tag('div', klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-56  el_after_av_layout_row  el_before_av_one_full  avia-builder-el-first  '):                        
+                    doc.asis("""  
+                        <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+                        <div class="avia_textblock  " itemprop="text">
+                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti</span></p>
+                        </div>
+                        </section>
+                    """)
+                    doc.asis(generate_tulot(data))
+                    doc.asis(generate_menot(data))
 
     doc.asis(generate_naamat())
     doc.asis(generate_outro())
