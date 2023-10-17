@@ -610,8 +610,10 @@ def generate_html(data, summary) -> str:
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
 
-    doc.asis(generate_tulokset(data, summary))
-    doc.asis(generate_saastoja(data))
+    doc.asis(generate_summary(data, summary))
+    doc.asis(generate_menot_summary(data))
+    # Too broad to be useful
+    #doc.asis(generate_tulot_summary(data))
 
     with tag('div', klass='main_color av_default_container_wrap container_wrap fullsize'):
         with tag('div', klass='template-page content  av-content-full alpha units'):
@@ -698,7 +700,7 @@ def generate_outro() -> str:
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Lisätietoja:<br>
     <a href="mailto:hallitus@liberaalipuolue.fi">hallitus@liberaalipuolue.fi</a></span></p>
     </div></section></div>
-    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-101  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-102  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-101  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; ">
     <div class="hr hr-default   avia-builder-el-103  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-106  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-107  avia-builder-el-no-sibling "><a href="https://liberaalipuolue.fi/eduskuntavaalit-2023/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Äänestä meitä!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
@@ -740,7 +742,7 @@ Tietotekniikan diplomi-insinööri<br>
 
     """
 
-def generate_tulokset(data, summary) -> str:
+def generate_summary(data, summary) -> str:
     doc, tag, text = Doc().tagtext()
 
     # Splitter and title
@@ -777,7 +779,7 @@ def generate_tulokset(data, summary) -> str:
     return doc.getvalue()
 
 # "Säästöjä löydetty ministeriöittän"
-def generate_saastoja(data) -> str:
+def generate_menot_summary(data) -> str:
     doc, tag, text = Doc().tagtext()
 
     doc.asis("""
@@ -816,6 +818,44 @@ def generate_saastoja(data) -> str:
         doc.asis(f'<div class="bar" style="width: {cut_percent}%" data-progress="{cut_percent}"></div></div></div></div></div>')
                 
     return doc.getvalue()
+
+# Generated progress bars do not make much sense for tulot top level. Not current used due this.
+def generate_tulot_summary(data) -> str:
+    doc, tag, text = Doc().tagtext()
+
+    doc.asis("""
+    <div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+    <span style="font-size: 18pt;">Veroleikkaukset</span></p>
+</div></section>    
+    """)
+
+    for row in data.values():
+        # Include only tulot
+        if not row.tulo:
+            continue
+        if row.hallitus == 0:
+            print("Skipping ministeriö with zero value at hallituksen esitys: %s" % title)
+            continue
+        title = row.osoite + " " + row.paaluokka_selite
+        try:
+            # Calculate
+            #cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
+            # Use values from sheet
+            percent = round(row.eroPercent*100, 0)
+            cut_percent = str(percent)
+        except ZeroDivisionError:
+            print("Unable to calculate cut percent for %s due hallitus value zero. Skipping" % title)
+            continue
+        doc.asis("""<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-39 el_after_av_textblock el_before_av_progress av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-yes"><div class="progressbar-title-wrap"><div class="progressbar-icon"><span class="progressbar-char" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span></div>""")
+        with tag('div', klass='progressbar-title'):
+            text(title)
+        doc.asis("""</div><div class="progressbar-percent avia_sc_animated_number_active number_prepared avia_animation_done" data-timer="2200">""")
+        doc.asis(f'<span class="av-bar-counter __av-single-number" data-number="{cut_percent}">{cut_percent}</span>%</div><div class="progress avia_start_animation" style="height:12px;"><div class="bar-outer">')
+        doc.asis(f'<div class="bar" style="width: {cut_percent}%" data-progress="{cut_percent}"></div></div></div></div></div>')
+                
+    return doc.getvalue()
+
 
 def generate_tulot(data):
     doc, tag, text = Doc().tagtext()
