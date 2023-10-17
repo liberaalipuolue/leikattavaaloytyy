@@ -72,6 +72,7 @@ try:
     COL_IDX_PERUSTELU = config.getint('google', 'COL_IDX_PERUSTELU')
     COL_IDX_OSOITE = config.getint('google', 'COL_IDX_OSOITE')
     COL_IDX_LINKKI = config.getint('google', 'COL_IDX_LINKKI')
+    COL_IDX_ERO = config.getint('google', 'COL_IDX_ERO')
 except configparser.NoOptionError as e:
     print("Mandatory config key missing, please review %s. %r" % (CONFIG_INI, e))
     sys.exit(1)
@@ -115,6 +116,7 @@ class DataObject:
     hallitus: Decimal   # Hallituksen esitys
     lib: Decimal # Liberaalipuolueen esitys
     ero: Decimal # Erotus, "Leikattavaa löytyy" -luku
+    eroPercent: float # Erotus, desimaaleja
     perustelu: str      # Leikkauksen perustelu
     linkki: str         # Budjettikirjan linkki
     subrows: dict        # Sorttausta varten, alemman tason rivit
@@ -196,6 +198,7 @@ def get_data():
 
         # Call the Sheets API
         sheet = service.spreadsheets()
+        # TODO?: use valueRenderOption='UNFORMATTED_VALUE', but it would require rewriting data parsing
         result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                                     range=SHEET_NAME).execute()
         values = result.get('values', [])
@@ -235,6 +238,7 @@ def get_data():
                 syvyysStr = ''
                 osoiteStr = ''
                 linkkiStr = ''
+                eroPercentStr = ''
                 if lastIndex >= COL_IDX_PAALUOKKA_SELITE:
                     paaluokka_selite=row[COL_IDX_PAALUOKKA_SELITE]
                 if lastIndex >= COL_IDX_MENOLUOKKA_SELITE:
@@ -255,6 +259,8 @@ def get_data():
                     syvyysStr = row[COL_IDX_SYVYYS]
                 if lastIndex >= COL_IDX_LINKKI:
                     linkkiStr = row[COL_IDX_LINKKI]
+                if lastIndex >= COL_IDX_ERO:
+                    eroPercentStr = row[COL_IDX_ERO]
 
                 # FIXME: API/Sheet is returning 1 for 11 in for some rows
                 #     due unknown issue.
@@ -290,7 +296,6 @@ def get_data():
                 except ValueError:
                     pass
 
-
                 hallitusDecimal = Decimal('0.0')
                 if (len(hallitusStr) > 0):
                     # Remove non-breaking spaces
@@ -315,9 +320,20 @@ def get_data():
                         print("Failed to convert libStr %r to Decimal" % libStr)
                         continue
 
+                # Euroja
                 eroDecimal = hallitusDecimal - libDecimal
                 # flip ero to match 2023 convetion
                 eroDecimal = -eroDecimal
+
+                # %
+                eroPercentDecimal = Decimal('0.0')
+                if (len(eroPercentStr) > 0):
+                    try:
+                        eroPercentDecimal = parse_localized_percent(eroPercentStr)
+                    except ValueError:
+                        print("Failed to convert eroPercentStr %r to Decimal" % eroPercentStr)
+                        continue
+
 
                 dataObj = DataObject(
                     tulo=tuloBool,
@@ -333,6 +349,7 @@ def get_data():
                     hallitus=hallitusDecimal,
                     lib=libDecimal,
                     ero=eroDecimal,
+                    eroPercent=eroPercentDecimal,
                     perustelu=perustelu,
                     linkki=linkkiStr,
                     subrows={}
@@ -403,6 +420,29 @@ def extract_osoite(osoite: str) -> (str, str, str, bool):
     
     # Convert to integers and return
     return parts[0], parts[1], parts[2], isLib
+
+def parse_localized_percent(percent_str):
+    # Already set
+    #locale.setlocale(locale.LC_ALL, 'fi_FI.utf8')
+    percent_str = percent_str.replace('\xa0', ' ')
+    percent_str = percent_str.strip('%')
+    # Replace weird character with normal negative sign
+    percent_str = percent_str.replace('−', '-')
+
+    # Parse the localized string to a float
+    try:
+        percent_value = locale.atof(percent_str)
+        #percent_str = percent_str.replace(',','.')
+        #percent_value = float(percent_str)
+    except ValueError as e:
+        # Handle invalid input gracefully
+        print("Invalid input:", percent_str)
+        raise e
+
+    # Convert the parsed value to the standard percentage (e.g., 55.2% becomes 0.552)
+    percent_value /= 100.0
+
+    return percent_value
 
 def sort_data(data: list[DataObject]) -> dict:
     """
@@ -751,9 +791,20 @@ def generate_saastoja(data) -> str:
         # Include only menot
         if row.tulo:
             continue
+        if row.hallitus == 0:
+            print("Skipping ministeriö with zero value at hallituksen esitys: %s" % title)
+            continue
         title = row.osoite + " " + row.paaluokka_selite
         try:
-            cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
+            # Calculate
+            #cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
+            # Use values from sheet
+            percent = round(row.eroPercent*100, 0)
+            lisays = percent > 0
+            lisaysStr = ''
+            if lisays:
+                lisaysStr = ' KOROTUS'
+            cut_percent = str(abs(percent))            
         except ZeroDivisionError:
             print("Unable to calculate cut percent for %s due hallitus value zero. Skipping" % title)
             continue
@@ -761,8 +812,8 @@ def generate_saastoja(data) -> str:
         with tag('div', klass='progressbar-title'):
             text(title)
         doc.asis("""</div><div class="progressbar-percent avia_sc_animated_number_active number_prepared avia_animation_done" data-timer="2200">""")
-        doc.asis('<span class="av-bar-counter __av-single-number" data-number="' + cut_percent + '">' + cut_percent + '</span>%</div><div class="progress avia_start_animation" style="height:12px;"><div class="bar-outer">')
-        doc.asis('<div class="bar" style="width: ' + cut_percent + '%" data-progress="' + cut_percent + '"></div></div></div></div></div>')
+        doc.asis(f'<span class="av-bar-counter __av-single-number" data-number="{cut_percent}">{cut_percent}</span>%{lisaysStr}</div><div class="progress avia_start_animation" style="height:12px;"><div class="bar-outer">')
+        doc.asis(f'<div class="bar" style="width: {cut_percent}%" data-progress="{cut_percent}"></div></div></div></div></div>')
                 
     return doc.getvalue()
 
