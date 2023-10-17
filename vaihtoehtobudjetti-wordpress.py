@@ -12,8 +12,8 @@ from unicodedata import decimal
 # TODO:
 #   Search boxes
 #   Collapse needs icon/text
-#   Parse % from sheet
-#   Parse extra sheet
+#   General tweaking
+#   New content? - Small charts to summarize hallitus and lib difference per paaluokka ?
 #
 
 # Main config file, paths to secrets and google and worpress configuration
