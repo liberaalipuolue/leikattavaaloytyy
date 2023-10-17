@@ -58,6 +58,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 try:
     SPREADSHEET_ID = config.get('google', 'SPREADSHEET_ID')
     SHEET_NAME = config.get('google', 'SHEET_NAME')
+    SHEET_EXTRAS = config.get('google', 'SHEET_EXTRAS')
     COL_IDX_TULO = config.getint('google', 'COL_IDX_TULO')
     COL_IDX_SYVYYS = config.getint('google', 'COL_IDX_SYVYYS')
     COL_IDX_PAALUOKKA = config.getint('google', 'COL_IDX_PAALUOKKA')
@@ -118,16 +119,25 @@ class DataObject:
     linkki: str         # Budjettikirjan linkki
     subrows: dict        # Sorttausta varten, alemman tason rivit
 
+@dataclass
+class SummaryDataObject:
+    rahaa_saastetty: Decimal
+    budjetista_leikattu_percent: Decimal
+
 
 def main():
     data = None
+    summary = None
     try:
-        data = get_data()        
+        data, summary = get_data()        
     except HttpError as err:
         print(err)
 
     if data is None:
         print('No data found')
+        sys.exit(10)
+    if summary is None:
+        print('No summary found')
         sys.exit(10)
     
     print("Got data, %d rows" % (len(data)))    
@@ -135,7 +145,7 @@ def main():
 
     #print_sorted_data(dataDict)
 
-    html = generate_html(dataDict)
+    html = generate_html(dataDict, summary)
     if html is None:
         print("Failed to generate html")
         sys.exit(20)
@@ -158,7 +168,7 @@ def main():
 
 
 
-def get_data() -> list[DataObject]:
+def get_data():
     """
     Acquires Vaihtoehtobudjetti data over Sheets API.
     """
@@ -180,6 +190,7 @@ def get_data() -> list[DataObject]:
             token.write(creds.to_json())
 
     values = False
+    extras = False
     try:
         service = build('sheets', 'v4', credentials=creds)
 
@@ -188,6 +199,11 @@ def get_data() -> list[DataObject]:
         result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                                     range=SHEET_NAME).execute()
         values = result.get('values', [])
+        
+        result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                    range=SHEET_EXTRAS, 
+                                    valueRenderOption='UNFORMATTED_VALUE').execute()
+        extras = result.get('values', [])
     except HttpError as err:
         raise err
     
@@ -324,7 +340,38 @@ def get_data() -> list[DataObject]:
                 data.append(dataObj)
             except Exception as e:
                 print("Failed to process row %r due %r" % (row, e))
-    return data
+    
+    summary = None
+    saastetty = Decimal('0')
+    leikattu_percent = Decimal('0.0')
+    if not extras:
+        print('No extra data found.')
+        sys.exit(1)
+    else:
+        for row in extras:
+            if len(row) < 2:
+                print("Unexpected row length on extras: %r" % row)
+                sys.exit(1)
+            else:
+                key = row[0]
+                value = row[1]
+                if key == 'Veronmaksajien rahaa säästetty':
+                    try:
+                        saastetty = Decimal(value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                elif key == 'Valtionbudjetista leikattu':
+                    try:
+                        print("Valtionbudjetista leikattu: %r" % value)
+                        value = round(value*100, 0)
+                        leikattu_percent = Decimal(value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                else:
+                    print("Unknown extra key %r" % key)
+    summary = SummaryDataObject(rahaa_saastetty=saastetty, budjetista_leikattu_percent=leikattu_percent)   
+
+    return (data, summary)
 
 def extract_osoite_int(osoite: str) -> (int, int, int, bool):
     """
@@ -518,12 +565,12 @@ def calc_saastoja_percent(hallitus, lib):
     rounded = abs(max(rounded, 0))
     return rounded
 
-def generate_html(data) -> str:
+def generate_html(data, summary) -> str:
 
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
 
-    doc.asis(generate_tulokset(data))
+    doc.asis(generate_tulokset(data, summary))
     doc.asis(generate_saastoja(data))
 
     with tag('div', klass='main_color av_default_container_wrap container_wrap fullsize'):
@@ -653,50 +700,41 @@ Tietotekniikan diplomi-insinööri<br>
 
     """
 
-# TODO: calculate actual numbers needs still to be done
-def generate_tulokset(data) -> str:
+def generate_tulokset(data, summary) -> str:
+    doc, tag, text = Doc().tagtext()
 
-    hallitus_total = Decimal(0)
-    lib_total = Decimal(0)
+    # Splitter and title
 
-    tulot_hallitus_total = Decimal(0)
-    tulot_hallitus_total = Decimal(0)
-
-    for row in data.values():
-        # Include only menot
-        if row.tulo:
-            continue
-
-
-    cut_percent = str(0)
-    saved = 0
-
-
-    return """
-    
+    doc.asis("""
     <div class="hr hr-default   avia-builder-el-24  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     
-    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#Leikkattavaalöytyy -työryhmän tulokset</span></p>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 24pt;">#Leikkattavaalöytyy -työryhmän tulokset</span></p>
 </div></section>
+    """)
+    
+    # % title
+    doc.asis(f'<div style="height:50px" class="hr hr-invisible   avia-builder-el-28  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">Valtionbudjetista leikattu {summary.budjetista_leikattu_percent}%</span></p></div></section>')
 
-<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">
-Valtionbudjetista leikattu """ + cut_percent + """%</span></p>
-</div></section>
+    # % progressbar
 
-<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer">
-<div class="bar" style="width: """ + cut_percent + """%" data-progress="""" + cut_percent + """"></div></div></div></div></div>
+    doc.asis(f'<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer"><div class="bar" style="width: {summary.budjetista_leikattu_percent}%" data-progress="{summary.budjetista_leikattu_percent}"></div></div></div></div></div>')
+    doc.asis('<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>')
 
-<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    # Säästäjen summa
 
+    # <div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+
+    doc.asis("""
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Veronmaksajien rahaa säästetty</span></p>
 </div></section>
 
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
 <span style="font-size: 36pt;">
-""" + euros(saved) + """</span></p>
-</div></section>
+""")
+    doc.asis(f'{euros(summary.rahaa_saastetty)}</span></p></div></section>')
 
-    """
+    return doc.getvalue()
 
 # "Säästöjä löydetty ministeriöittän"
 def generate_saastoja(data) -> str:
