@@ -73,6 +73,7 @@ try:
     COL_IDX_OSOITE = config.getint('google', 'COL_IDX_OSOITE')
     COL_IDX_LINKKI = config.getint('google', 'COL_IDX_LINKKI')
     COL_IDX_ERO = config.getint('google', 'COL_IDX_ERO')
+    COL_IDX_ERO_PERCENT = config.getint('google', 'COL_IDX_ERO_PERCENT')
 except configparser.NoOptionError as e:
     print("Mandatory config key missing, please review %s. %r" % (CONFIG_INI, e))
     sys.exit(1)
@@ -96,7 +97,7 @@ HEADERS = {
 
 # html generation
 from yattag import Doc
-from decimal import Decimal, InvalidOperation
+from decimal import ConversionSyntax, Decimal, InvalidOperation
 from dataclasses import dataclass
 import locale # For currency formatting
 locale.setlocale(locale.LC_ALL, 'fi_FI.UTF-8')
@@ -123,8 +124,13 @@ class DataObject:
 
 @dataclass
 class SummaryDataObject:
-    rahaa_saastetty: Decimal
+    valtion_tehtavia_vahennetty: Decimal
+    veronmaksajien_rahaa_saastetty: Decimal
     budjetista_leikattu_percent: Decimal
+    budjetista_leikattu_percent_abs: Decimal
+    tehtavia_siirretty_aluehallinnolle: Decimal
+    alijaamaa: Decimal
+    leikkausten_osuus: Decimal
 
 
 def main():
@@ -238,6 +244,7 @@ def get_data():
                 syvyysStr = ''
                 osoiteStr = ''
                 linkkiStr = ''
+                eroStr = ''
                 eroPercentStr = ''
                 if lastIndex >= COL_IDX_PAALUOKKA_SELITE:
                     paaluokka_selite=row[COL_IDX_PAALUOKKA_SELITE]
@@ -259,8 +266,10 @@ def get_data():
                     syvyysStr = row[COL_IDX_SYVYYS]
                 if lastIndex >= COL_IDX_LINKKI:
                     linkkiStr = row[COL_IDX_LINKKI]
+                if lastIndex >= COL_IDX_ERO_PERCENT:
+                    eroPercentStr = row[COL_IDX_ERO_PERCENT]
                 if lastIndex >= COL_IDX_ERO:
-                    eroPercentStr = row[COL_IDX_ERO]
+                    eroStr = row[COL_IDX_ERO]
 
                 # FIXME: API/Sheet is returning 1 for 11 in for some rows
                 #     due unknown issue.
@@ -318,12 +327,23 @@ def get_data():
                         libDecimal = Decimal(libStr)
                     except InvalidOperation:
                         print("Failed to convert libStr %r to Decimal" % libStr)
-                        continue
+                        continue                    
 
                 # Euroja
-                eroDecimal = hallitusDecimal - libDecimal
-                # flip ero to match 2023 convetion
-                eroDecimal = -eroDecimal
+                # From sheet
+                eroDecimal = Decimal('0.0')
+                if (len(eroStr) > 0):
+                    eroStr = eroStr.replace('\xa0', '')
+                    eroStr = eroStr.replace('−', '-')
+                    try:
+                        eroDecimal = Decimal(eroStr)
+                    except InvalidOperation:
+                        print("Failed to convert eroDecimal %r to Decimal" % eroStr)
+                        continue
+                # Code
+                #eroDecimal = hallitusDecimal - libDecimal                
+                #eroDecimal = -eroDecimal
+                
 
                 # %
                 eroPercentDecimal = Decimal('0.0')
@@ -359,8 +379,13 @@ def get_data():
                 print("Failed to process row %r due %r" % (row, e))
     
     summary = None
-    saastetty = Decimal('0')
-    leikattu_percent = Decimal('0.0')
+
+    valtion_tehtavia_vahennetty = Decimal('0')
+    veronmaksajien_rahaa_saastetty = Decimal('0')
+    budjetista_leikattu_percent = Decimal('0')
+    tehtavia_siirretty_aluehallinnolle = Decimal('0')
+    alijaamaa = Decimal('0')
+    leikkausten_osuus = Decimal('0')
     if not extras:
         print('No extra data found.')
         sys.exit(1)
@@ -372,21 +397,52 @@ def get_data():
             else:
                 key = row[0]
                 value = row[1]
-                if key == 'Veronmaksajien rahaa säästetty':
+                if key == 'Valtion tehtäviä vähennetty':
                     try:
-                        saastetty = Decimal(value)
+                        valtion_tehtavia_vahennetty = Decimal(value)
                     except InvalidOperation:
                         print("Failed to convert %r to Decimal" % value)
-                elif key == 'Valtionbudjetista leikattu':
+                elif key == 'Veronmaksajien rahaa säästetty':
                     try:
-                        print("Valtionbudjetista leikattu: %r" % value)
+                        veronmaksajien_rahaa_saastetty = Decimal(value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                elif key == 'Valtion budjetista leikattu':
+                    try:
+                        round_2_value = round(value*100, 2)
+                        budjetista_leikattu_percent = Decimal(round_2_value)
+                        abs_value = abs(round(value*100,0))
+                        budjetista_leikattu_percent_abs = Decimal(abs_value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                elif key == 'Tehtäviä siirretty aluehallinnoille':
+                    try:
+                        tehtavia_siirretty_aluehallinnolle = Decimal(value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                elif key == 'Alijäämää varjobudjetissa':
+                    try:
+                        alijaamaa = Decimal(value)
+                    except InvalidOperation:
+                        print("Failed to convert %r to Decimal" % value)
+                elif key == 'Leikkausten osuus':
+                    try:
                         value = round(value*100, 0)
-                        leikattu_percent = Decimal(value)
+                        leikkausten_osuus = Decimal(value)
                     except InvalidOperation:
                         print("Failed to convert %r to Decimal" % value)
                 else:
-                    print("Unknown extra key %r" % key)
-    summary = SummaryDataObject(rahaa_saastetty=saastetty, budjetista_leikattu_percent=leikattu_percent)   
+                    if len(key) > 0:
+                        print("Unknown extra key %r" % key)
+                
+                
+    summary = SummaryDataObject(valtion_tehtavia_vahennetty=valtion_tehtavia_vahennetty,
+        veronmaksajien_rahaa_saastetty=veronmaksajien_rahaa_saastetty, 
+        budjetista_leikattu_percent=budjetista_leikattu_percent,
+        budjetista_leikattu_percent_abs=budjetista_leikattu_percent_abs,
+        tehtavia_siirretty_aluehallinnolle=tehtavia_siirretty_aluehallinnolle,
+        alijaamaa=alijaamaa,
+        leikkausten_osuus=leikkausten_osuus)   
 
     return (data, summary)
 
@@ -609,7 +665,7 @@ def generate_html(data, summary) -> str:
 
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
-
+    
     doc.asis(generate_summary(data, summary))
     doc.asis(generate_menot_summary(data))
     # Too broad to be useful
@@ -622,7 +678,7 @@ def generate_html(data, summary) -> str:
                     doc.asis("""  
                         <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
                         <div class="avia_textblock  " itemprop="text">
-                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti</span></p>
+                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti 2024</span></p>
                         </div>
                         </section>
                     """)
@@ -631,7 +687,12 @@ def generate_html(data, summary) -> str:
 
     doc.asis(generate_naamat())
     doc.asis(generate_outro())
+
+    doc.asis(generate_2023())
+    doc.asis(generate_mediassa_2023())
+        
     doc.asis(generate_js())
+    doc.asis("""<div style="height:50px" class="hr hr-invisible   avia-builder-el-115  el_after_av_hr  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div></div>""")
 
     # Generate release version
     current_datetime = datetime.datetime.now()
@@ -652,16 +713,38 @@ def generate_intro() -> str:
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><div class="hr hr-default   avia-builder-el-3  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><h4 style="text-align: center;"></h4>
 <h4 style="text-align: center;"></h4>
-<p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.</span></p>
+<p style="text-align: center;"><span style="font-size: 24pt;">#LeikataanReilusti on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.</span></p>
 <p style="text-align: center;"><span style="font-size: 18pt;">Varjobudjetissa ei käytetä juustohöylää, vaan karsitaan kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Menokohteet tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille. Veronalennuksiinkin on varaa ilman alijäämiä ja lisävelkaa.</span></p>
 <p style="text-align: center;"><span style="font-size: 18pt;">Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Me haluamme valita toisin, Suomen tulevaisuuden tähden.</span></p>
 </div></section>
 <div style="height:50px" class="hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-<div style="height:50px" class="hr hr-invisible   avia-builder-el-8  el_after_av_textblock  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    """
+
+def generate_2023() -> str:
+    """ 
+    Linkit 2023 leikattavaa löytyy budjettiin
+    """
+    return """
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-96  el_after_av_one_third  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-97  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div class="hr hr-default   avia-builder-el-98  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <div style="height:50px" class="hr hr-invisible   avia-builder-el-99  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+    <span style="font-size: 24pt;"><br>
+    <a href="https://liberaalipuolue.fi/leikattavaaloytyy/">
+    Katso myös Liberaalipuolueen #LeikattavaaLöytyy 2023 varjobudjetti</a></span>
+    </div></section></div>
+    """
+
+    #    <div style="height:50px" class="hr hr-invisible   avia-builder-el-115  el_after_av_hr  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div></div>
+
+def generate_mediassa_2023() -> str:
+    """ 
+    Linkit 2023 media esiintymisiin
+    """
+    return """
 <div class="hr hr-default   avia-builder-el-9  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy mediassa</span></p>
 </div></section></div>
-
 
 
 <div class="flex_column av_one_half  flex_column_div av-zero-column-padding first  avia-builder-el-11  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Aarne Leinonen | Heikelä&amp;Koskelo 23 minuuttia -podcastissa</p>
@@ -686,7 +769,6 @@ def generate_intro() -> str:
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/Lyd94PaRmxo?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
 </div></section></div>
-
     """
 
 def generate_outro() -> str:
@@ -705,20 +787,17 @@ def generate_outro() -> str:
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-106  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-107  avia-builder-el-no-sibling "><a href="https://liberaalipuolue.fi/eduskuntavaalit-2023/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Äänestä meitä!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-110  el_after_av_one_third  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-111  avia-builder-el-no-sibling "><a href="https://puoluerekisteri.fi/puolue/50" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Täytä kannattajakortti</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
-    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-112  el_after_av_one_third  avia-builder-el-last  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-113  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-    <div class="hr hr-default   avia-builder-el-114  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-    <div style="height:50px" class="hr hr-invisible   avia-builder-el-115  el_after_av_hr  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div></div>
     """
 
 def generate_naamat() -> str:
     """
-    #LeikattavaaLöytyy -työryhmä
+    #LeikataanReilusti -työryhmä
     """
     return """
 
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-76  el_after_av_one_fourth  el_before_av_one_third  column-top-margin" style="border-radius:0px; " id="tyoryhma"><div class="hr hr-default   avia-builder-el-77  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
 <div style="height:50px" class="hr hr-invisible   avia-builder-el-78  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy -työryhmä<br>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikataanReilusti -työryhmä<br>
 </span></p>
 </div></section></div>
 
@@ -747,34 +826,73 @@ def generate_summary(data, summary) -> str:
 
     # Splitter and title
 
-    doc.asis("""
-    <div class="hr hr-default   avia-builder-el-24  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+# I think this is redundant, the intro already briefs reader in
+#    doc.asis("""
+#    <div class="hr hr-default   avia-builder-el-24  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>  
+#<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text">
+#<p style="text-align: center;">
+#<span style="font-size: 24pt;">#LeikataanReilusti -työryhmän tulokset</span></p>
+#</div></section>
+#    """)
     
+    # Valtion tehtäviä vähennetty    
+    doc.asis("""<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>""")
+    doc.asis("""
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-<span style="font-size: 24pt;">#Leikkattavaalöytyy -työryhmän tulokset</span></p>
+<span style="font-size: 24pt;">Valtion tehtäviä vähennetty</span></p>
 </div></section>
-    """)
-    
-    # % title
-    doc.asis(f'<div style="height:50px" class="hr hr-invisible   avia-builder-el-28  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">Valtionbudjetista leikattu {summary.budjetista_leikattu_percent}%</span></p></div></section>')
-
-    # % progressbar
-
-    doc.asis(f'<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer"><div class="bar" style="width: {summary.budjetista_leikattu_percent}%" data-progress="{summary.budjetista_leikattu_percent}"></div></div></div></div></div>')
-    doc.asis('<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>')
-
-    # Säästäjen summa
-
-    # <div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-
-    doc.asis("""
-<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Veronmaksajien rahaa säästetty</span></p>
-</div></section>
-
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
 <span style="font-size: 36pt;">
 """)
-    doc.asis(f'{euros(summary.rahaa_saastetty)}</span></p></div></section>')
+    doc.asis(f'{euros(summary.valtion_tehtavia_vahennetty)}</span></p></div></section>')
+
+    # valtion budjetista leikattu
+    # % title
+    doc.asis(f'<div style="height:50px" class="hr hr-invisible   avia-builder-el-28  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Valtionbudjetista leikattu {round(summary.budjetista_leikattu_percent,2)} %</span></p></div></section>')
+    # % progressbar
+    doc.asis(f'<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer"><div class="bar" style="width: {summary.budjetista_leikattu_percent_abs}%" data-progress="{summary.budjetista_leikattu_percent_abs}"></div></div></div></div></div>')
+    doc.asis('<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>')
+
+    # Veronmaksajien rahaa säästetty
+    # <div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    doc.asis("""
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Veronmaksajien rahaa säästetty</span></p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 36pt;">
+""")
+    doc.asis(f'{euros(summary.veronmaksajien_rahaa_saastetty)}</span></p></div></section>')
+
+    # Tehtaviä siirretty aluehallinnolle
+    doc.asis("""<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>""")
+    doc.asis("""
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 24pt;">Tehtäviä siirretty aluehallinnolle</span></p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 36pt;">
+""")
+    doc.asis(f'{euros(summary.tehtavia_siirretty_aluehallinnolle)}</span></p></div></section>')
+
+    # Alijäämää
+    doc.asis("""<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>""")
+    doc.asis("""
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 24pt;">Alijäämää</span></p>
+</div></section>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+<span style="font-size: 36pt;">
+""")
+    doc.asis(f'{euros(summary.alijaamaa)}</span></p></div></section>')
+
+    # Leikkausten osuus
+    # % title
+    doc.asis(f'<div style="height:50px" class="hr hr-invisible   avia-builder-el-28  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  av_inherit_color " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Leikkausten osuus {summary.leikkausten_osuus}%</span></p></div></section>')
+    # % progressbar
+    doc.asis(f'<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-30 el_after_av_textblock el_before_av_hr av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-no"><div class="progress avia_start_animation" style="height:46px;"><div class="bar-outer"><div class="bar" style="width: {summary.leikkausten_osuus}%" data-progress="{summary.leikkausten_osuus}"></div></div></div></div></div>')
+    doc.asis('<div style="height:50px" class="hr hr-invisible   avia-builder-el-31  el_after_av_progress  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>')
+
+
 
     return doc.getvalue()
 
@@ -909,7 +1027,7 @@ def generate_tables(data, include_tulot=True, include_menot=True) -> str:
                 with tag('h4'):
                     text(f'Liberaalipuolueen esitys: {euros(row.lib)}')
                 with tag('h4'):
-                    text(f'Leikattavaa löytyy: {euros(row.ero)}')
+                    text(f'Reilumpi leikkaus: {euros(row.ero)}')
                 with tag('p', style="font-size: 14pt;"):
                     text(row.perustelu)
 
@@ -998,7 +1116,7 @@ def generate_level_2_table(subrow) -> str:
                 with tag('th'):
                     text('Liberaalipuolueen esitys')
                 with tag('th'):
-                    text('Leikattavaa löytyy')
+                    text('Reilumpi leikkaus')
                 with tag('th'):
                     text('Perustelu')
 
@@ -1031,6 +1149,10 @@ def generate_level_2_table(subrow) -> str:
                 with tag('tr', klass=class_text):
                     with tag('td'):
                         text(subsubrow.osoite + " " + subsubrow.momentti_selite)
+                        text(" ")
+                        if subsubrow.linkki:
+                            with tag('a', href=subsubrow.linkki, target='_blank'):
+                                text("Linkki")
                     with tag('td'):
                         text(euros(subsubrow.hallitus))
                     with tag('td'):
