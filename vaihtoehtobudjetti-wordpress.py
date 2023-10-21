@@ -178,7 +178,7 @@ def main():
 
 def get_data():
     """
-    Acquires Vaihtoehtobudjetti data over Sheets API.
+    Acquires Varjobudjetti data over Sheets API.
     """
     creds = None
     # The file GOOGLE_TOKEN_FILE stores the user's access and refresh tokens, and is
@@ -595,7 +595,7 @@ def print_sorted_data(dataDict) -> None:
 
 def update_wordpress_page(page_id, content):
     """
-    Update Vaihtoehtobudjetti page at Wordpress site
+    Update content to Wordpress page
 
     Note: Page must be saved in "Classic editor" mode for REST api pushed content to be visible
           If page is saved using "Advanced Layout Editor" active, the will have completly different content
@@ -678,7 +678,7 @@ def generate_html(data, summary) -> str:
                     doc.asis("""  
                         <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
                         <div class="avia_textblock  " itemprop="text">
-                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen vaihtoehtobudjetti 2024</span></p>
+                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen varjobudjetti 2024</span></p>
                         </div>
                         </section>
                     """)
