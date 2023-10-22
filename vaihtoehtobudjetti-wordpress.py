@@ -1016,8 +1016,9 @@ def generate_tables(data, include_tulot=True, include_menot=True) -> str:
         if not row.tulo and not include_menot:
             continue
         with tag('div', klass='toggle-section', style='border: none;'):
-            with tag('h2', klass='toggle-button av-elegant-toggle toggler'):
+            with tag('h2', klass='toggle-button av-elegant-toggle toggler', style='padding: 35px 10px 30px 35px; border-left-width: 0; border-right-width: 0;'):
                 text(row.osoite + " " + row.paaluokka_selite)
+                doc.asis('<span class="toggle_icon"><span class="vert_icon"></span><span class="hor_icon"></span></span>')
             with tag('div', klass='section-content'):
 
                 with tag('br'):
@@ -1175,6 +1176,7 @@ def generate_js() -> str:
             jQuery(".toggle-button").click(function(){
                 var section = jQuery(this).closest(".toggle-section");              
                 section.find(".section-content").slideToggle();
+                section.find(".vert_icon").slideToggle();
             });
             jQuery(".section-content").slideToggle(0);
         });
