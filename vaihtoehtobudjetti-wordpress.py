@@ -1107,7 +1107,7 @@ def generate_level_2_table(subrow) -> str:
 
     doc, tag, text = Doc().tagtext()
     odd = True
-    with tag('table', klass='tablepress tablepress-id-11_verot tablepress-responsive tablepress-responsive-stack-tablet'):
+    with tag('table', klass='datatable tablepress tablepress-responsive tablepress-responsive-stack-tablet'):
         with tag('thead'):
             with tag('tr'):
                 with tag('th'):
@@ -1169,6 +1169,7 @@ def generate_js() -> str:
     """
     Add js for:
     * Collapsing tables
+    * Datatables for search
     """
     return """    
      <script>
@@ -1181,7 +1182,23 @@ def generate_js() -> str:
             jQuery(".section-content").slideToggle(0);
         });
     </script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery("table.datatable").DataTable({
+                paging: false,
+                searching: true,
+                ordering: false
+            });
+       });
+    </script>
+ 
     """
+
+
+    
     
 
 
