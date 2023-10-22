@@ -725,7 +725,6 @@ def generate_2023() -> str:
     return """
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-96  el_after_av_one_third  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><div style="height:50px" class="hr hr-invisible   avia-builder-el-97  el_before_av_hr  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <div class="hr hr-default   avia-builder-el-98  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-    <div style="height:50px" class="hr hr-invisible   avia-builder-el-99  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
     <span style="font-size: 24pt;"><br>
     <a href="https://liberaalipuolue.fi/leikattavaaloytyy/">
@@ -739,12 +738,13 @@ def generate_mediassa_2023() -> str:
     """ 
     Linkit 2023 media esiintymisiin
     """
+
+    # <div class="hr hr-default   avia-builder-el-9  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+#<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy mediassa</span></p>
+#</div></section></div>
+
+
     return """
-<div class="hr hr-default   avia-builder-el-9  el_after_av_hr  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikattavaaLöytyy mediassa</span></p>
-</div></section></div>
-
-
 <div class="flex_column av_one_half  flex_column_div av-zero-column-padding first  avia-builder-el-11  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Aarne Leinonen | Heikelä&amp;Koskelo 23 minuuttia -podcastissa</p>
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe title="YouTube video player" src="//www.youtube.com/embed/1nTK69pd6io?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
@@ -781,11 +781,18 @@ def generate_outro() -> str:
     <a href="mailto:hallitus@liberaalipuolue.fi">hallitus@liberaalipuolue.fi</a></span></p>
     </div></section></div>
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-101  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; ">
-    <div class="hr hr-default   avia-builder-el-103  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-106  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-107  avia-builder-el-no-sibling "><a href="https://liberaalipuolue.fi/eduskuntavaalit-2023/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Äänestä meitä!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
-    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
+    <div class="hr hr-default   avia-builder-el-103  el_after_av_hr  el_before_av_hr "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>    
+
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 32px;">Vapaus kaipaa puolustajansa – tule mukaan!</span></p>
+</div></section>
+    
+    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding first  avia-builder-el-108  el_after_av_one_third  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-109  avia-builder-el-no-sibling "><a href="http://liberaalipuolue.fi/jaseneksi/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Liity jäseneksi!</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
     <div class="flex_column av_one_third  flex_column_div av-zero-column-padding   avia-builder-el-110  el_after_av_one_third  el_before_av_one_full  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-111  avia-builder-el-no-sibling "><a href="https://puoluerekisteri.fi/puolue/50" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">Täytä kannattajakortti</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
+    <div class="flex_column av_one_third  flex_column_div av-zero-column-padding  avia-builder-el-106  el_after_av_one_full  el_before_av_one_third  column-top-margin" style="border-radius:0px; "><div class="avia-button-wrap avia-button-center  avia-builder-el-107  avia-builder-el-no-sibling "><a href="https://liberaalipuolue.fi/leikattavaaloytyy/" class="avia-button avia-button-fullwidth  avia-font-color-black avia-icon_select-yes-left-icon avia-color-custom " style="background-color:#ffd900; "><span class="avia_button_icon avia_button_icon_left" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span><span class="avia_iconbox_title">#LeikattavaaLöytyy</span><span class="avia_button_background avia-button avia-button-fullwidth avia-color-theme-color-subtle"></span></a></div></div>
     """
+
+    # Ei vaaleja nyt menossa:
+    # 
 
 def generate_naamat() -> str:
     """
