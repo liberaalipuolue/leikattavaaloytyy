@@ -1036,8 +1036,10 @@ def generate_tables(data, include_tulot=True, include_menot=True) -> str:
                     text(f'Reilumpi leikkaus: {euros(row.ero)}')
                 with tag('p', style="font-size: 14pt;"):
                     text(row.perustelu)
-
-                # TODO: Search
+                if row.linkki:
+                    with tag('p'):
+                        with tag('a', href=row.linkki):
+                            text("Linkki")
 
                 for subrow in row.subrows.values():
                     doc.asis(generate_level_2(subrow))
@@ -1136,6 +1138,10 @@ def generate_level_2_table(subrow) -> str:
                 with tag('td'):
                     with tag('h4', klass='table_header'):
                         text(subrow.osoite + " " + subrow.menoluokka_selite)
+                        # XXX There doesn't seem to be any links in the sheet at this level
+                        if subrow.linkki:
+                            with tag('a', href=subrow.linkki):
+                                text("Linkki")
                 with tag('td'):
                     with tag('h4', klass='table_header'):
                         text(euros(subrow.hallitus))
