@@ -10,8 +10,6 @@ from unicodedata import decimal
 
 #
 # TODO:
-#   Search boxes
-#   Collapse needs icon/text
 #   General tweaking
 #   New content? - Small charts to summarize hallitus and lib difference per paaluokka ?
 #
@@ -1105,9 +1103,11 @@ def generate_level_2_table(subrow) -> str:
     </table>
     """
 
+    # XXX: tablepress-id-11_verot applies some styling, so each table gets it
+
     doc, tag, text = Doc().tagtext()
     odd = True
-    with tag('table', klass='datatable tablepress tablepress-responsive tablepress-responsive-stack-tablet'):
+    with tag('table', klass='datatable tablepress tablepress-responsive tablepress-responsive-stack-tablet tablepress-id-11_verot'):
         with tag('thead'):
             with tag('tr'):
                 with tag('th'):
@@ -1183,20 +1183,26 @@ def generate_js() -> str:
         });
     </script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
     <script>
         jQuery(document).ready(function(){
             jQuery("table.datatable").DataTable({
                 paging: false,
                 searching: true,
-                ordering: false
+                ordering: false,
+                language: {
+                  url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fi.json',
+                },
             });
        });
     </script>
  
     """
 
+    # Not needed
+    # <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
 
     
     
