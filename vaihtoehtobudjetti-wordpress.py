@@ -663,7 +663,7 @@ def generate_html(data, summary) -> str:
 
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
-    
+    doc.asis(generate_budjetti_title())
     doc.asis(generate_summary(data, summary))
     doc.asis(generate_menot_summary(data))
     # Too broad to be useful
@@ -673,13 +673,7 @@ def generate_html(data, summary) -> str:
         with tag('div', klass='template-page content  av-content-full alpha units'):
             with tag('div', klass='entry-content-wrapper clearfix'):
                 with tag('div', klass='flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-56  el_after_av_layout_row  el_before_av_one_full  avia-builder-el-first  '):                        
-                    doc.asis("""  
-                        <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
-                        <div class="avia_textblock  " itemprop="text">
-                        <p style="text-align: center;"><span style="font-size: 36pt;">Liberaalipuolueen varjobudjetti 2024</span></p>
-                        </div>
-                        </section>
-                    """)
+                    #doc.asis(generate_budjetti_title())
                     doc.asis(generate_tulot(data))
                     doc.asis(generate_menot(data))
 
@@ -701,6 +695,18 @@ def generate_html(data, summary) -> str:
 
     return doc.getvalue()
 
+def generate_budjetti_title() -> str:
+    """
+    "Liberaalipuolueen varjobudjetti 2024"
+    """
+    return """  
+        <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+        <div class="avia_textblock  " itemprop="text">
+        <p style="text-align: center;"><span style="font-size: 32pt;">Liberaalipuolueen varjobudjetti 2024</span></p>
+        </div>
+        </section>
+    """
+
 def generate_intro() -> str:
     """
     Intro block
@@ -709,23 +715,24 @@ def generate_intro() -> str:
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full  avia-builder-el-first  " style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p><img decoding="async" fetchpriority="high" class="wp-image-8978  aligncenter" src="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png" alt="" width="593" height="354" srcset="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png 300w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1030x616.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-768x459.png 768w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1536x919.png 1536w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-2048x1225.png 2048w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1500x897.png 1500w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-705x422.png 705w" sizes="(max-width: 593px) 100vw, 593px"></p>
     </div></section></div>
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><div class="hr hr-default   avia-builder-el-3  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><h4 style="text-align: center;"></h4>
-<h4 style="text-align: center;"></h4>
-<p style="text-align: center;"><span style="font-size: 24pt;">
+<section style="text-align: center;" class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text">
+<p><span style="font-size: 24pt; line-height: 1.4;">
 Viime keväänä käytyjen eduskuntavaalien jälkeen muodostettu kokoomusjohtoinen hallitus on päättänyt jatkaa edellisvuosilta tuttua tuhlauspolitiikkaa ja holtitonta velanottoa, samalla köyhiä kyykyttäen. Valtiontalouden sopeutus on riittämätöntä, ja kohdistuu väärin. Liberaalipuolue näyttää varjobudjetillaan mallia, kuinka #LeikataanReilusti.
 </span></p>
-<p style="text-align: center;"><span style="font-size: 18pt;">
+<p><span style="font-size: 18pt;">
 Varjobudjetissa perumme hallituksen tekemiä sosiaaliturvaleikkauksia. Loppusumma on silti yli 12 miljardia euroa pienempi kuin hallituksen esityksessä. Se saavutetaan karsimalla kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Asiat tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille.
 </span></p>
-<p style="text-align: center;"><span style="font-size: 18pt;">
+<p><span style="font-size: 18pt;">
 Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Yhtä vastuutonta on yrittää maksattaa törsäysvuosien laskua yhteiskunnan vähäosaisilla samalla, kun toissijaisia rahareikiä riittää tukittaviksi.
 </span></p>
-<p style="text-align: center;"><span style="font-size: 18pt;">
+<p><span style="font-size: 18pt;">
 Suomi tarvitsee reiluja leikkauksia, sanan molemmissa merkityksissä.
 </span></p>
 </div></section>
-<div style="height:50px" class="hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     """
+
+    # <div style="height:50px" class="hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
 
 def generate_2023() -> str:
     """ 
@@ -916,7 +923,7 @@ def generate_menot_summary(data) -> str:
 
     doc.asis("""
     <div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 18pt;">Säästöjä löydetty ministeriöittäin.</span></p>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Leikkaukset ministeriöittäin</span></p>
 </div></section>    
     """)
 
@@ -996,7 +1003,7 @@ def generate_tulot(data):
     doc.asis("""
     <div id="tulot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-    <span style="font-size: 24pt;">Tulot</span></p>
+    <span style="font-size: 32pt;">Tulot</span></p>
 </div></section>"""
     )
 
@@ -1011,7 +1018,7 @@ def generate_menot(data):
     doc.asis("""
     <div id="menot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-    <span style="font-size: 24pt;">Menot</span></p>
+    <span style="font-size: 32pt;">Menot</span></p>
 </div></section>"""
     )
 
