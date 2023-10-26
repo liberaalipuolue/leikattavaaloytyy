@@ -711,9 +711,18 @@ def generate_intro() -> str:
     <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><div class="hr hr-default   avia-builder-el-3  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><h4 style="text-align: center;"></h4>
 <h4 style="text-align: center;"></h4>
-<p style="text-align: center;"><span style="font-size: 24pt;">#LeikataanReilusti on Liberaalipuolueen varjobudjetti, jolla haluamme osoittaa, että nykyiselle tuhlauspolitiikalle ja valtion holtittomalle velanotolle on olemassa vaihtoehto.</span></p>
-<p style="text-align: center;"><span style="font-size: 18pt;">Varjobudjetissa ei käytetä juustohöylää, vaan karsitaan kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Menokohteet tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille. Veronalennuksiinkin on varaa ilman alijäämiä ja lisävelkaa.</span></p>
-<p style="text-align: center;"><span style="font-size: 18pt;">Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Me haluamme valita toisin, Suomen tulevaisuuden tähden.</span></p>
+<p style="text-align: center;"><span style="font-size: 24pt;">
+Viime keväänä käytyjen eduskuntavaalien jälkeen muodostettu kokoomusjohtoinen hallitus on päättänyt jatkaa edellisvuosilta tuttua tuhlauspolitiikkaa ja holtitonta velanottoa, samalla köyhiä kyykyttäen. Valtiontalouden sopeutus on riittämätöntä, ja kohdistuu väärin. Liberaalipuolue näyttää varjobudjetillaan mallia, kuinka #LeikataanReilusti.
+</span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;">
+Varjobudjetissa perumme hallituksen tekemiä sosiaaliturvaleikkauksia. Loppusumma on silti yli 12 miljardia euroa pienempi kuin hallituksen esityksessä. Se saavutetaan karsimalla kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Asiat tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille.
+</span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;">
+Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Yhtä vastuutonta on yrittää maksattaa törsäysvuosien laskua yhteiskunnan vähäosaisilla samalla, kun toissijaisia rahareikiä riittää tukittaviksi.
+</span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;">
+Suomi tarvitsee reiluja leikkauksia, sanan molemmissa merkityksissä.
+</span></p>
 </div></section>
 <div style="height:50px" class="hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     """
