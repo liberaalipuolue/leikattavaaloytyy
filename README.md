@@ -1,7 +1,12 @@
 ![Leikataan Reilusti](https://github.com/liberaalipuolue/leikattavaaloytyy/blob/main/julkaisumateriaali/leikataanreilusti.png?raw=true "Leikataan Reilusti")
 
-# Tämä repo on yhdistelmä skriptejä budjetin tekemiseen
+Liberaalipuolue julkaisee maanantaina 2023-10-30 varjobudjetin, joka tarjoaa yksityiskohtaisen suunnitelman talouden tasapainottamiseksi ja valtion tehtävien uudelleen arvioimiseksi.
+
+# Tämä repo on yhdistelmä julkaisumateriaalia ja skriptejä budjetin tekemiseen
+julkaisumateriaali-kansiossa löytyy grafiikkaa, kuvia, logoja ja budjettitaulukko (2023-10-30 jälkeen).
+
 uusi_budjetti-osiossa kerrotaan CSV-muokkaukseen tarkoitetuista skripteistä.
+
 Lisäksi Python-skriptillä voi Googlen spreadsheetistä ajaa HTML-taulukon Wordpressiin julkaistavaksi.
 
 # uusi_budjetti
