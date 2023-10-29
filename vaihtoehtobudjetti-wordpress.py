@@ -409,7 +409,7 @@ def get_data():
                     try:
                         round_2_value = round(value*100, 2)
                         budjetista_leikattu_percent = Decimal(round_2_value)
-                        abs_value = abs(round(value*100,0))
+                        abs_value = abs(round(value*100,1))
                         budjetista_leikattu_percent_abs = Decimal(abs_value)
                     except InvalidOperation:
                         print("Failed to convert %r to Decimal" % value)
@@ -655,8 +655,8 @@ def euros(number) -> str:
 
 def calc_saastoja_percent(hallitus, lib):
     percentage = 100 - (lib/hallitus) * 100
-    rounded = round(percentage, 0)
-    rounded = abs(max(rounded, 0))
+    rounded = round(percentage, 1)
+    rounded = abs(max(rounded, 1))
     return rounded
 
 def generate_html(data, summary) -> str:
@@ -666,6 +666,7 @@ def generate_html(data, summary) -> str:
     doc.asis(generate_budjetti_title())
     doc.asis(generate_summary(data, summary))
     doc.asis(generate_menot_summary(data))
+    doc.asis(generate_aiheipiireittain(data))
     # Too broad to be useful
     #doc.asis(generate_tulot_summary(data))
 
@@ -690,8 +691,8 @@ def generate_html(data, summary) -> str:
     current_datetime = datetime.datetime.now()
     timestamp = current_datetime.timestamp()
     formatted_time = current_datetime.strftime('%c')
-    with tag('h6'):
-        text("Versio %s" % formatted_time)
+    with tag('span', style="font-size: 10pt;"):
+        text("Sivun versio: %s" % formatted_time)
 
     return doc.getvalue()
 
@@ -702,7 +703,7 @@ def generate_budjetti_title() -> str:
     return """  
         <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
         <div class="avia_textblock  " itemprop="text">
-        <p style="text-align: center;"><span style="font-size: 32pt;">Liberaalipuolueen varjobudjetti 2024</span></p>
+        <p style="text-align: center;"><span style="font-size: 28pt;">Liberaalipuolueen varjobudjetti 2024</span></p>
         </div>
         </section>
     """
@@ -712,20 +713,21 @@ def generate_intro() -> str:
     Intro block
     """
     return """    
-    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full  avia-builder-el-first  " style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p><img decoding="async" fetchpriority="high" class="wp-image-8978  aligncenter" src="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png" alt="" width="593" height="354" srcset="https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-300x179.png 300w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1030x616.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-768x459.png 768w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1536x919.png 1536w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-2048x1225.png 2048w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-1500x897.png 1500w, https://liberaalipuolue.fi/wp-content/uploads/2022/09/Leikkauslogo_isokasi-705x422.png 705w" sizes="(max-width: 593px) 100vw, 593px"></p>
-    </div></section></div>
-    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-2  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; "><div class="hr hr-default   avia-builder-el-3  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+
+    <div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-0  el_before_av_one_full  avia-builder-el-first  " style="border-radius:0px; "><section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p><img decoding="async" fetchpriority="high" class="wp-image-8978  aligncenter" src="https://liberaalipuolue.fi/wp-content/uploads/2023/10/leikataanreilusti-593.png" alt="" width="593" height="296" srcset="https://liberaalipuolue.fi/wp-content/uploads/2023/10/leikataanreilusti-300.png 300w, https://liberaalipuolue.fi/wp-content/uploads/2023/10/leikataanreilusti-1030.png 1030w, https://liberaalipuolue.fi/wp-content/uploads/2023/10/leikataanreilusti-2048.png 2048w" sizes="(max-width: 593px) 100vw, 593px"></p>
+
+
 <section style="text-align: center;" class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text">
-<p><span style="font-size: 24pt; line-height: 1.4;">
+<p><span style="font-size: 18pt; line-height: 1.4;">
 Viime keväänä käytyjen eduskuntavaalien jälkeen muodostettu kokoomusjohtoinen hallitus on päättänyt jatkaa edellisvuosilta tuttua tuhlauspolitiikkaa ja holtitonta velanottoa, samalla köyhiä kyykyttäen. Valtiontalouden sopeutus on riittämätöntä, ja kohdistuu väärin. Liberaalipuolue näyttää varjobudjetillaan mallia, kuinka #LeikataanReilusti.
 </span></p>
-<p><span style="font-size: 18pt;">
+<p><span style="font-size: 14pt;">
 Varjobudjetissa perumme hallituksen tekemiä sosiaaliturvaleikkauksia. Loppusumma on silti yli 12 miljardia euroa pienempi kuin hallituksen esityksessä. Se saavutetaan karsimalla kokonaan pois tehtäviä, jotka näkemyksemme mukaan eivät kuulu valtiolle ensinkään. Asiat tärkeysjärjestykseen laittamalla voidaan taata riittävä rahoitus koulutuksen, terveydenhuollon ja sosiaaliturvan kaltaisille ydintoiminnoille.
 </span></p>
-<p><span style="font-size: 18pt;">
+<p><span style="font-size: 14pt;">
 Tulevien sukupolvien kustannuksella eläminen ei ole välttämätöntä, vaan vastuuton poliittinen valinta. Yhtä vastuutonta on yrittää maksattaa törsäysvuosien laskua yhteiskunnan vähäosaisilla samalla, kun toissijaisia rahareikiä riittää tukittaviksi.
 </span></p>
-<p><span style="font-size: 18pt;">
+<p><span style="font-size: 14pt;">
 Suomi tarvitsee reiluja leikkauksia, sanan molemmissa merkityksissä.
 </span></p>
 </div></section>
@@ -863,7 +865,7 @@ def generate_summary(data, summary) -> str:
 <span style="font-size: 24pt;">Valtion tehtäviä vähennetty</span></p>
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-<span style="font-size: 36pt;">
+<span style="font-size: 28pt;">
 """)
     doc.asis(f'{euros(summary.valtion_tehtavia_vahennetty)}</span></p></div></section>')
 
@@ -880,7 +882,7 @@ def generate_summary(data, summary) -> str:
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Veronmaksajien rahaa säästetty</span></p>
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-<span style="font-size: 36pt;">
+<span style="font-size: 28pt;">
 """)
     doc.asis(f'{euros(summary.veronmaksajien_rahaa_saastetty)}</span></p></div></section>')
 
@@ -891,7 +893,7 @@ def generate_summary(data, summary) -> str:
 <span style="font-size: 24pt;">Tehtäviä siirretty aluehallinnolle</span></p>
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-<span style="font-size: 36pt;">
+<span style="font-size: 28pt;">
 """)
     doc.asis(f'{euros(summary.tehtavia_siirretty_aluehallinnolle)}</span></p></div></section>')
 
@@ -902,7 +904,7 @@ def generate_summary(data, summary) -> str:
 <span style="font-size: 24pt;">Alijäämää</span></p>
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-<span style="font-size: 36pt;">
+<span style="font-size: 28pt;">
 """)
     doc.asis(f'{euros(summary.alijaamaa)}</span></p></div></section>')
 
@@ -940,7 +942,7 @@ def generate_menot_summary(data) -> str:
             # Calculate
             #cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
             # Use values from sheet
-            percent = round(row.eroPercent*100, 0)
+            percent = round(row.eroPercent*100, 1)
             lisays = percent > 0
             lisaysStr = ''
             if lisays:
@@ -957,6 +959,45 @@ def generate_menot_summary(data) -> str:
         doc.asis(f'<div class="bar" style="width: {cut_percent}%" data-progress="{cut_percent}"></div></div></div></div></div>')
                 
     return doc.getvalue()
+
+# XXX https://github.com/liberaalipuolue/leikattavaaloytyy/blob/main/julkaisumateriaali/Liberaalipuolueen%20varjobudjetti%202024%20leikkauksia%20aihepiireitt%C3%A4in%2C%20mrd%20%E2%82%AC.png 
+#     as html
+def generate_aiheipiireittain(data) -> str:
+    """
+    """
+    doc, tag, text = Doc().tagtext()
+
+    doc.asis("""
+    <div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">Leikkaukset aihepiireittäin</span></p>
+</div></section>    
+    """)
+
+
+
+    aihepiireittain = {
+        "Yritystuet": 3.7,
+        "Aluetuet": 3.5,
+        "Tehtävät hyvintointialueille": 2.5,
+        "Järjestörälssi": 1.0,
+        "Markkinahäiriköinti": 0.7,
+        "Muut": 1.6
+    }
+    total = 0
+    for title, value in aihepiireittain.items():
+        total += value
+
+    for title, value in aihepiireittain.items():
+        cut_percent = round(((value / total) * 100), 0)
+        doc.asis("""<div class="avia-progress-bar-container avia_animate_when_almost_visible avia-builder-el-39 el_after_av_textblock el_before_av_progress av-flat-bar av-animated-bar av-small-bar avia_start_animation"><div class="avia-progress-bar theme-color-bar icon-bar-yes"><div class="progressbar-title-wrap"><div class="progressbar-icon"><span class="progressbar-char" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></span></div>""")
+        with tag('div', klass='progressbar-title'):
+            text(title)
+        doc.asis("""</div><div class="progressbar-percent avia_sc_animated_number_active number_prepared avia_animation_done" data-timer="2200">""")
+        doc.asis(f'<span class="av-bar-counter __av-single-number" data-number="{cut_percent}">{value}</span> mrd €</div><div class="progress avia_start_animation" style="height:12px;"><div class="bar-outer">')
+        doc.asis(f'<div class="bar" style="width: {cut_percent}%" data-progress="{cut_percent}"></div></div></div></div></div>')
+                
+    return doc.getvalue()
+
 
 # Generated progress bars do not make much sense for tulot top level. Not current used due this.
 def generate_tulot_summary(data) -> str:
@@ -981,7 +1022,7 @@ def generate_tulot_summary(data) -> str:
             # Calculate
             #cut_percent = str(calc_saastoja_percent(row.hallitus, row.lib))
             # Use values from sheet
-            percent = round(row.eroPercent*100, 0)
+            percent = round(row.eroPercent*100, 1)
             cut_percent = str(percent)
         except ZeroDivisionError:
             print("Unable to calculate cut percent for %s due hallitus value zero. Skipping" % title)
@@ -1003,7 +1044,7 @@ def generate_tulot(data):
     doc.asis("""
     <div id="tulot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-    <span style="font-size: 32pt;">Tulot</span></p>
+    <span style="font-size: 28pt;">Tulot</span></p>
 </div></section>"""
     )
 
@@ -1018,7 +1059,7 @@ def generate_menot(data):
     doc.asis("""
     <div id="menot" style="height:50px" class="hr hr-invisible   avia-builder-el-58  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
     <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
-    <span style="font-size: 32pt;">Menot</span></p>
+    <span style="font-size: 28pt;">Menot</span></p>
 </div></section>"""
     )
 
