@@ -678,6 +678,7 @@ def generate_html(data, summary) -> str:
                     doc.asis(generate_tulot(data))
                     doc.asis(generate_menot(data))
 
+    doc.asis(generate_taulukkolinkki())
     doc.asis(generate_naamat())
     doc.asis(generate_outro())
 
@@ -695,6 +696,16 @@ def generate_html(data, summary) -> str:
         text("Sivun versio: %s" % formatted_time)
 
     return doc.getvalue()
+
+def generate_taulukkolinkki() -> str:
+    return """
+    <div class="avia_textblock  " itemprop="text">
+    <p style="text-align: center;">
+    <span style="font-size: 16pt;"><br>
+    <a href="https://docs.google.com/spreadsheets/d/12seElnkWFL7_XaQtMw1PROJzAZXJFCZyBFD39PxdZcQ/edit?usp=sharing"><br>
+    #LeikataanReilusti varjobudjettina taulukkomuodossa</a></span>
+    </p></div>
+    """
 
 def generate_budjetti_title() -> str:
     """
