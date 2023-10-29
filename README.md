@@ -1,3 +1,5 @@
+![Leikataan Reilusti](https://github.com/liberaalipuolue/leikattavaaloytyy/blob/main/julkaisumateriaali/leikataanreilusti.png?raw=true "Leikataan Reilusti")
+
 # Tämä repo on yhdistelmä skriptejä budjetin tekemiseen
 uusi_budjetti-osiossa kerrotaan CSV-muokkaukseen tarkoitetuista skripteistä.
 Lisäksi Python-skriptillä voi Googlen spreadsheetistä ajaa HTML-taulukon Wordpressiin julkaistavaksi.
