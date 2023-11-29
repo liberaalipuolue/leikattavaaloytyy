@@ -650,6 +650,13 @@ def euros(number) -> str:
     formatted = locale.currency(number, grouping=True, symbol=False)
     # Remove empty cents
     formatted = formatted.replace(",00", '')
+    # FIXME: locale.setlocale on mac
+    # XXX mac insists on using . as thousands separator. As we do not use decimal precision in euros, we can just replace . with correct thousands separator
+    formatted = formatted.replace(".", ' ')
+    # XXX and does something weird with -, by placing it at end of the number
+    formatted = formatted.replace("-", '')
+    if (number < 0):
+        formatted = "-" + formatted
     formatted += ' €'
     return formatted
 
@@ -663,10 +670,15 @@ def generate_html(data, summary) -> str:
 
     doc, tag, text = Doc().tagtext()
     doc.asis(generate_intro())
+    
+    doc.asis(generate_mediassa_2024())
+
     doc.asis(generate_budjetti_title())
     doc.asis(generate_summary(data, summary))
     doc.asis(generate_menot_summary(data))
     doc.asis(generate_aiheipiireittain(data))
+
+    
     # Too broad to be useful
     #doc.asis(generate_tulot_summary(data))
 
@@ -796,6 +808,34 @@ def generate_mediassa_2023() -> str:
 </div></section>
 <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><iframe loading="lazy" title="YouTube video player" src="//www.youtube.com/embed/Lyd94PaRmxo?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
 </div></section></div>
+    """
+
+def generate_mediassa_2024() -> str:
+    """ 
+    Linkit 2024 media esiintymisiin
+
+    """
+
+    return """
+<div class="flex_column av_one_full  flex_column_div av-zero-column-padding first  avia-builder-el-11  el_after_av_one_full  column-top-margin" style="margin-top: 0px; border-radius:0px; ">
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+    <div class="avia_textblock  " itemprop="text"><p style="text-align: center;"><span style="font-size: 24pt;">#LeikataanReilusti mediassa</span></p>
+    </div></section>
+</div>
+
+<div class="flex_column av_one_half  flex_column_div av-zero-column-padding first  avia-builder-el-11  el_after_av_one_full  el_before_av_one_half  column-top-margin" style="border-radius:0px; ">
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+        <div class="avia_textblock  " itemprop="text"><p style="text-align: center;">Lassi Kivinen | Heikelä&amp;Koskelo 23 minuuttia -podcastissa</p></div>
+    </section>
+    <section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+        <div class="avia_textblock  " itemprop="text"><p style="text-align: center;">
+            <iframe title="YouTube video player" src="//www.youtube.com/embed/PvJUYqY70jc?wmode=opaque&amp;rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+        </p></div>
+    </section>
+</div>
+
+    <div class="hr hr-default   avia-builder-el-37  el_before_av_textblock  avia-builder-el-first "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+
     """
 
 def generate_outro() -> str:
